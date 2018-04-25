@@ -25,10 +25,12 @@
 
     <IsUWP>false</IsUWP>
     <IsUWP Condition="'$(Configuration)'=='Debug_UWP' Or '$(Configuration)'=='Release_UWP'">true</IsUWP>
-    <OutputSuffix Condition="!$(IsUWP)"/>
-
   </PropertyGroup>
 
+  <PropertyGroup Condition="!$(IsUWP)">
+    <OutputSuffix />
+  </PropertyGroup>
+  
   <PropertyGroup Condition="$(IsUWP)">
     <MathLibrary>OpenBLAS</MathLibrary>
     <CNTKCustomOpenBLASVersion>2</CNTKCustomOpenBLASVersion>
@@ -56,6 +58,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="!$(IsUWP)">
+    <!-- BugBug: Needs desc -->
+    <WindowsTargetPlatformVersion Condition="$(WindowsSDKVersion.EndsWith('\'))">10.0.16299.0</WindowsTargetPlatformVersion>
     <MathLibrary>MKL</MathLibrary>
     <MathIncludePath>$(MKL_PATH)\include</MathIncludePath>
     <MathDefine>USE_MKL</MathDefine>
@@ -74,6 +78,7 @@
     <MathLinkLibrary Condition="$(HasMklDnn)">$(MathLinkLibrary);mkldnn.lib</MathLinkLibrary>
     <MathDelayLoad Condition="$(HasMklDnn)">$(MathDelayLoad);mkldnn.dll</MathDelayLoad>
   </PropertyGroup>
+  
   <PropertyGroup Condition="$(UseZip)">
     <ZipInclude>$(ZLIB_PATH)\include;$(ZLIB_PATH)\lib\libzip\include;</ZipInclude>
     <ZipDefine>USE_ZIP</ZipDefine>
@@ -112,7 +117,7 @@
     <CudaRuntimeDll>cudart64_90.dll</CudaRuntimeDll>
     <CudaDlls>cublas64_90.dll;cusparse64_90.dll;curand64_90.dll;$(CudaRuntimeDll)</CudaDlls>
 
-<!-- Use NvidiaCompute to define nvcc target architectures (will generate code to support them all, i.e. fat-binary, in release mode)
+    <!-- Use NvidiaCompute to define nvcc target architectures (will generate code to support them all, i.e. fat-binary, in release mode)
     In debug mode we only include cubin/PTX for 30 and rely on PTX / JIT to generate the required native cubin format
     http://docs.nvidia.com/cuda/pascal-compatibility-guide/index.html#building-applications-with-pascal-support -->
     <NvidiaCompute Condition="$(DebugBuild)">$(CNTK_CUDA_CODEGEN_DEBUG)</NvidiaCompute>
