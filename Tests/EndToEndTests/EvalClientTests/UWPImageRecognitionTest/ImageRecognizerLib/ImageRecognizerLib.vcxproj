@@ -19,8 +19,7 @@
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <WindowsTargetPlatformVersion>$(UCRTVersion)</WindowsTargetPlatformVersion>
-    <!-- BugBug <TargetPlatformMinVersion>$(UCRTVersion)</TargetPlatformMinVersion>-->
-    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion> <!-- BugBug -->
+    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion> <!-- Windows 10, November 2015 -->
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <ProjectName>ImageRecognizerLib</ProjectName>
   </PropertyGroup>

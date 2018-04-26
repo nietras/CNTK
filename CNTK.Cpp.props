@@ -45,9 +45,8 @@
     <OutputSuffix>_app</OutputSuffix>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <WindowsTargetPlatformVersion>$(UCRTVersion)</WindowsTargetPlatformVersion><!-- BugBug <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.10586.0</WindowsTargetPlatformMinVersion>-->
-    <TargetPlatformMinVersion>$(UCRTVersion)</TargetPlatformMinVersion> <!-- BugBug -->
+    <WindowsTargetPlatformVersion>$(UCRTVersion)</WindowsTargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion> <!-- Windows 10, November 2015 -->
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <DefaultLanguage>en-US</DefaultLanguage>
   </PropertyGroup>
@@ -58,8 +57,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="!$(IsUWP)">
-    <!-- BugBug: Needs desc -->
-    <WindowsTargetPlatformVersion Condition="$(WindowsSDKVersion.EndsWith('\'))">10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>$(WindowsSDKVersion.TrimEnd('\'))</WindowsTargetPlatformVersion>
+    
     <MathLibrary>MKL</MathLibrary>
     <MathIncludePath>$(MKL_PATH)\include</MathIncludePath>
     <MathDefine>USE_MKL</MathDefine>
