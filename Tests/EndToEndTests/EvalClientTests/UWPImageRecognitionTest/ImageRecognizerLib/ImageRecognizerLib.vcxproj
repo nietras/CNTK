@@ -18,9 +18,9 @@
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
-    <WindowsTargetPlatformVersion>$(UCRTVersion)</WindowsTargetPlatformVersion> <!-- BugBug <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>-->
-    <!-- BugBug <WindowsTargetPlatformMinVersion>10.0.10586.0</WindowsTargetPlatformMinVersion>-->
-    <TargetPlatformMinVersion>$(UCRTVersion)</TargetPlatformMinVersion> <!-- BugBug -->
+    <WindowsTargetPlatformVersion>$(UCRTVersion)</WindowsTargetPlatformVersion>
+    <!-- BugBug <TargetPlatformMinVersion>$(UCRTVersion)</TargetPlatformMinVersion>-->
+    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion> <!-- BugBug -->
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <ProjectName>ImageRecognizerLib</ProjectName>
   </PropertyGroup>
