@@ -1,7 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <Import Project="$(SolutionDir)\CNTK.Common.props" />
+  <!-- $(SolutionDir) isn't defined when nuget attempts to restore packages, and it (nuget) will stop processing the file if CNTK.Common.props can't be found (meaning it will not 
+       install the referenced packages below. Because of this, use a relative path when importing CNTK.Common.props rather than relying on $(SolutionDir); nuget is able to resolve 
+       this path and continue to import referenced packages.
+       
+       <Import Project="$(SolutionDir)\CNTK.Common.props" />
+  -->
+  <Import Project="..\..\..\..\..\CNTK.Common.props" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug_UWP</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
@@ -97,6 +103,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup> 
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform"> 
+      <!-- Was 5.2.2 -->
+      <Version>6.1.2</Version> 
+    </PackageReference> 
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ImageRecognizerLib, Version=255.255.255.255, Culture=neutral, processorArchitecture=MSIL">
