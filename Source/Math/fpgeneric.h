@@ -806,15 +806,15 @@ inline cusparseStatus_t cusparseSpVV_bufferSizeHelper(cusparseHandle_t, cusparse
 {
     RuntimeError("Unsupported template argument(half) in cusparseSpVV_bufferSizeHelper");
 }
-inline cusparseStatus_t cusparseSpVV(cusparseHandle_t handle, cusparseOperation_t opX, cusparseSpVecDescr_t vecX, cusparseDnVecDescr_t vecY, float *result, void *externalBuffer)
+inline cusparseStatus_t cusparseSpVVHelper(cusparseHandle_t handle, cusparseOperation_t opX, cusparseSpVecDescr_t vecX, cusparseDnVecDescr_t vecY, float *result, void *externalBuffer)
 {
     return cusparseSpVV(handle, opX, vecX, vecY, result, CUDA_R_32F, externalBuffer);
 }
-inline cusparseStatus_t cusparseSpVV(cusparseHandle_t handle, cusparseOperation_t opX, cusparseSpVecDescr_t vecX, cusparseDnVecDescr_t vecY, double *result, void *externalBuffer)
+inline cusparseStatus_t cusparseSpVVHelper(cusparseHandle_t handle, cusparseOperation_t opX, cusparseSpVecDescr_t vecX, cusparseDnVecDescr_t vecY, double *result, void *externalBuffer)
 {
     return cusparseSpVV(handle, opX, vecX, vecY, result, CUDA_R_64F, externalBuffer);
 }
-inline cusparseStatus_t cusparseSpVV(cusparseHandle_t, cusparseOperation_t, cusparseSpVecDescr_t, cusparseDnVecDescr_t, half *, void *)
+inline cusparseStatus_t cusparseSpVVHelper(cusparseHandle_t, cusparseOperation_t, cusparseSpVecDescr_t, cusparseDnVecDescr_t, half *, void *)
 {
     RuntimeError("Unsupported template argument(half) in cusparseSpVV");
 }

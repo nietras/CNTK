@@ -2367,8 +2367,8 @@ ElemType GPUSparseMatrix<ElemType>::InnerProductOfMatrices(const GPUSparseMatrix
 
     // 2020.12.14 - mj.jo
     // cuda 11.1
-    size_t buffer_size = 0;
-    void* buffer = NULL;
+    size_t buffer_size1 = 0;
+    void* buffer1 = NULL;
 
     if (allocTemp) // need to put a in ColumnMajor format
     {
@@ -2385,11 +2385,11 @@ ElemType GPUSparseMatrix<ElemType>::InnerProductOfMatrices(const GPUSparseMatrix
         // cuda 11.1
         CUSPARSE_CALL(cusparseCsr2cscEx2_bufferSizeHelper(cusparseHandle, m, n, nnz, a.Data(), a.RowLocation(),
                                                           a.ColLocation(), cscValA, cscColPtrA, cscRowIndA,
-                                                          cpVals, idxBase, &buffer_size));
-        CUDA_CALL(cudaMallocHost(&buffer, buffer_size));
+                                                          cpVals, idxBase, &buffer_size1));
+        CUDA_CALL(cudaMallocHost(&buffer1, buffer_size1));
         CUSPARSE_CALL(cusparseCsr2cscEx2Helper(cusparseHandle, m, n, nnz, a.Data(), a.RowLocation(),
                                                a.ColLocation(), cscValA, cscColPtrA, cscRowIndA,
-                                               cpVals, idxBase, buffer));
+                                               cpVals, idxBase, buffer1));
     }
     else if (a.GetFormat() == matrixFormatSparseCSC)
     {
@@ -2423,12 +2423,20 @@ ElemType GPUSparseMatrix<ElemType>::InnerProductOfMatrices(const GPUSparseMatrix
 	// cuda 10.0
     //CUSPARSE_CALL(cusparsedotiHelper(cusparseHandle, (int) a_nz, cscValA, vectArray, b.Data(), &res, idxBase));
 	
+	// 2020.12.16 - mj.jo
 	// cuda 11.1
-    auto test = a.GetNumElements();
     cusparseSpVecDescr_t vecX;
     cusparseDnVecDescr_t vecY;
-    size_t buffer_size = 0;
-    void* buffer = NULL;
+    size_t buffer_size2 = 0;
+    void* buffer2 = NULL;
+    cusparseOperation_t opX = CUSPARSE_OPERATION_NON_TRANSPOSE;
+
+    CUSPARSE_CALL(cusparseCreateSpVecHelper(&vecX, (int) a.GetNumElements(), (int) a_nz,
+                                            vecArray, cscValA, idxBase));
+    CUSPARSE_CALL(cusparseCreateDnVecHelper(&vecY, (int) b.GetNumElements(), b.Data()));
+    CUSPARSE_CALL(cusparseSpVV_bufferSizeHelper(cusparseHandle, opX, vecX, vecY, &res, &buffer_size2));
+    CUDA_CALL(cudaMallocHost(&buffer2, buffer_size2));
+    CUSPARSE_CALL(cusparseSpVVHelper(cusparseHandle, opX, vecX, vecY, &res, buffer2));
 
     TracingGPUMemoryAllocator::Free<GPUSPARSE_INDEX_TYPE>(a.GetComputeDeviceId(), vectArray);
     if (allocTemp)
@@ -2438,8 +2446,12 @@ ElemType GPUSparseMatrix<ElemType>::InnerProductOfMatrices(const GPUSparseMatrix
     CUSPARSE_CALL(cusparseDestroy(cusparseHandle));
     // 2020.12.14 - mj.jo
     // cuda 11.1
-    if (buffer)
-        CUDA_CALL(cudaFreeHost(buffer));
+    CUSPARSE_CALL(cusparseDestroySpVec(vecX));
+    CUSPARSE_CALL(cusparseDestroyDnVec(vecY));
+    if (buffer1)
+        CUDA_CALL(cudaFreeHost(buffer1));
+    if (buffer2)
+        CUDA_CALL(cudaFreeHost(buffer2));
     return res;
 }
 
