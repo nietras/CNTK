@@ -461,9 +461,14 @@ protected:
             // cuda 11.1
 			int res_count = 0;
             cudnnConvolutionBwdFilterAlgoPerf_t bwd_perf;
+            cudnnStatus_t result;
 
 			if (!noMem)
-                cudnnStatus_t result = cudnnGetConvolutionBackwardFilterAlgorithm_v7(*m_cudnn, m_inT, m_outT, *m_conv, *m_kernelT, 1, &res_count, &bwd_perf);
+			{
+                result = cudnnGetConvolutionBackwardFilterAlgorithm_v7(*m_cudnn, m_inT, m_outT, *m_conv, *m_kernelT, 1, &res_count, &bwd_perf);
+                algo = bwd_perf.algo;
+                return result;
+			}
             // special case for half/odd filter
             if(m_kernelT->isOdd() && m_dataType == CUDNN_DATA_HALF)
             {
@@ -473,7 +478,7 @@ protected:
                 workspace.Resize((tmpSize + sizeof(ElemType) - 1) / sizeof(ElemType), 1);
                 return err;
             }
-            cudnnStatus_t result = cudnnGetConvolutionBackwardFilterAlgorithm_v7(*m_cudnn, m_inT, m_outT, *m_conv, *m_kernelT, 0, &res_count, &bwd_perf);
+            result = cudnnGetConvolutionBackwardFilterAlgorithm_v7(*m_cudnn, m_inT, m_outT, *m_conv, *m_kernelT, 0, &res_count, &bwd_perf);
 			algo = bwd_perf.algo;
             return result;
         };
