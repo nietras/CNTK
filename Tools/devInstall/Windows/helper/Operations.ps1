@@ -299,10 +299,10 @@ function OpSwig3010(
         } )
 }
 
-function OpCheckVS2017
+function OpCheckVS2019
 {
-    @( @{Name = "Verify Installation of VS2017"; ShortName = "PREVS17"; VerifyInfo = "Checking for Visual Studio 2017"; 
-                        Verification = @( @{Function = "VerifyWinProductVersion"; Match = "^Visual Studio (Community|Professional|Enterprise) 2017$"; Version = "15.5"; MatchExact = $false} ); 
+    @( @{Name = "Verify Installation of VS2019"; ShortName = "PREVS17"; VerifyInfo = "Checking for Visual Studio 2019"; 
+                        Verification = @( @{Function = "VerifyWinProductVersion"; Match = "^Visual Studio (Community|Professional|Enterprise) 2019$"; Version = "15.5"; MatchExact = $false} ); 
                         PreReq = @( @{Function = "PrereqInfoVS17" } );
                         Action = @( @{Function = "StopInstallation" } )
                         } )
