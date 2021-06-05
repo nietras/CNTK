@@ -95,9 +95,18 @@ System.Management.Automation.RuntimeException: Running [start-process  env creat
   * **MSVC v141  VS 2017 C++ x64/86 build tools (v14.16)**
 * Set Environment Variables
 ```
+setx CNTK_ENABLE_ASGD false
+setx MKL_PATH c:\local\mklml-mkldnn-0.12
+setx BOOST_INCLUDE_PATH c:\local\boost_1_60_0-msvc-14.0
+setx BOOST_LIB_PATH c:\local\boost_1_60_0-msvc-14.0\lib64-msvc-14.0
+setx PROTOBUF_PATH c:\local\protobuf-3.1.0-vs17
+setx CUDNN_PATH C:\local\cudnn-9.0-v7.0\cuda
+setx OPENCV_PATH_V31 c:\local\Opencv3.1.0\build
+setx ZLIB_PATH c:\local\zlib-vs17
 setx CUB_PATH c:\local\cub-1.8.0\
 setx SWIG_PATH C:\local\swigwin-3.0.10
 ```
+* Restart the shell afterwards or use `set` not `setx`
 * Follow https://docs.microsoft.com/en-us/cognitive-toolkit/setup-cntk-with-script-on-windows
 * Then https://docs.microsoft.com/en-us/cognitive-toolkit/setup-cntk-on-windows#building-cntk
 
