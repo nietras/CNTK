@@ -1,7 +1,12 @@
 # Build on Windows Notes
 * Clone recursive
-* Download CUDA Toolkit 10.0 and install (don't install driver since old!)
-  https://developer.nvidia.com/cuda-10.0-download-archive?target_os=Windows&target_arch=x86_64&target_version=10&target_type=exenetwork
+```
+git clone --recursive https://github.com/nietras/CNTK
+```
+>* Download CUDA Toolkit 10.0 and install (don't install driver since old!)
+>  https://developer.nvidia.com/cuda-10.0-download-archive?target_os=Windows&target_arch=x86_64&target_version=10&target_type=exenetwork
+* Download CUDA Toolkit 10.2 plus patches and install (don't install driver since old!)
+  https://developer.nvidia.com/cuda-10.2-download-archive?target_os=Windows&target_arch=x86_64&target_version=10&target_type=exenetwork
 * To support VS2019 fix `C:\git\oss\CNTK\Tools\devInstall\Windows\helper\Operations.ps1` 
   * `OpCheckVS2017` => `OpCheckVS2019`
 * Run `C:\git\oss\CNTK\Tools\devInstall\Windows\DevInstall.ps1`
@@ -100,7 +105,7 @@ setx MKL_PATH c:\local\mklml-mkldnn-0.12
 setx BOOST_INCLUDE_PATH c:\local\boost_1_60_0-msvc-14.0
 setx BOOST_LIB_PATH c:\local\boost_1_60_0-msvc-14.0\lib64-msvc-14.0
 setx PROTOBUF_PATH c:\local\protobuf-3.1.0-vs17
-setx CUDNN_PATH C:\local\cudnn-9.0-v7.0\cuda
+setx CUDNN_PATH c:\local\cudnn-10.0-v7.3.1\cuda
 setx OPENCV_PATH_V31 c:\local\Opencv3.1.0\build
 setx ZLIB_PATH c:\local\zlib-vs17
 setx CUB_PATH c:\local\cub-1.8.0\
@@ -110,8 +115,19 @@ setx SWIG_PATH C:\local\swigwin-3.0.10
 * Follow https://docs.microsoft.com/en-us/cognitive-toolkit/setup-cntk-with-script-on-windows
 * Then https://docs.microsoft.com/en-us/cognitive-toolkit/setup-cntk-on-windows#building-cntk
 
+# CUDA 10.2 - First step to see if can build
+Focus on building `Common` project first.
 
 # CUDA 11
 https://github.com/microsoft/CNTK/issues/3835
 
+`CUDA_PATH_V10_2` and related are pre-defined environment variables.
+
+Fix warning treated as error in `GPUMatrix.cu`, `GPUSparseMatrix.cu` by inserting:
+```
+#pragma warning(disable : 4324) // 'thrust::detail::aligned_type<2>::type': structure was padded due to alignment
+```
+
+
+## Look at changes in other repo for reference
 https://github.com/haryngod/CNTK/tree/2.7-cuda-11.1
