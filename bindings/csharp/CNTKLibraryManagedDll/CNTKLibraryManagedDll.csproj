@@ -45,7 +45,7 @@
     <Company>Microsoft Corporation</Company>
     <Authors>Microsoft Corporation</Authors>
     <Product>Cntk.Core.Managed</Product>
-    <Version>$(CntkVersion)-preview.3</Version>
+    <Version>$(CntkVersion)-preview.4</Version>
     <PlatformTarget>x64</PlatformTarget>
 	<DebugType>portable</DebugType>
      
