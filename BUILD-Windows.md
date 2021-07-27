@@ -118,16 +118,20 @@ setx SWIG_PATH C:\local\swigwin-3.0.10
 # CUDA 10.2 - First step to see if can build
 Focus on building `Common` project first.
 
-# CUDA 11
-https://github.com/microsoft/CNTK/issues/3835
 
 `CUDA_PATH_V10_2` and related are pre-defined environment variables.
 
-Fix warning treated as error in `GPUMatrix.cu`, `GPUSparseMatrix.cu` by inserting:
+Fix warning treated as error in `GPUMatrix.cu`, `GPUSparseMatrix.cu`, `GPUTensor.cu` by inserting:
 ```
 #pragma warning(disable : 4324) // 'thrust::detail::aligned_type<2>::type': structure was padded due to alignment
 ```
+at the top of the file.
 
+See https://github.com/nietras/CNTK/pull/1/files
+
+# CUDA 11 - Modifications to support Ampere GPUs
+https://github.com/microsoft/CNTK/issues/3835
 
 ## Look at changes in other repo for reference
 https://github.com/haryngod/CNTK/tree/2.7-cuda-11.1
+
