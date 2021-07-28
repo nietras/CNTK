@@ -3,7 +3,7 @@
   <Import Project="$(SolutionDir)\CNTK.Common.props" />
   <PropertyGroup>
     <CudaVersion />
-    <CudaVersion Condition="Exists('$(CUDA_PATH_V11_1)') And '$(CudaVersion)' == ''">11.1</CudaVersion>
+    <CudaVersion Condition="Exists('$(CUDA_PATH_V11_4)') And '$(CudaVersion)' == ''">11.4</CudaVersion>
 
     <NvmlDll>%ProgramW6432%\NVIDIA Corporation\NVSMI\nvml.dll</NvmlDll>
     <NvmlDll Condition="Exists('c:\local\nvsmi9\NVSMI\nvml.dll')">c:\local\nvsmi9\NVSMI\nvml.dll</NvmlDll>
@@ -84,7 +84,17 @@
     <ZipLibs>zlib.lib;zip.lib;</ZipLibs>
   </PropertyGroup>
 
-  <PropertyGroup Condition="Exists('$(OPENCV_PATH)')">
+<PropertyGroup Condition="Exists('$(OPENCV_PATH)')">
+    <OpenCvPath>$(OPENCV_PATH)</OpenCvPath>
+    <OpenCvVersion>300</OpenCvVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="Exists('$(OPENCV_PATH_V31)')">
+    <OpenCvPath>$(OPENCV_PATH_V31)</OpenCvPath>
+    <OpenCvVersion>310</OpenCvVersion>
+  </PropertyGroup>
+  
+  <!--<PropertyGroup Condition="Exists('$(OPENCV_PATH)')">
     <OpenCvPath>$(OPENCV_PATH)</OpenCvPath>
     <OpenCvVersion>410</OpenCvVersion>
   </PropertyGroup>
@@ -92,8 +102,8 @@
   <PropertyGroup Condition="Exists('$(OPENCV_PATH_V43)')">
     <OpenCvPath>$(OPENCV_PATH_V43)</OpenCvPath>
     <OpenCvVersion>430</OpenCvVersion>
-  </PropertyGroup>
-
+  </PropertyGroup>-->
+  
   <PropertyGroup Condition="$(HasOpenCv)">
     <OpenCvInclude>$(OpenCvPath)\include;</OpenCvInclude>
     <OpenCvWorld Condition="$(ReleaseBuild)">opencv_world$(OpenCvVersion)</OpenCvWorld>
@@ -110,8 +120,8 @@
     <ProtobufLib Condition="$(DebugBuild)">libprotobufd.lib</ProtobufLib>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(CudaVersion)' == '11.1'">
-    <CudaPath>$(CUDA_PATH_V11_1)</CudaPath>
+  <PropertyGroup Condition="'$(CudaVersion)' == '11.4'">
+    <CudaPath>$(CUDA_PATH_V11_4)</CudaPath>
     <CudaRuntimeDll>cudart64_110.dll</CudaRuntimeDll>
     <CudaDlls>cublasLt64_11.dll;cublas64_11.dll;cusparse64_11.dll;curand64_10.dll;$(CudaRuntimeDll)</CudaDlls>
 
@@ -158,7 +168,8 @@
       <PreprocessorDefinitions>CNTK_VERSION="$(CntkVersion)";CNTK_VERSION_BANNER="$(CntkVersionBanner)";CNTK_COMPONENT_VERSION="$(CntkComponentVersion)"</PreprocessorDefinitions>
       <!-- UWP does not use MPI -->
       <PreprocessorDefinitions Condition="!$(IsUWP)">%(PreprocessorDefinitions);HAS_MPI=1</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(CudaVersion)' == '11.1'">%(PreprocessorDefinitions);CUDA_NO_HALF;__CUDA_NO_HALF_OPERATORS__</PreprocessorDefinitions>
+      <!--THIS LOOKS WRONG - HALF SHOULD BE SUPPORTED -->
+      <PreprocessorDefinitions Condition="'$(CudaVersion)' == '11.4'">%(PreprocessorDefinitions);CUDA_NO_HALF;__CUDA_NO_HALF_OPERATORS__</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
 
