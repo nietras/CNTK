@@ -178,7 +178,7 @@ packages, unzipping them and then manually modifying them to match
 the latest version.
 
 
-# CUDA 11.4 - Modifications to support Ampere GPUs
+# CUDA 11 - Modifications to support Ampere GPUs
 https://github.com/microsoft/CNTK/issues/3835
 
 ## Look at changes in other repo for reference
@@ -208,3 +208,10 @@ IMPORTANT: Remember to restart your shell/powershell window after, then check va
 ```
 gci env:
 ```
+
+## 11.4
+This fails spectacularly with a lot of errors when trying to compile `MathCUDA`project in `CNTK.sln`.
+Hence, reverting to trying with 11.1 since this was reportedly working.
+
+
+
