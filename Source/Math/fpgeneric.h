@@ -443,6 +443,8 @@ inline curandStatus_t curandGenerateNormalHelper(curandGenerator_t, short*, size
     RuntimeError("Unsupported template argument(short) in GPUSparseMatrix");
 }
 
+#pragma warning(push) 
+#pragma warning(disable : 4996) // Deprecated methods cusparse<T>csr2dense
 // cusparse
 inline cusparseStatus_t cusparsecsr2denseHelper(cusparseHandle_t handle, int m, int n, const cusparseMatDescr_t descrA, const float *csrValA, const int *csrRowPtrA, const int *csrColIndA, float *A, int lda)
 {
@@ -452,7 +454,7 @@ inline cusparseStatus_t cusparsecsr2denseHelper(cusparseHandle_t handle, int m, 
 {
     return cusparseDcsr2dense(handle, m, n, descrA, csrValA, csrRowPtrA, csrColIndA, A, lda);
 }
-inline cusparseStatus_t cusparsecsr2denseHelper(cusparseHandle_t,int,int,const cusparseMatDescr_t, const half *, const int *, const int *, half *, int)
+inline cusparseStatus_t cusparsecsr2denseHelper(cusparseHandle_t, int, int, const cusparseMatDescr_t, const half *, const int *, const int *, half *, int)
 {
     RuntimeError("Unsupported template argument(half) in GPUSparseMatrix");
 }
@@ -527,6 +529,7 @@ inline cusparseStatus_t cusparseCsr2cscEx2Helper(cusparseHandle_t, int, int, int
 {
     RuntimeError("Unsupported template argument(half) in cusparseCsr2cscEx2Helper");
 }
+#pragma warning(pop)
 
 inline cusparseStatus_t cusparsennzHelper(cusparseHandle_t handle, cusparseDirection_t dirA, int m, int n, const cusparseMatDescr_t descrA, const float *A, int lda, int *nnzPerRowColumn, int *nnzTotalDevHostPtr)
 {
@@ -549,6 +552,8 @@ inline cusparseStatus_t cusparsennzHelper(cusparseHandle_t,cusparseDirection_t,i
     RuntimeError("Unsupported template argument(char) in GPUSparseMatrix");
 }
 
+#pragma warning(push)
+#pragma warning(disable : 4996) // Deprecated methods cusparse<T>csr2dense
 inline cusparseStatus_t cusparsedense2csrHelper(cusparseHandle_t handle, int m, int n, const cusparseMatDescr_t descrA, const float *A, int lda, const int *nnzPerRow, float *csrValA, int *csrRowPtrA, int *csrColIndA)
 {
     return cusparseSdense2csr(handle, m, n, descrA, A, lda, nnzPerRow, csrValA, csrRowPtrA, csrColIndA);
@@ -590,6 +595,7 @@ inline cusparseStatus_t cusparsedense2cscHelper(cusparseHandle_t,int,int,const c
 {
     RuntimeError("Unsupported template argument(char) in GPUSparseMatrix");
 }
+#pragma warning(pop)
 
 // 2020.12.10 - mj.jo
 // cuda 10.0

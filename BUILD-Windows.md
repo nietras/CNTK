@@ -213,5 +213,11 @@ gci env:
 This fails spectacularly with a lot of errors when trying to compile `MathCUDA`project in `CNTK.sln`.
 Hence, reverting to trying with 11.1 since this was reportedly working.
 
+## 11.1
+Change some environment variables.
+```
+setx CUB_PATH "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.1"
+```
+Some warnings with 11.1.1 due to deprecated methods, disabling the warnings in `fpgeneric.h`.
 
 
