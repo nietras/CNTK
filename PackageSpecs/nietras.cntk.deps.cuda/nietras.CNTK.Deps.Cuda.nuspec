@@ -12,7 +12,7 @@
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <description>Microsoft Cognitive Toolkit Libraries, Cuda dependencies</description>
     <summary>This NuGet package provides Cuda dependencies for CNTK GPU build.</summary>
-    <releaseNotes>git commit:c7bc93fde7d206f71d98a13420b6f2140a97cf20</releaseNotes>
+    <releaseNotes>CUDA 11.1</releaseNotes>
     <copyright>© Microsoft Corporation. All rights reserved.</copyright>
   </metadata>
 </package>
