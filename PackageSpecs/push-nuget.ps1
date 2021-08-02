@@ -1,1 +1,1 @@
-./nuget.exe push *2.8.0-preview.2.nupkg -Source https://api.nuget.org/v3/index.json -ApiKey <ENTERAPIKEYHERE!>
+./nuget.exe push *2.8.0.nupkg -Source https://api.nuget.org/v3/index.json -ApiKey <ENTERAPIKEYHERE!>
