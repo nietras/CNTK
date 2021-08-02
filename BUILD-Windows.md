@@ -220,4 +220,5 @@ setx CUB_PATH "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.1"
 ```
 Some warnings with 11.1.1 due to deprecated methods, disabling the warnings in `fpgeneric.h`.
 
+Release then builds, but Debug does not. Don't care about Debug so moving on.
 
