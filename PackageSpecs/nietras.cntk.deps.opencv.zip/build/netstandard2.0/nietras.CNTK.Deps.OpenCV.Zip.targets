@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <OpenCvZipDllDir>$(MSBuildThisFileDirectory)\..\..\support\x64\</OpenCvZipDllDir>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(Platform.ToLower())' == 'x64'">
+    <None Include="$(OpenCvZipDllDir)Dependency\Release\opencv_world310.dll">
+      <Link>opencv_world310.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(OpenCvZipDllDir)Dependency\zip.dll">
+      <Link>zip.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(OpenCvZipDllDir)Dependency\zlib.dll">
+      <Link>zlib.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

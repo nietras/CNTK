@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <CNTKDllDir>$(MSBuildThisFileDirectory)\..\..\support\x64\</CNTKDllDir>
+    <CNTKComponentVersion>2.8.1</CNTKComponentVersion>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(Platform.ToLower())' == 'x64'">
+    <None Include="$(CNTKDllDir)Release\Cntk.Core.CSBinding-$(CNTKComponentVersion).dll">
+      <Link>Cntk.Core.CSBinding-$(CNTKComponentVersion).dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(CNTKDllDir)Release\Cntk.Core-$(CNTKComponentVersion).dll">
+      <Link>Cntk.Core-$(CNTKComponentVersion).dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(CNTKDllDir)Release\Cntk.Math-$(CNTKComponentVersion).dll">
+      <Link>Cntk.Math-$(CNTKComponentVersion).dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(CNTKDllDir)Release\Cntk.PerformanceProfiler-$(CNTKComponentVersion).dll">
+      <Link>Cntk.PerformanceProfiler-$(CNTKComponentVersion).dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(CNTKDllDir)Release\Cntk.Deserializers.Binary-$(CNTKComponentVersion).dll">
+      <Link>Cntk.Deserializers.Binary-$(CNTKComponentVersion).dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(CNTKDllDir)Release\Cntk.Deserializers.TextFormat-$(CNTKComponentVersion).dll">
+      <Link>Cntk.Deserializers.TextFormat-$(CNTKComponentVersion).dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(CNTKDllDir)Release\Cntk.Composite-$(CNTKComponentVersion).dll">
+      <Link>Cntk.Composite-$(CNTKComponentVersion).dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(CNTKDllDir)Release\Cntk.Deserializers.HTK-$(CNTKComponentVersion).dll">
+      <Link>Cntk.Deserializers.HTK-$(CNTKComponentVersion).dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(CNTKDllDir)Release\Cntk.Deserializers.Image-$(CNTKComponentVersion).dll">
+      <Link>Cntk.Deserializers.Image-$(CNTKComponentVersion).dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
