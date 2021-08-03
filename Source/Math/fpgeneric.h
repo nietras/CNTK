@@ -134,6 +134,8 @@ __global__ void copyFloat2Half(half *odata, const float *idata, const int n)
 }
 
 // Generalize library calls to be use in template functions
+#pragma warning(push)
+#pragma warning(disable : 4100) // 'identifier': unreferenced formal parameter
 
 // gemm
 inline cublasStatus_t cublasgemmHelper(cublasHandle_t handle, cublasOperation_t transa, cublasOperation_t transb, int m, int n, int k, const float* alpha, const float* A, int lda, const float* B, int ldb, const float* beta, float* C, int ldc)
@@ -1108,5 +1110,7 @@ inline cudaError_t SortPairsDescending(void *, size_t, const char *, char *, con
 {
     RuntimeError("Unsupported template argument(char) in SortPairsDescending");
 }
+
+#pragma warning(pop)
 
 #endif // CPUONLY

@@ -221,7 +221,7 @@ DECL bool isnan_(half v) {
     return v != v;
 #endif
 }
-DECL bool isnan_(int v)
+DECL bool isnan_(int )
 {
     return false;
 }
@@ -269,7 +269,7 @@ DECL int rsqrt_(int v)
 }
 DECL char rsqrt_(char v)
 {
-    assert(false "Unsupported template argument(char) in rsqrt_");
+    assert(false && "Unsupported template argument(char) in rsqrt_");
     return v;
 }
 
