@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <CudaDllDir>$(MSBuildThisFileDirectory)\..\..\support\x64\</CudaDllDir>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(Platform.ToLower())' == 'x64'">
+    <None Include="$(CudaDllDir)Dependency\cublas64_11.dll">
+      <Link>cublas64_11.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(CudaDllDir)Dependency\cublasLt64_11.dll">
+      <Link>cublasLt64_11.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(CudaDllDir)Dependency\cudart64_110.dll">
+      <Link>cudart64_110.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(CudaDllDir)Dependency\curand64_10.dll">
+      <Link>curand64_10.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(CudaDllDir)Dependency\cusparse64_11.dll">
+      <Link>cusparse64_11.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(CudaDllDir)Dependency\nvml.dll">
+      <Link>nvml.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

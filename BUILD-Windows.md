@@ -209,10 +209,6 @@ IMPORTANT: Remember to restart your shell/powershell window after, then check va
 gci env:
 ```
 
-## 11.4
-This fails spectacularly with a lot of errors when trying to compile `MathCUDA`project in `CNTK.sln`.
-Hence, reverting to trying with 11.1 since this was reportedly working.
-
 ## 11.1
 Change some environment variables.
 ```
@@ -222,3 +218,25 @@ Some warnings with 11.1.1 due to deprecated methods, disabling the warnings in `
 
 Release then builds, but Debug does not. Don't care about Debug so moving on.
 
+## 11.4
+Change some environment variables.
+```
+setx CUB_PATH "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.4"
+setx CUDA_PATH "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.4"
+```
+Last one is due to installing CUDA 11.1 after installing 11.4 and hence the 
+environment variables got overwritten.
+
+Probably best to simply reinstall CUDA 11.4 to be sure everything defined correctly.
+
+This fails spectacularly with a lot of errors when trying to compile `MathCUDA`project in `CNTK.sln`.
+
+Most of these appear to be yet another step from CUDA in instantiating templates,
+so more overloads are needed in `MathCUDA`. Fixed these one by one.
+
+Additionally, a ton of warnings specifically due to some of the template 
+instantiations being for integer types, and a lot of the code assumes floating points,
+so lots of warnings around truncations or similar. Did not fix these, just
+disabled treating warnings as errors.
+
+Most of Debug configuration now builds again.

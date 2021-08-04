@@ -51,6 +51,27 @@ static __inline__ __device__ half atomicAdd(half* address, half val)
     assert(false); // TODO: implement later
     return val;
 }
+static __inline__ __device__ short atomicAdd(short* address, short val)
+{
+    assert(false); // TODO: implement later
+    return val;
+}
+static __inline__ __device__ char atomicAdd(char* address, char val)
+{
+    assert(false); // TODO: implement later
+    return val;
+}
+
+static __inline__ __device__ int normcdfinv(const int a)
+{
+    assert(false && "Unsupported normcdfinv for (int)");
+    return a;
+}
+
+static __inline__ __device__ int ceil(int v)
+{
+    return v;
+}
 
 
 // TODO: replace this with TensorOps.h LogAdd(). It differs in using ElemType throughout, while this one seems to use 'double' versions of exp() and log().
@@ -76,6 +97,12 @@ static inline __device__ __host__ ElemType logaddk(ElemType x, ElemType y)
         z = exp(diff);
         return x + log(1.0 + z);
     }
+}
+static inline __device__ __host__ int logaddk(int x, int y)
+{
+    assert(false && "Unsupported logaddk for (int)");
+    (void) y;
+    return x;
 }
 
 namespace Microsoft { namespace MSR { namespace CNTK {

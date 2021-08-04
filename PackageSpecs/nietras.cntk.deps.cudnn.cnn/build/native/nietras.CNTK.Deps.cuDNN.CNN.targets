@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <cuDNNCNNPackageRoot>$(MSBuildThisFileDirectory)..\..\</cuDNNCNNPackageRoot>
+  </PropertyGroup>
+  <Target Name="cudnn_redist_AfterBuild" Condition="'$(Platform.ToLower())' == 'x64'" AfterTargets="AfterBuild">
+    <Copy SourceFiles="$(cuDNNCNNPackageRoot)support\x64\Dependency\cudnn*.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+  </Target>
+</Project>
