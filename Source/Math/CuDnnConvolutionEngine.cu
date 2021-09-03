@@ -307,7 +307,7 @@ protected:
                     fwd_perf[i].algo, &tmpSize);
                 if (err == CUDNN_STATUS_SUCCESS)
                 { 
-                    printf("found algo sizeBytes %zd algo size %zd\n", sizeBytes, tmpSize);
+                    //printf("found algo sizeBytes %zd algo size %zd\n", sizeBytes, tmpSize);
                     if (tmpSize <= sizeBytes)
                     {
                         algo = fwd_perf[i].algo;
@@ -405,7 +405,7 @@ protected:
                     bwd_perf[i].algo, &tmpSize);
                 if (err == CUDNN_STATUS_SUCCESS)
                 {
-                    printf("found bwd algo sizeBytes %zd bwd algo size %zd\n", sizeBytes, tmpSize);
+                    //printf("found bwd algo sizeBytes %zd bwd algo size %zd\n", sizeBytes, tmpSize);
                     if (tmpSize <= sizeBytes)
                     {
                         algo = bwd_perf[i].algo;
@@ -512,7 +512,7 @@ protected:
                     bwf_perf[i].algo, &tmpSize);
                 if (err == CUDNN_STATUS_SUCCESS)
                 {
-                    printf("found bwf algo sizeBytes %zd bwf algo size %zd\n", sizeBytes, tmpSize);
+                    //printf("found bwf algo sizeBytes %zd bwf algo size %zd\n", sizeBytes, tmpSize);
                     if (tmpSize <= sizeBytes)
                     {
                         algo = bwf_perf[i].algo;
