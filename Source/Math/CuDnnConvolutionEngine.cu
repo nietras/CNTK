@@ -287,28 +287,30 @@ protected:
             return cudnnGetConvolutionForwardAlgorithm(*m_cudnn, m_inT, *m_kernelT, *m_conv, m_outT, CUDNN_CONVOLUTION_FWD_NO_WORKSPACE, 0, &algo);*/
 
 			// 2021.08.30 - sigfrid696
+            // 2021.09.03 - nietras
             // cuda 11.4
             int res_count = 0;
-            std::unique_ptr<cudnnConvolutionFwdAlgoPerf_t[]> fwd_perf(new cudnnConvolutionFwdAlgoPerf_t[100]);
+            std::unique_ptr<cudnnConvolutionFwdAlgoPerf_t[]> fwd_perf(new cudnnConvolutionFwdAlgoPerf_t[MaxAlgoCount]);
 
-			cudnnStatus_t result;
-            result = cudnnGetConvolutionForwardAlgorithm_v7(*m_cudnn, m_inT, *m_kernelT, *m_conv, m_outT, 100, &res_count, fwd_perf.get());
-            size_t sizeBytes = 0;
-			if (!noMem)
-                sizeBytes = workspace.BufferSize();
+            cudnnStatus_t result = cudnnGetConvolutionForwardAlgorithm_v7(*m_cudnn, m_inT, *m_kernelT, *m_conv, m_outT, 
+                MaxAlgoCount, &res_count, fwd_perf.get());
+            if (result != CUDNN_STATUS_SUCCESS)
+                return result;
 
-			size_t tmpSize = 0;
+            const size_t sizeBytes = noMem ? 0 : workspace.BufferSize();
+
             cudnnStatus_t err = CUDNN_STATUS_EXECUTION_FAILED;
 			for (int i = 0; i < res_count; i++)
             {
-                auto err0 = cudnnGetConvolutionForwardWorkspaceSize(*m_cudnn, m_inT, *m_kernelT, *m_conv, m_outT, fwd_perf[i].algo, &tmpSize);
-                if (err0 == CUDNN_STATUS_SUCCESS)
+                size_t tmpSize = 0;
+                err = cudnnGetConvolutionForwardWorkspaceSize(*m_cudnn, m_inT, *m_kernelT, *m_conv, m_outT, 
+                    fwd_perf[i].algo, &tmpSize);
+                if (err == CUDNN_STATUS_SUCCESS)
                 { 
-					//printf("found algo sizeBytes %d algo size %d\n", sizeBytes, tmpSize);
+                    printf("found algo sizeBytes %zd algo size %zd\n", sizeBytes, tmpSize);
                     if (tmpSize <= sizeBytes)
                     {
                         algo = fwd_perf[i].algo;
-                        err = err0;
                         break;
                     } 
 				}
@@ -383,28 +385,30 @@ protected:
             return cudnnGetConvolutionBackwardDataAlgorithm(*m_cudnn, *m_kernelT, m_outT, *m_conv, m_inT, CUDNN_CONVOLUTION_BWD_DATA_NO_WORKSPACE, 0, &algo);*/
 
 			// 2021.08.30 - sigfrid696
+            // 2021.09.03 - nietras
             // cuda 11.4
 			int res_count = 0;
-            std::unique_ptr<cudnnConvolutionBwdDataAlgoPerf_t[]> bwd_perf(new cudnnConvolutionBwdDataAlgoPerf_t[100]);
+            std::unique_ptr<cudnnConvolutionBwdDataAlgoPerf_t[]> bwd_perf(new cudnnConvolutionBwdDataAlgoPerf_t[MaxAlgoCount]);
 
-            cudnnStatus_t result;
-            result = cudnnGetConvolutionBackwardDataAlgorithm_v7(*m_cudnn, *m_kernelT, m_outT, *m_conv, m_inT, 100, &res_count, bwd_perf.get());
-            size_t sizeBytes = 0;
-            if (!noMem)
-                sizeBytes = workspace.BufferSize();
+            cudnnStatus_t result = cudnnGetConvolutionBackwardDataAlgorithm_v7(*m_cudnn, *m_kernelT, m_outT, *m_conv, m_inT, 
+                MaxAlgoCount, &res_count, bwd_perf.get());
+            if (result != CUDNN_STATUS_SUCCESS)
+                return result;
 
-            size_t tmpSize = 0;
+            const size_t sizeBytes = noMem ? 0 : workspace.BufferSize();
+
             cudnnStatus_t err = CUDNN_STATUS_EXECUTION_FAILED;
             for (int i = 0; i < res_count; i++)
             {
-                auto err0 = cudnnGetConvolutionBackwardDataWorkspaceSize(*m_cudnn, *m_kernelT, m_outT, *m_conv, m_inT, bwd_perf[i].algo, &tmpSize);
-                if (err0 == CUDNN_STATUS_SUCCESS)
+                size_t tmpSize = 0;
+                err = cudnnGetConvolutionBackwardDataWorkspaceSize(*m_cudnn, *m_kernelT, m_outT, *m_conv, m_inT, 
+                    bwd_perf[i].algo, &tmpSize);
+                if (err == CUDNN_STATUS_SUCCESS)
                 {
-                    //printf("found bwd algo sizeBytes %d bwd algo size %d\n", sizeBytes, tmpSize);
+                    printf("found bwd algo sizeBytes %zd bwd algo size %zd\n", sizeBytes, tmpSize);
                     if (tmpSize <= sizeBytes)
                     {
                         algo = bwd_perf[i].algo;
-                        err = err0;
                         break;
 					}
                 }
@@ -488,24 +492,27 @@ protected:
             //return cudnnGetConvolutionBackwardFilterAlgorithm(*m_cudnn, m_inT, m_outT, *m_conv, *m_kernelT, CUDNN_CONVOLUTION_BWD_FILTER_NO_WORKSPACE, 0, &algo);
 
 			// 2021.08.30 - sigfrid696
+            // 2021.09.03 - nietras
             // cuda 11.4
             int res_count = 0;
-            std::unique_ptr<cudnnConvolutionBwdFilterAlgoPerf_t[]> bwf_perf(new cudnnConvolutionBwdFilterAlgoPerf_t[100]);
+            std::unique_ptr<cudnnConvolutionBwdFilterAlgoPerf_t[]> bwf_perf(new cudnnConvolutionBwdFilterAlgoPerf_t[MaxAlgoCount]);
 
-            cudnnStatus_t result;
-            result = cudnnGetConvolutionBackwardFilterAlgorithm_v7(*m_cudnn, m_inT, m_outT, *m_conv, *m_kernelT, 100, &res_count, bwf_perf.get());
-            size_t sizeBytes = 0;
-            if (!noMem)
-                sizeBytes = workspace.BufferSize();
+            cudnnStatus_t result = cudnnGetConvolutionBackwardFilterAlgorithm_v7(*m_cudnn, m_inT, m_outT, *m_conv, *m_kernelT, 
+                MaxAlgoCount, &res_count, bwf_perf.get());
+            if (result != CUDNN_STATUS_SUCCESS)
+                return result;
 
-            size_t tmpSize = 0;
+            const size_t sizeBytes = noMem ? 0 : workspace.BufferSize();
+
             cudnnStatus_t err = CUDNN_STATUS_EXECUTION_FAILED;
             for (int i = 0; i < res_count; i++)
             {
-                auto err0 = cudnnGetConvolutionBackwardFilterWorkspaceSize(*m_cudnn, m_inT, m_outT, *m_conv, *m_kernelT, bwf_perf[i].algo, &tmpSize);
-                if (err0 == CUDNN_STATUS_SUCCESS)
+                size_t tmpSize = 0;
+                err = cudnnGetConvolutionBackwardFilterWorkspaceSize(*m_cudnn, m_inT, m_outT, *m_conv, *m_kernelT, 
+                    bwf_perf[i].algo, &tmpSize);
+                if (err == CUDNN_STATUS_SUCCESS)
                 {
-                    //printf("found bwf algo sizeBytes %d bwf algo size %d\n", sizeBytes, tmpSize);
+                    printf("found bwf algo sizeBytes %zd bwf algo size %zd\n", sizeBytes, tmpSize);
                     if (tmpSize <= sizeBytes)
                     {
                         algo = bwf_perf[i].algo;
@@ -516,7 +523,6 @@ protected:
                             workspace.Resize((tmpSize + sizeof(ElemType) - 1) / sizeof(ElemType), 1);
                         }
 
-                        err = err0;
                         break;
                     }
                 }
@@ -636,7 +642,7 @@ private:
             if (m_forceDeterministicAlgorithms)
             {
                 workspace.Resize((algo.DeterministicAlgoWorkspaceSize + sizeof(ElemType) - 1) / sizeof(ElemType), 1, 0, false);
-				CUDNN_CALL(deterministicFinder(calgo, algoPerf));
+                CUDNN_CALL(deterministicFinder(calgo, algoPerf));
                 assert(calgo == 1);                                 // only one deterministic algorithm will be returned
                 algo.RecordAlgoBatchSizeWorkspaceSize(true, (*algoPerf).algo, batchSize, (*algoPerf).memory);
                 algo.autotuningState = AutotuningState::Running;    // no further need for tuning since this is deterministic, directly enter running state
@@ -645,7 +651,7 @@ private:
             {
                 // This branch handles two cases: a) When first MB comes through, and b) When input has free dimensions.
                 // If the handling of these two cases changes, we may need to create separate branches for them.
-				CUDNN_CALL(staticFinder(algo.selectedAlgo, true));
+                CUDNN_CALL(staticFinder(algo.selectedAlgo, true));
                 algo.maxMBSizeSeen = batchSize;
                 // Here MaxAlgoWorkspaceSize is temporarily storing 'possible' need changed by staticFinder.
                 // Thus we don't set maxAlgo records and those will be tuned later.
