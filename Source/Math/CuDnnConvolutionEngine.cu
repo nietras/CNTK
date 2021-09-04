@@ -288,12 +288,15 @@ protected:
 
 			// 2021.08.30 - sigfrid696
             // 2021.09.03 - nietras
+			// 2021.09.05 - sigfrid696
+			// a value 100 is used here instead of MaxAlgoCount, because with MaxAlgoCount we're not guaranteed 
+			// to obtain an algo, among the other returned by the function, with needed workspace size 0
             // cuda 11.4
             int res_count = 0;
-            std::unique_ptr<cudnnConvolutionFwdAlgoPerf_t[]> fwd_perf(new cudnnConvolutionFwdAlgoPerf_t[MaxAlgoCount]);
+            std::unique_ptr<cudnnConvolutionFwdAlgoPerf_t[]> fwd_perf(new cudnnConvolutionFwdAlgoPerf_t[100]);
 
             cudnnStatus_t result = cudnnGetConvolutionForwardAlgorithm_v7(*m_cudnn, m_inT, *m_kernelT, *m_conv, m_outT, 
-                MaxAlgoCount, &res_count, fwd_perf.get());
+                100, &res_count, fwd_perf.get());
             if (result != CUDNN_STATUS_SUCCESS)
                 return result;
 
@@ -303,14 +306,15 @@ protected:
 			for (int i = 0; i < res_count; i++)
             {
                 size_t tmpSize = 0;
-                err = cudnnGetConvolutionForwardWorkspaceSize(*m_cudnn, m_inT, *m_kernelT, *m_conv, m_outT, 
+                auto err0 = cudnnGetConvolutionForwardWorkspaceSize(*m_cudnn, m_inT, *m_kernelT, *m_conv, m_outT, 
                     fwd_perf[i].algo, &tmpSize);
-                if (err == CUDNN_STATUS_SUCCESS)
+                if (err0 == CUDNN_STATUS_SUCCESS)
                 { 
                     //printf("found algo sizeBytes %zd algo size %zd\n", sizeBytes, tmpSize);
                     if (tmpSize <= sizeBytes)
                     {
                         algo = fwd_perf[i].algo;
+                        err = err0;
                         break;
                     } 
 				}
@@ -386,12 +390,15 @@ protected:
 
 			// 2021.08.30 - sigfrid696
             // 2021.09.03 - nietras
+			// 2021.09.05 - sigfrid696
+			// a value 100 is used here instead of MaxAlgoCount, because with MaxAlgoCount we're not guaranteed 
+			// to obtain an algo, among the other returned by the function, with needed workspace size 0
             // cuda 11.4
 			int res_count = 0;
-            std::unique_ptr<cudnnConvolutionBwdDataAlgoPerf_t[]> bwd_perf(new cudnnConvolutionBwdDataAlgoPerf_t[MaxAlgoCount]);
+            std::unique_ptr<cudnnConvolutionBwdDataAlgoPerf_t[]> bwd_perf(new cudnnConvolutionBwdDataAlgoPerf_t[100]);
 
             cudnnStatus_t result = cudnnGetConvolutionBackwardDataAlgorithm_v7(*m_cudnn, *m_kernelT, m_outT, *m_conv, m_inT, 
-                MaxAlgoCount, &res_count, bwd_perf.get());
+                100, &res_count, bwd_perf.get());
             if (result != CUDNN_STATUS_SUCCESS)
                 return result;
 
@@ -401,14 +408,15 @@ protected:
             for (int i = 0; i < res_count; i++)
             {
                 size_t tmpSize = 0;
-                err = cudnnGetConvolutionBackwardDataWorkspaceSize(*m_cudnn, *m_kernelT, m_outT, *m_conv, m_inT, 
+                auto err0 = cudnnGetConvolutionBackwardDataWorkspaceSize(*m_cudnn, *m_kernelT, m_outT, *m_conv, m_inT, 
                     bwd_perf[i].algo, &tmpSize);
-                if (err == CUDNN_STATUS_SUCCESS)
+                if (err0 == CUDNN_STATUS_SUCCESS)
                 {
                     //printf("found bwd algo sizeBytes %zd bwd algo size %zd\n", sizeBytes, tmpSize);
                     if (tmpSize <= sizeBytes)
                     {
                         algo = bwd_perf[i].algo;
+                        err = err0;
                         break;
 					}
                 }
@@ -493,12 +501,15 @@ protected:
 
 			// 2021.08.30 - sigfrid696
             // 2021.09.03 - nietras
+			// 2021.09.05 - sigfrid696
+			// a value 100 is used here instead of MaxAlgoCount, because with MaxAlgoCount we're not guaranteed 
+			// to obtain an algo, among the other returned by the function, with needed workspace size 0
             // cuda 11.4
             int res_count = 0;
-            std::unique_ptr<cudnnConvolutionBwdFilterAlgoPerf_t[]> bwf_perf(new cudnnConvolutionBwdFilterAlgoPerf_t[MaxAlgoCount]);
+            std::unique_ptr<cudnnConvolutionBwdFilterAlgoPerf_t[]> bwf_perf(new cudnnConvolutionBwdFilterAlgoPerf_t[100]);
 
             cudnnStatus_t result = cudnnGetConvolutionBackwardFilterAlgorithm_v7(*m_cudnn, m_inT, m_outT, *m_conv, *m_kernelT, 
-                MaxAlgoCount, &res_count, bwf_perf.get());
+                100, &res_count, bwf_perf.get());
             if (result != CUDNN_STATUS_SUCCESS)
                 return result;
 
@@ -508,9 +519,9 @@ protected:
             for (int i = 0; i < res_count; i++)
             {
                 size_t tmpSize = 0;
-                err = cudnnGetConvolutionBackwardFilterWorkspaceSize(*m_cudnn, m_inT, m_outT, *m_conv, *m_kernelT, 
+                auto err0 = cudnnGetConvolutionBackwardFilterWorkspaceSize(*m_cudnn, m_inT, m_outT, *m_conv, *m_kernelT, 
                     bwf_perf[i].algo, &tmpSize);
-                if (err == CUDNN_STATUS_SUCCESS)
+                if (err0 == CUDNN_STATUS_SUCCESS)
                 {
                     //printf("found bwf algo sizeBytes %zd bwf algo size %zd\n", sizeBytes, tmpSize);
                     if (tmpSize <= sizeBytes)
@@ -523,6 +534,7 @@ protected:
                             workspace.Resize((tmpSize + sizeof(ElemType) - 1) / sizeof(ElemType), 1);
                         }
 
+                        err = err0;
                         break;
                     }
                 }
