@@ -620,7 +620,7 @@ private:
     // for some convolution algo finders because with MaxAlgoCount 
     // we're not guaranteedto obtain an algo, among the other 
     // returned by the function, with needed workspace size 0.
-    static const int HighMaxAlgoCount = std::max(MaxAlgoCount, 100);
+    static const int HighMaxAlgoCount = 100;
 
     template <typename TAlgo, typename TWorkspaceSizeFinder, typename TDeterministicFinder, typename TFinder, typename TStaticFinder>
     void FindBestAlgo(size_t batchSize, TAlgo& algo, TWorkspaceSizeFinder workspaceSizeFinder, TDeterministicFinder deterministicFinder, TFinder finder, TStaticFinder staticFinder, Mat& workspace)
