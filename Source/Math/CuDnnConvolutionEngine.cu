@@ -618,7 +618,7 @@ private:
     static const int MaxAlgoCount = 10;
     // A much higher value is used instead of MaxAlgoCount
     // for some convolution algo finders because with MaxAlgoCount 
-    // we're not guaranteedto obtain an algo, among the other 
+    // we're not guaranteed to obtain an algo, among the other 
     // returned by the function, with needed workspace size 0.
     static const int HighMaxAlgoCount = 100;
 
