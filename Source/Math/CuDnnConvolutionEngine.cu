@@ -286,19 +286,40 @@ protected:
                 return cudnnGetConvolutionForwardAlgorithm(*m_cudnn, m_inT, *m_kernelT, *m_conv, m_outT, CUDNN_CONVOLUTION_FWD_SPECIFY_WORKSPACE_LIMIT, workspace.BufferSize(), &algo);
             return cudnnGetConvolutionForwardAlgorithm(*m_cudnn, m_inT, *m_kernelT, *m_conv, m_outT, CUDNN_CONVOLUTION_FWD_NO_WORKSPACE, 0, &algo);*/
 
-			// 2020.12.09 - mj.jo
-			// cuda 11.1
+			// 2021.08.30 - sigfrid696
+            // 2021.09.03 - nietras
+			// 2021.09.05 - sigfrid696
+			// a value 100 is used here instead of MaxAlgoCount, because with MaxAlgoCount we're not guaranteed 
+			// to obtain an algo, among the other returned by the function, with needed workspace size 0
+            // cuda 11.4
             int res_count = 0;
-            cudnnConvolutionFwdAlgoPerf_t fwd_perf;
+            std::unique_ptr<cudnnConvolutionFwdAlgoPerf_t[]> fwd_perf(new cudnnConvolutionFwdAlgoPerf_t[100]);
 
-			cudnnStatus_t result;
-            if (!noMem)
-                result = cudnnGetConvolutionForwardAlgorithm_v7(*m_cudnn, m_inT, *m_kernelT, *m_conv, m_outT, 1, &res_count, &fwd_perf);
-            else
-                result = cudnnGetConvolutionForwardAlgorithm_v7(*m_cudnn, m_inT, *m_kernelT, *m_conv, m_outT, 0, &res_count, &fwd_perf);
+            cudnnStatus_t result = cudnnGetConvolutionForwardAlgorithm_v7(*m_cudnn, m_inT, *m_kernelT, *m_conv, m_outT, 
+                100, &res_count, fwd_perf.get());
+            if (result != CUDNN_STATUS_SUCCESS)
+                return result;
 
-            algo = fwd_perf.algo;
-            return result;
+            const size_t sizeBytes = noMem ? 0 : workspace.BufferSize();
+
+            cudnnStatus_t err = CUDNN_STATUS_EXECUTION_FAILED;
+			for (int i = 0; i < res_count; i++)
+            {
+                size_t tmpSize = 0;
+                auto err0 = cudnnGetConvolutionForwardWorkspaceSize(*m_cudnn, m_inT, *m_kernelT, *m_conv, m_outT, 
+                    fwd_perf[i].algo, &tmpSize);
+                if (err0 == CUDNN_STATUS_SUCCESS)
+                { 
+                    //printf("found algo sizeBytes %zd algo size %zd\n", sizeBytes, tmpSize);
+                    if (tmpSize <= sizeBytes)
+                    {
+                        algo = fwd_perf[i].algo;
+                        err = err0;
+                        break;
+                    } 
+				}
+			}
+            return err;
         };
         // find deterministic algorithm
         auto deterministicFinder = [&, this](int& calgo, cudnnConvolutionFwdAlgoPerf_t algoPerf[MaxAlgoCount]) -> cudnnStatus_t
@@ -367,19 +388,40 @@ protected:
                 return cudnnGetConvolutionBackwardDataAlgorithm(*m_cudnn, *m_kernelT, m_outT, *m_conv, m_inT, CUDNN_CONVOLUTION_BWD_DATA_SPECIFY_WORKSPACE_LIMIT, workspace.BufferSize(), &algo);
             return cudnnGetConvolutionBackwardDataAlgorithm(*m_cudnn, *m_kernelT, m_outT, *m_conv, m_inT, CUDNN_CONVOLUTION_BWD_DATA_NO_WORKSPACE, 0, &algo);*/
 
-			// 2020.12.09 - mj.jo
-            // cuda 11.1
-            int res_count = 0;
-            cudnnConvolutionBwdDataAlgoPerf_t bwd_perf;
+			// 2021.08.30 - sigfrid696
+            // 2021.09.03 - nietras
+			// 2021.09.05 - sigfrid696
+			// a value 100 is used here instead of MaxAlgoCount, because with MaxAlgoCount we're not guaranteed 
+			// to obtain an algo, among the other returned by the function, with needed workspace size 0
+            // cuda 11.4
+			int res_count = 0;
+            std::unique_ptr<cudnnConvolutionBwdDataAlgoPerf_t[]> bwd_perf(new cudnnConvolutionBwdDataAlgoPerf_t[100]);
 
-			cudnnStatus_t result;
-            if (!noMem)
-                result = cudnnGetConvolutionBackwardDataAlgorithm_v7(*m_cudnn, *m_kernelT, m_outT, *m_conv, m_inT, 1, &res_count, &bwd_perf);
-            else
-                result = cudnnGetConvolutionBackwardDataAlgorithm_v7(*m_cudnn, *m_kernelT, m_outT, *m_conv, m_inT, 0, &res_count, &bwd_perf);
+            cudnnStatus_t result = cudnnGetConvolutionBackwardDataAlgorithm_v7(*m_cudnn, *m_kernelT, m_outT, *m_conv, m_inT, 
+                100, &res_count, bwd_perf.get());
+            if (result != CUDNN_STATUS_SUCCESS)
+                return result;
 
-            algo = bwd_perf.algo;
-            return result;
+            const size_t sizeBytes = noMem ? 0 : workspace.BufferSize();
+
+            cudnnStatus_t err = CUDNN_STATUS_EXECUTION_FAILED;
+            for (int i = 0; i < res_count; i++)
+            {
+                size_t tmpSize = 0;
+                auto err0 = cudnnGetConvolutionBackwardDataWorkspaceSize(*m_cudnn, *m_kernelT, m_outT, *m_conv, m_inT, 
+                    bwd_perf[i].algo, &tmpSize);
+                if (err0 == CUDNN_STATUS_SUCCESS)
+                {
+                    //printf("found bwd algo sizeBytes %zd bwd algo size %zd\n", sizeBytes, tmpSize);
+                    if (tmpSize <= sizeBytes)
+                    {
+                        algo = bwd_perf[i].algo;
+                        err = err0;
+                        break;
+					}
+                }
+            }
+            return err;
         };
         // find deterministic algorithm
         auto deterministicFinder = [&, this](int& calgo, cudnnConvolutionBwdDataAlgoPerf_t algoPerf[MaxAlgoCount]) -> cudnnStatus_t
@@ -457,30 +499,47 @@ protected:
             //}
             //return cudnnGetConvolutionBackwardFilterAlgorithm(*m_cudnn, m_inT, m_outT, *m_conv, *m_kernelT, CUDNN_CONVOLUTION_BWD_FILTER_NO_WORKSPACE, 0, &algo);
 
-			// 2020.12.09 - mj.jo
-            // cuda 11.1
-			int res_count = 0;
-            cudnnConvolutionBwdFilterAlgoPerf_t bwd_perf;
-            cudnnStatus_t result;
+			// 2021.08.30 - sigfrid696
+            // 2021.09.03 - nietras
+			// 2021.09.05 - sigfrid696
+			// a value 100 is used here instead of MaxAlgoCount, because with MaxAlgoCount we're not guaranteed 
+			// to obtain an algo, among the other returned by the function, with needed workspace size 0
+            // cuda 11.4
+            int res_count = 0;
+            std::unique_ptr<cudnnConvolutionBwdFilterAlgoPerf_t[]> bwf_perf(new cudnnConvolutionBwdFilterAlgoPerf_t[100]);
 
-			if (!noMem)
-			{
-                result = cudnnGetConvolutionBackwardFilterAlgorithm_v7(*m_cudnn, m_inT, m_outT, *m_conv, *m_kernelT, 1, &res_count, &bwd_perf);
-                algo = bwd_perf.algo;
+            cudnnStatus_t result = cudnnGetConvolutionBackwardFilterAlgorithm_v7(*m_cudnn, m_inT, m_outT, *m_conv, *m_kernelT, 
+                100, &res_count, bwf_perf.get());
+            if (result != CUDNN_STATUS_SUCCESS)
                 return result;
-			}
-            // special case for half/odd filter
-            if(m_kernelT->isOdd() && m_dataType == CUDNN_DATA_HALF)
+
+            const size_t sizeBytes = noMem ? 0 : workspace.BufferSize();
+
+            cudnnStatus_t err = CUDNN_STATUS_EXECUTION_FAILED;
+            for (int i = 0; i < res_count; i++)
             {
                 size_t tmpSize = 0;
-                algo = (cudnnConvolutionBwdFilterAlgo_t) 1;
-                auto err = cudnnGetConvolutionBackwardFilterWorkspaceSize(*m_cudnn, m_inT, m_outT, *m_conv, *m_kernelT, algo, &tmpSize);
-                workspace.Resize((tmpSize + sizeof(ElemType) - 1) / sizeof(ElemType), 1);
-                return err;
+                auto err0 = cudnnGetConvolutionBackwardFilterWorkspaceSize(*m_cudnn, m_inT, m_outT, *m_conv, *m_kernelT, 
+                    bwf_perf[i].algo, &tmpSize);
+                if (err0 == CUDNN_STATUS_SUCCESS)
+                {
+                    //printf("found bwf algo sizeBytes %zd bwf algo size %zd\n", sizeBytes, tmpSize);
+                    if (tmpSize <= sizeBytes)
+                    {
+                        algo = bwf_perf[i].algo;
+
+						// special case for half/odd filter
+                        if (noMem && m_kernelT->isOdd() && m_dataType == CUDNN_DATA_HALF)
+                        {
+                            workspace.Resize((tmpSize + sizeof(ElemType) - 1) / sizeof(ElemType), 1);
+                        }
+
+                        err = err0;
+                        break;
+                    }
+                }
             }
-            result = cudnnGetConvolutionBackwardFilterAlgorithm_v7(*m_cudnn, m_inT, m_outT, *m_conv, *m_kernelT, 0, &res_count, &bwd_perf);
-			algo = bwd_perf.algo;
-            return result;
+            return err;
         };
         // find deterministic algorithm
         auto deterministicFinder = [&, this](int& calgo, cudnnConvolutionBwdFilterAlgoPerf_t algoPerf[MaxAlgoCount])->cudnnStatus_t
