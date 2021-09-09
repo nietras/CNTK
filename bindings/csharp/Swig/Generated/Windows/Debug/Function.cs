@@ -64,6 +64,12 @@ public partial class Function : global::System.IDisposable {
     return ret;
   }
 
+  public virtual bool SupportedDevice(DeviceDescriptor arg0) {
+    bool ret = CNTKLibPINVOKE.Function_SupportedDevice(swigCPtr, DeviceDescriptor.getCPtr(arg0));
+    if (CNTKLibPINVOKE.SWIGPendingException.Pending) throw CNTKLibPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
   private void _Evaluate(UnorderedMapVariableValuePtr arguments, UnorderedMapVariableValuePtr outputs, DeviceDescriptor computeDevice) {
     CNTKLibPINVOKE.Function__Evaluate__SWIG_0(swigCPtr, UnorderedMapVariableValuePtr.getCPtr(arguments), UnorderedMapVariableValuePtr.getCPtr(outputs), DeviceDescriptor.getCPtr(computeDevice));
     if (CNTKLibPINVOKE.SWIGPendingException.Pending) throw CNTKLibPINVOKE.SWIGPendingException.Retrieve();

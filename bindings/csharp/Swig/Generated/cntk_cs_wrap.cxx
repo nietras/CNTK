@@ -49985,6 +49985,85 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_CNTK_Function__Clone__SWIG_0(void * jarg1, 
 }
 
 
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_CNTK_Function_SupportedDevice(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
+  CNTK::Function *arg1 = (CNTK::Function *) 0 ;
+  CNTK::DeviceDescriptor *arg2 = 0 ;
+  std::shared_ptr< CNTK::Function const > *smartarg1 = 0 ;
+  bool result;
+  
+  
+  smartarg1 = (std::shared_ptr< const CNTK::Function > *)jarg1;
+  arg1 = (CNTK::Function *)(smartarg1 ? smartarg1->get() : 0); 
+  arg2 = (CNTK::DeviceDescriptor *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "CNTK::DeviceDescriptor const & type is null", 0);
+    return 0;
+  } 
+  {
+    try {
+      result = (bool)((CNTK::Function const *)arg1)->SupportedDevice((CNTK::DeviceDescriptor const &)*arg2); 
+    }
+    catch (const Swig::DirectorException &e) {
+      {
+        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
+      }; 
+    }
+    catch (const Microsoft::MSR::CNTK::IExceptionWithCallStackBase& err)
+    {
+      auto msg = std::string(dynamic_cast<const std::exception&>(err).what());
+      msg = msg + "\n" + err.CallStack();
+      
+      if (dynamic_cast<const std::invalid_argument*>(&err)) 
+      {
+        {
+          SWIG_CSharpException(SWIG_ValueError, msg.c_str()); return 0; 
+        }; 
+      }
+      
+      if (dynamic_cast<const std::logic_error*>(&err) || 
+        dynamic_cast<const std::runtime_error*>(&err)) 
+      {
+        {
+          SWIG_CSharpException(SWIG_RuntimeError, msg.c_str()); return 0; 
+        }; 
+      }
+      
+      {
+        SWIG_CSharpException(SWIG_UnknownError, msg.c_str()); return 0; 
+      }; 
+    }
+    catch (const std::runtime_error &e) {
+      {
+        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
+      }; 
+    }
+    catch (const std::invalid_argument &e) {
+      {
+        SWIG_CSharpException(SWIG_ValueError, e.what()); return 0; 
+      }; 
+    }
+    catch (const std::logic_error &e) {
+      {
+        SWIG_CSharpException(SWIG_RuntimeError, e.what()); return 0; 
+      }; 
+    }
+    catch (const std::exception &e) {
+      {
+        SWIG_CSharpException(SWIG_UnknownError, e.what()); return 0; 
+      }; 
+    }
+    catch (...) {
+      {
+        SWIG_CSharpException(SWIG_UnknownError, "Runtime exception"); return 0; 
+      }; 
+    }
+  }
+  jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT void SWIGSTDCALL CSharp_CNTK_Function__Evaluate__SWIG_0(void * jarg1, void * jarg2, void * jarg3, void * jarg4) {
   CNTK::Function *arg1 = (CNTK::Function *) 0 ;
   std::unordered_map< CNTK::Variable,CNTK::ValuePtr > *arg2 = 0 ;
