@@ -57,6 +57,31 @@ public:
         // using OutputMultiplexerNode when creating the computation network.
         this->m_outputsValue[0] = m_value;
 
+        ::CNTK::DeviceDescriptor computeDevice = ::CNTK::AsDeviceDescriptor(InputRef(0).Value().GetDeviceId());
+
+        // 2021.09.06 - sigfrid696
+        // check if the current device is supported by external function
+        // Actually check is done only on ForwardProp
+        bool supportedDevice = m_externalFunction->SupportedDevice(computeDevice);
+        int from = 0;
+        int to = 0;
+
+        if (!supportedDevice)
+        {
+            if (computeDevice.Type() == ::CNTK::DeviceDescriptor::CPUDevice().Type())
+            {
+                computeDevice = ::CNTK::DeviceDescriptor::GPUDevice(0);
+                from = CPUDEVICE;
+                to = 0; // GPU device
+            }
+            else
+            {
+                computeDevice = ::CNTK::DeviceDescriptor::CPUDevice();
+                from = 0; // GPU device
+                to = CPUDEVICE;
+            }
+        }
+
         // Get the arguments of the external function
         auto arguments = m_externalFunction->Arguments();
         std::unordered_map<::CNTK::Variable, ::CNTK::ValuePtr> argumentValues;
@@ -88,15 +113,26 @@ public:
             auto inputValueForFrame = input.ValueFor(inputFr);
             auto argumentShape = ::CNTK::AsNDShape(input.GetSampleLayout());
 
-            // Get the argument value pointer for the provided frame.
+            const Matrix<ElemType>* pInputMatrix = &inputValueForFrame;
+            Matrix<ElemType> fromTo(CPUDEVICE);
+            // 2021.09.06 - sigfrid696
+            // Clone input on supported device
+            if (!supportedDevice)
+            {
+                fromTo = pInputMatrix->DeepClone();
+                fromTo.TransferFromDeviceToDevice(from, to, true);
+                pInputMatrix = &fromTo;
+            }
+
             auto argumentValue =
                 ::CNTK::Utils::GetValueObjectFromCNTKImplMatrixAndMBLayout(
                     argumentShape,
                     argumentVar.DynamicAxes(),
-                    inputValueForFrame, // only for the particular frame.
-                    layout); // layout for the frame.
+                    *pInputMatrix, // only for the particular frame.
+                    layout);       // layout for the frame.
 
             argumentValues.insert(std::make_pair(argumentVar, argumentValue));
+
         }
         assert(j == arguments.size());
 
@@ -110,8 +146,6 @@ public:
         std::unordered_set<::CNTK::Variable> outputsToRetainBackwardStateFor;
         if (Environment().IsTraining())
             outputsToRetainBackwardStateFor.insert(outputs.begin(), outputs.end());
-
-        auto computeDevice = ::CNTK::AsDeviceDescriptor(InputRef(0).Value().GetDeviceId());
 
         m_currentBackpropStatePtr = m_externalFunction->Forward(
             argumentValues,
@@ -132,6 +166,17 @@ public:
                     outputValues[output],
                     &inferredVarShape);
 
+            const Matrix<ElemType>* pOutputMatrix = outputMatrixAndLayout.first.get();
+            Matrix<ElemType> toFrom(CPUDEVICE);
+            // 2021.09.06 - sigfrid696
+            // Clone back output on original device
+            if (!supportedDevice)
+            {
+                toFrom = pOutputMatrix->DeepClone();
+                toFrom.TransferFromDeviceToDevice(to, from, true);
+                pOutputMatrix = &toFrom;
+            }
+
             if (inferredVarShape.IsUnknown() || inferredVarShape.HasUnboundDimension())
                 LogicError("The output shape '%S' of an external user defined Function '%S' "
                     "must be fully defined.", inferredVarShape.AsString().c_str(),
@@ -150,13 +195,13 @@ public:
                 // input frame.
                 //size_t numCols = outputMatrixAndLayout.first->GetNumCols();
                 size_t numCols = fr.m_pMBLayout->GetNumParallelSequences();
-                size_t startCol = fr.timeIdxInSeq * numCols;   
-                this->m_outputsValue[i]->SetColumnSlice(*outputMatrixAndLayout.first, startCol, numCols);
+                size_t startCol = fr.timeIdxInSeq * numCols;
+                this->m_outputsValue[i]->SetColumnSlice(*pOutputMatrix, startCol, numCols);
             }
             else
             {
-                // Set the entire output value.
-                this->m_outputsValue[i]->SetValue(*outputMatrixAndLayout.first);
+                // Set the entire output value
+                this->m_outputsValue[i]->SetValue(*pOutputMatrix);
             }
 
             if ((this->m_outputsMBLayout[i] != nullptr) && (outputMatrixAndLayout.second == nullptr))

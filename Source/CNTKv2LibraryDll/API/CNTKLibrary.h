@@ -3340,6 +3340,16 @@ namespace CNTK
         ///
         CNTK_API virtual FunctionPtr Clone(const std::vector<Variable>& /*clonedInputs*/) { NOT_IMPLEMENTED; }
 
+		/// 2021.09.06 - sigfrid696
+        /// Returns all the devices supported by this function.
+		/// This method is useful for user defined function which not support a particular device (i.e. GPU)
+		/// so that the framework can handle the case
+        ///
+        virtual bool SupportedDevice(const DeviceDescriptor& /*device*/) const
+        {
+            return true;
+        } 
+
     public:
         ///
         /// Compute the gradients of the output of this Function, w.r.t. the specified input variables in 'gradients'

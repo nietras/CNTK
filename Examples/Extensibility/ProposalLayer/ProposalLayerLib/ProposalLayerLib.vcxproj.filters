@@ -23,12 +23,6 @@
     <ClInclude Include="ProposalLayerLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NmsUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Rectangle2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RpnUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
