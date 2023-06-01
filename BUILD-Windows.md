@@ -240,3 +240,42 @@ so lots of warnings around truncations or similar. Did not fix these, just
 disabled treating warnings as errors.
 
 Most of Debug configuration now builds again.
+
+# CUDA 11.? - Modifications to support Ada Lovelace 40-series GPUs
+ * Try using Visual Studio 2022 to build CNTK as of 11.4 first
+ * Install MSVC++ v141 x86/x64 build tools via Visual Studio Installer
+ * Appears CUDA 11.4 is not integrated with VS 2022 as `CUDA 11.4.props` are missing.
+ * Try reinstalling CUDA 11.4
+ * Apparently only CUDA 11.6+ works with 2022 see
+   https://quasar.ugent.be/files/doc/cuda-msvc-compatibility.html
+ * Try using latest CUDA 11.x instead, skipping 12.x since likely breaking
+   changes. Must restart VS and shells after so 
+   `CUDA_PATH_V11_8=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8` 
+   is set.
+
+## Downloads
+* CUDA 11.8 https://developer.download.nvidia.com/compute/cuda/11.8.0/network_installers/cuda_11.8.0_windows_network.exe 
+* cuDNN 8.9.1.23 https://developer.nvidia.com/downloads/compute/cudnn/secure/8.9.1/local_installers/11.8/cudnn-windows-x86_64-8.9.1.23_cuda11-archive.zip/ (need login),
+  extract to `c:\local` as given in environment variables below.
+* OpenCV 4.5.3 https://sourceforge.net/projects/opencvlibrary/files/4.5.3/opencv-4.5.3-vc14_vc15.exe/download 
+Besides above other tools.
+
+# Update Environment Variables
+```
+setx CNTK_ENABLE_ASGD false
+setx MKL_PATH c:\local\mklml-mkldnn-0.12
+setx BOOST_INCLUDE_PATH c:\local\boost_1_60_0-msvc-14.0
+setx BOOST_LIB_PATH c:\local\boost_1_60_0-msvc-14.0\lib64-msvc-14.0
+setx PROTOBUF_PATH c:\local\protobuf-3.1.0-vs17
+setx CUDNN_PATH C:\local\cudnn-windows-x86_64-8.9.1.23_cuda11-archive
+setx OPENCV_PATH_V31 c:\local\Opencv3.1.0\build
+setx ZLIB_PATH c:\local\zlib-vs17
+setx CUB_PATH "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8"
+setx SWIG_PATH C:\local\swigwin-3.0.10
+```
+Note that `CUB` is part of CUDA now.
+
+IMPORTANT: Remember to restart your shell/powershell window after, then check variables e.g. via:
+```
+gci env:
+```
