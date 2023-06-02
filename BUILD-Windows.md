@@ -241,7 +241,9 @@ disabled treating warnings as errors.
 
 Most of Debug configuration now builds again.
 
-# CUDA 11.? - Modifications to support Ada Lovelace 40-series GPUs
+# CUDA 11.8 - Modifications to support Ada Lovelace 40-series GPUs
+
+## Modifications
  * Try using Visual Studio 2022 to build CNTK as of 11.4 first
  * Install MSVC++ v141 x86/x64 build tools via Visual Studio Installer
  * Appears CUDA 11.4 is not integrated with VS 2022 as `CUDA 11.4.props` are missing.
@@ -252,6 +254,7 @@ Most of Debug configuration now builds again.
    changes. Must restart VS and shells after so 
    `CUDA_PATH_V11_8=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8` 
    is set.
+ * Replace 11.4/11_4 with 11.8/11_8 in all files that appears relevant. (See commit ??)
 
 ## Downloads
 * CUDA 11.8 https://developer.download.nvidia.com/compute/cuda/11.8.0/network_installers/cuda_11.8.0_windows_network.exe 
@@ -279,3 +282,45 @@ IMPORTANT: Remember to restart your shell/powershell window after, then check va
 ```
 gci env:
 ```
+
+## Visual Studio Issues
+Several issues encountered in Visual Studio which simply says there are issues
+with configurations. No indication of what or where. To resolve had to "Unload
+Project" for some projects that appeared to have issues like
+`CNTKLibraryCSEvalExamplesTest.standard.csproj`. Also simply removed `AnyCPU`
+from configuration and only focusing on `Release` + `x64`.
+
+## Build Issues
+First errors appear in `MatchCUDA` project in particular in `GPUSparseMatrix.cu`:
+```
+1>C:\git\oss\CNTK\Source\Math>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8\bin\nvcc.exe" -gencode=arch=compute_61,code=\"sm_61,compute_61\" -gencode=arch=compute_75,code=\"sm_75,compute_75\" -gencode=arch=compute_80,code=\"sm_80,compute_80\" -gencode=arch=compute_86,code=\"sm_86,compute_86\" -gencode=arch=compute_90,code=\"sm_90,compute_90\" --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\2022\Preview\VC\Tools\MSVC\14.16.27023\bin\HostX64\x64" -x cu   -IC:\git\oss\CNTK\Source\Common\include -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8\include" -I"C:\local\cudnn-windows-x86_64-8.9.1.23_cuda11-archive\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8\include"   -lineinfo  --keep-dir C:\git\oss\CNTK\x64\.build\Release\Source\Math\\MathCUDA -use_fast_math -maxrregcount=0  --machine 64 --compile -cudart static -Xcudafe "--diag_suppress=field_without_dll_interface" -Xcompiler "/wd 4819"   -DNO_SYNC -DWIN32 -D_WINDOWS -D_USRDLL -DMATH_EXPORTS -DUSE_CUDNN -D_UNICODE -DUNICODE -DNDEBUG -D"CNTK_VERSION=\"2.8.2\"" -D"CNTK_VERSION_BANNER=\"2.8.2\"" -D"CNTK_COMPONENT_VERSION=\"2.8.2\"" -DHAS_MPI=1 -DCUDA_NO_HALF -D__CUDA_NO_HALF_OPERATORS__ -Xcompiler "/EHsc /W4 /nologo /O2 /FdC:\git\oss\CNTK\x64\.build\Release\Source\Math\\MathCUDA\MathCUDA.pdb /FS   /MD " -o C:\git\oss\CNTK\x64\.build\Release\Source\Math\MathCUDA\GPUSparseMatrix.cu.obj "C:\git\oss\CNTK\Source\Math\GPUSparseMatrix.cu"
+1>c:\program files\nvidia gpu computing toolkit\cuda\v11.8\include\cub\util_cpp_dialect.cuh:129: warning: CUB requires at least MSVC 2019 (19.20/16.0/14.20). MSVC 2017 is deprecated but still supported. MSVC 2017 support will be removed in a future release. Define CUB_IGNORE_DEPRECATED_CPP_DIALECT to suppress this message.
+1>C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.8/include\thrust/detail/config/cpp_dialect.h:118: warning: Thrust requires at least MSVC 2019 (19.20/16.0/14.20). MSVC 2017 is deprecated but still supported. MSVC 2017 support will be removed in a future release. Define THRUST_IGNORE_DEPRECATED_CPP_DIALECT to suppress this message.
+1>c:\program files\nvidia gpu computing toolkit\cuda\v11.8\include\cub\util_cpp_dialect.cuh:129: warning: CUB requires at least MSVC 2019 (19.20/16.0/14.20). MSVC 2017 is deprecated but still supported. MSVC 2017 support will be removed in a future release. Define CUB_IGNORE_DEPRECATED_CPP_DIALECT to suppress this message.
+1>C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.8/include\thrust/detail/config/cpp_dialect.h:118: warning: Thrust requires at least MSVC 2019 (19.20/16.0/14.20). MSVC 2017 is deprecated but still supported. MSVC 2017 support will be removed in a future release. Define THRUST_IGNORE_DEPRECATED_CPP_DIALECT to suppress this message.
+1>c:\program files\nvidia gpu computing toolkit\cuda\v11.8\include\cub\util_cpp_dialect.cuh:129: warning: CUB requires at least MSVC 2019 (19.20/16.0/14.20). MSVC 2017 is deprecated but still supported. MSVC 2017 support will be removed in a future release. Define CUB_IGNORE_DEPRECATED_CPP_DIALECT to suppress this message.
+1>C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.8/include\thrust/detail/config/cpp_dialect.h:118: warning: Thrust requires at least MSVC 2019 (19.20/16.0/14.20). MSVC 2017 is deprecated but still supported. MSVC 2017 support will be removed in a future release. Define THRUST_IGNORE_DEPRECATED_CPP_DIALECT to suppress this message.
+1>c:\program files\nvidia gpu computing toolkit\cuda\v11.8\include\cub\util_cpp_dialect.cuh:129: warning: CUB requires at least MSVC 2019 (19.20/16.0/14.20). MSVC 2017 is deprecated but still supported. MSVC 2017 support will be removed in a future release. Define CUB_IGNORE_DEPRECATED_CPP_DIALECT to suppress this message.
+1>C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.8/include\thrust/detail/config/cpp_dialect.h:118: warning: Thrust requires at least MSVC 2019 (19.20/16.0/14.20). MSVC 2017 is deprecated but still supported. MSVC 2017 support will be removed in a future release. Define THRUST_IGNORE_DEPRECATED_CPP_DIALECT to suppress this message.
+1>c:\program files\nvidia gpu computing toolkit\cuda\v11.8\include\cub\util_cpp_dialect.cuh:129: warning: CUB requires at least MSVC 2019 (19.20/16.0/14.20). MSVC 2017 is deprecated but still supported. MSVC 2017 support will be removed in a future release. Define CUB_IGNORE_DEPRECATED_CPP_DIALECT to suppress this message.
+1>C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.8/include\thrust/detail/config/cpp_dialect.h:118: warning: Thrust requires at least MSVC 2019 (19.20/16.0/14.20). MSVC 2017 is deprecated but still supported. MSVC 2017 support will be removed in a future release. Define THRUST_IGNORE_DEPRECATED_CPP_DIALECT to suppress this message.
+1>C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.8/include\cub/device/dispatch/dispatch_segmented_sort.cuh(338): error : invalid combination of type specifiers
+1>
+1>C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.8/include\cub/device/dispatch/dispatch_segmented_sort.cuh(338): error : expected an identifier
+1>
+1>C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.8/include\cub/device/dispatch/dispatch_segmented_sort.cuh(379): error : expected a member name
+1>
+1>3 errors detected in the compilation of "C:/git/oss/CNTK/Source/Math/GPUSparseMatrix.cu".
+1>GPUSparseMatrix.cu
+1>C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\BuildCustomizations\CUDA 11.8.targets(785,9): error MSB3721: The command ""C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8\bin\nvcc.exe" -gencode=arch=compute_61,code=\"sm_61,compute_61\" -gencode=arch=compute_75,code=\"sm_75,compute_75\" -gencode=arch=compute_80,code=\"sm_80,compute_80\" -gencode=arch=compute_86,code=\"sm_86,compute_86\" -gencode=arch=compute_90,code=\"sm_90,compute_90\" --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\2022\Preview\VC\Tools\MSVC\14.16.27023\bin\HostX64\x64" -x cu   -IC:\git\oss\CNTK\Source\Common\include -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8\include" -I"C:\local\cudnn-windows-x86_64-8.9.1.23_cuda11-archive\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8\include"   -lineinfo  --keep-dir C:\git\oss\CNTK\x64\.build\Release\Source\Math\\MathCUDA -use_fast_math -maxrregcount=0  --machine 64 --compile -cudart static -Xcudafe "--diag_suppress=field_without_dll_interface" -Xcompiler "/wd 4819"   -DNO_SYNC -DWIN32 -D_WINDOWS -D_USRDLL -DMATH_EXPORTS -DUSE_CUDNN -D_UNICODE -DUNICODE -DNDEBUG -D"CNTK_VERSION=\"2.8.2\"" -D"CNTK_VERSION_BANNER=\"2.8.2\"" -D"CNTK_COMPONENT_VERSION=\"2.8.2\"" -DHAS_MPI=1 -DCUDA_NO_HALF -D__CUDA_NO_HALF_OPERATORS__ -Xcompiler "/EHsc /W4 /nologo /O2 /FdC:\git\oss\CNTK\x64\.build\Release\Source\Math\\MathCUDA\MathCUDA.pdb /FS   /MD " -o C:\git\oss\CNTK\x64\.build\Release\Source\Math\MathCUDA\GPUSparseMatrix.cu.obj "C:\git\oss\CNTK\Source\Math\GPUSparseMatrix.cu"" exited with code 2.
+```
+Ignoring warnings first and trying to figure out the error. Googled and found:
+https://forums.developer.nvidia.com/t/cub-1-5-fails-to-build-when-windows-h-was-previously-included/210367
+Hence, the issue appears to relate to CUB version and a bug in that, and thus the warnings appear relevant.
+So first trying to define those preprocessor constants, first in the top of the file `GPUSparseMatrix.cu`:
+```cpp
+#define CUB_IGNORE_DEPRECATED_CPP_DIALECT
+#define THRUST_IGNORE_DEPRECATED_CPP_DIALECT
+```
+This did not solve it, and as it is claimed this bug is fixed in CUDA 11.8 this
+might be due to MSVC++ version, so trying to update that.
