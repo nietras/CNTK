@@ -144,7 +144,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
 
   <PropertyGroup Condition="Exists('$(HALIDE_PATH)')">

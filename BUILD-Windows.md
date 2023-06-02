@@ -323,4 +323,41 @@ So first trying to define those preprocessor constants, first in the top of the 
 #define THRUST_IGNORE_DEPRECATED_CPP_DIALECT
 ```
 This did not solve it, and as it is claimed this bug is fixed in CUDA 11.8 this
-might be due to MSVC++ version, so trying to update that.
+might be due to MSVC++ version, so trying to update that which is the
+`PlatformToolset` defined in `CNTK.Cpp.props`, set this to `v143`. Also search
+for `v141` and replace where relevant e.g.
+`<PlatformToolset>v141</PlatformToolset>`.
+
+Reload solution, then try building just `GPUSparseMatrix.cu` again.
+Unfortunately, this fails but know without the warnings:
+```
+1>Compiling CUDA source file GPUSparseMatrix.cu...
+1>
+1>C:\git\oss\CNTK\Source\Math>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8\bin\nvcc.exe" -gencode=arch=compute_61,code=\"sm_61,compute_61\" -gencode=arch=compute_75,code=\"sm_75,compute_75\" -gencode=arch=compute_80,code=\"sm_80,compute_80\" -gencode=arch=compute_86,code=\"sm_86,compute_86\" -gencode=arch=compute_90,code=\"sm_90,compute_90\" --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\2022\Preview\VC\Tools\MSVC\14.37.32705\bin\HostX64\x64" -x cu   -IC:\git\oss\CNTK\Source\Common\include -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8\include" -I"C:\local\cudnn-windows-x86_64-8.9.1.23_cuda11-archive\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8\include"   -lineinfo  --keep-dir C:\git\oss\CNTK\x64\.build\Release\Source\Math\\MathCUDA -use_fast_math -maxrregcount=0  --machine 64 --compile -cudart static -Xcudafe "--diag_suppress=field_without_dll_interface" -Xcompiler "/wd 4819"   -DNO_SYNC -DWIN32 -D_WINDOWS -D_USRDLL -DMATH_EXPORTS -DUSE_CUDNN -D_UNICODE -DUNICODE -DNDEBUG -D"CNTK_VERSION=\"2.8.2\"" -D"CNTK_VERSION_BANNER=\"2.8.2\"" -D"CNTK_COMPONENT_VERSION=\"2.8.2\"" -DHAS_MPI=1 -DCUDA_NO_HALF -D__CUDA_NO_HALF_OPERATORS__ -Xcompiler "/EHsc /W4 /nologo /O2 /FdC:\git\oss\CNTK\x64\Release\Cntk.Math.Cuda-2.8.2.pdb /FS   /MD " -o C:\git\oss\CNTK\x64\.build\Release\Source\Math\MathCUDA\GPUSparseMatrix.cu.obj "C:\git\oss\CNTK\Source\Math\GPUSparseMatrix.cu"
+1>C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.8/include\cub/device/dispatch/dispatch_segmented_sort.cuh(338): error : invalid combination of type specifiers
+1>
+1>C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.8/include\cub/device/dispatch/dispatch_segmented_sort.cuh(338): error : expected an identifier
+1>
+1>C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.8/include\cub/device/dispatch/dispatch_segmented_sort.cuh(379): error : expected a member name
+1>
+1>3 errors detected in the compilation of "C:/git/oss/CNTK/Source/Math/GPUSparseMatrix.cu".
+1>GPUSparseMatrix.cu
+1>C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\BuildCustomizations\CUDA 11.8.targets(785,9): error MSB3721: The command ""C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8\bin\nvcc.exe" -gencode=arch=compute_61,code=\"sm_61,compute_61\" -gencode=arch=compute_75,code=\"sm_75,compute_75\" -gencode=arch=compute_80,code=\"sm_80,compute_80\" -gencode=arch=compute_86,code=\"sm_86,compute_86\" -gencode=arch=compute_90,code=\"sm_90,compute_90\" --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\2022\Preview\VC\Tools\MSVC\14.37.32705\bin\HostX64\x64" -x cu   -IC:\git\oss\CNTK\Source\Common\include -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8\include" -I"C:\local\cudnn-windows-x86_64-8.9.1.23_cuda11-archive\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8\include"   -lineinfo  --keep-dir C:\git\oss\CNTK\x64\.build\Release\Source\Math\\MathCUDA -use_fast_math -maxrregcount=0  --machine 64 --compile -cudart static -Xcudafe "--diag_suppress=field_without_dll_interface" -Xcompiler "/wd 4819"   -DNO_SYNC -DWIN32 -D_WINDOWS -D_USRDLL -DMATH_EXPORTS -DUSE_CUDNN -D_UNICODE -DUNICODE -DNDEBUG -D"CNTK_VERSION=\"2.8.2\"" -D"CNTK_VERSION_BANNER=\"2.8.2\"" -D"CNTK_COMPONENT_VERSION=\"2.8.2\"" -DHAS_MPI=1 -DCUDA_NO_HALF -D__CUDA_NO_HALF_OPERATORS__ -Xcompiler "/EHsc /W4 /nologo /O2 /FdC:\git\oss\CNTK\x64\Release\Cntk.Math.Cuda-2.8.2.pdb /FS   /MD " -o C:\git\oss\CNTK\x64\.build\Release\Source\Math\MathCUDA\GPUSparseMatrix.cu.obj "C:\git\oss\CNTK\Source\Math\GPUSparseMatrix.cu"" exited with code 2.
+```
+The github issue ["Fix segmented sort compilation in case of
+windows.h"](https://github.com/NVIDIA/cub/pull/423) says this is fixed in CUB
+1.16.0 but that this isn't available in CUDA until 12.x... it also says the
+issue is related to `windows.h` inclusion. Based on this looking at
+`stdafx.h` which defines:
+```cpp
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN // Exclude rarely-used stuff from Windows headers
+#define NOMINMAX
+#include "Windows.h"
+#endif
+```
+so then adding the following at top of `GPUSparseMatrix.cu`:
+```cpp
+#include "stdafx.h"
+```
+

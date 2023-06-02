@@ -1644,6 +1644,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{FC5C3CF9-65F9-47AC-9190-67993E37E249}"
 	ProjectSection(SolutionItems) = preProject
 		BUILD-Windows.md = BUILD-Windows.md
+		CMakeLists.txt = CMakeLists.txt
+		CNTK.Common.props = CNTK.Common.props
+		CNTK.Cpp.props = CNTK.Cpp.props
 	EndProjectSection
 EndProject
 Global
