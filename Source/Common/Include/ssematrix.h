@@ -1278,7 +1278,10 @@ public:
     //       the move constructor instead of the private copy constructor.
     ssematrixfrombuffer(ssematrixfrombuffer &&other) noexcept
     {
+#pragma warning(push)
+#pragma warning(disable : 4834) // C4834: discarding return value of function with 'nodiscard' attribute
         std::move(other);
+#pragma warning(pop)
     }
 };
 
