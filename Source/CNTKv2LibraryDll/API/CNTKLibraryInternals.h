@@ -35,7 +35,7 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <stdlib.h>
-#include <string.h>
+#include <string>
 
 #pragma warning(disable: 4702 4127)
 
