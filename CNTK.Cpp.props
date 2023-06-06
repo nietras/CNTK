@@ -127,6 +127,8 @@
     <ProtobufLib Condition="$(ReleaseBuild)">libprotobuf.lib</ProtobufLib>
     <ProtobufLibPath Condition="$(DebugBuild)">$(ProtobufDir)\debug\lib</ProtobufLibPath>
     <ProtobufLib Condition="$(DebugBuild)">libprotobufd.lib</ProtobufLib>
+    <PROTOBUF_PATH>$(ProtobufDir)</PROTOBUF_PATH>
+    <ProtobufToolDir>$(ProtobufDir)/tool/protobuf/</ProtobufToolDir>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(CudaVersion)' == '11.8'">

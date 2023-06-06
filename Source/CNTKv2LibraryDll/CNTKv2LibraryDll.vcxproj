@@ -362,7 +362,7 @@
   </ItemGroup>
   <Target Name="ProtoGen" Inputs="@(Proto)" Outputs="@(Proto->'%(RelativeDir)%(Filename).pb.cc')">
     <Message Text="Compiling %(Proto.Identity)" />
-    <Exec Command="$(PROTOBUF_PATH)\bin\protoc --proto_path=$(ProjectDir)%(Proto.RelativeDir) --cpp_out=$(ProjectDir)%(Proto.RelativeDir) %(Proto.FullPath)" WorkingDirectory="$(ProjectDir)" />
+    <Exec Command="$(ProtobufToolDir)\protoc --proto_path=$(ProjectDir)%(Proto.RelativeDir) --cpp_out=$(ProjectDir)%(Proto.RelativeDir) %(Proto.FullPath)" WorkingDirectory="$(ProjectDir)" />
   </Target>
   <ItemGroup>
     <ProtoONNX Include="proto\onnx\onnxruntime\onnxruntime\core\protobuf\onnx-ml.proto" />
@@ -373,7 +373,7 @@
   </ItemGroup>
   <Target Name="ProtoONNXGen" Inputs="@(ProtoONNX)" Outputs="@(ProtoONNX->'%(RelativeDir)%(Filename).pb.cc')">
     <Message Text="Compiling %(ProtoONNX.Identity)" />
-    <Exec Command="$(PROTOBUF_PATH)\bin\protoc --proto_path=$(ProjectDir)proto\onnx\onnxruntime\onnxruntime\core\protobuf --cpp_out=$(ProjectDir)proto\onnx\onnxruntime\onnxruntime\core\protobuf %(ProtoONNX.FullPath)" WorkingDirectory="$(ProjectDir)" />
+    <Exec Command="$(ProtobufToolDir)\protoc --proto_path=$(ProjectDir)proto\onnx\onnxruntime\onnxruntime\core\protobuf --cpp_out=$(ProjectDir)proto\onnx\onnxruntime\onnxruntime\core\protobuf %(ProtoONNX.FullPath)" WorkingDirectory="$(ProjectDir)" />
   </Target>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="Build" Condition="$(HasProtobuf)" Outputs="$(TargetPath)" DependsOnTargets="ProtoGen;ProtoONNXGen;$(BuildDependsOn)" />
