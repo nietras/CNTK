@@ -360,4 +360,48 @@ so then adding the following at top of `GPUSparseMatrix.cu`:
 ```cpp
 #include "stdafx.h"
 ```
+this resolves build errors in that file and the `MathCUDA` project, but then
+other projects fail with miscellaneuous errors, some of these are warnings
+treated as errors, those warnings will then be disabled.
 
+Then there are issues with protobuf:
+```
+1>------ Build started: Project: CNTKv2LibraryDll, Configuration: Release x64 ------
+1>Serialization.cpp
+1>c:\local\protobuf-3.1.0-vs17\include\google\protobuf\stubs\hash.h(245,50): error C2143: syntax error: missing ',' before '<'
+1>c:\local\protobuf-3.1.0-vs17\include\google\protobuf\stubs\hash.h(246,2): message : see reference to class template instantiation 'google::protobuf::hash<Key>' being compiled
+1>c:\local\protobuf-3.1.0-vs17\include\google\protobuf\stubs\hash.h(259,14): error C2039: 'hash_compare': is not a member of 'std'
+1>c:\local\protobuf-3.1.0-vs17\include\google\protobuf\stubs\common.h(88,11): message : see declaration of 'std'
+1>c:\local\protobuf-3.1.0-vs17\include\google\protobuf\stubs\hash.h(259,14): error C2504: 'hash_compare': base class undefined
+1>c:\local\protobuf-3.1.0-vs17\include\google\protobuf\stubs\hash.h(259,42): error C2143: syntax error: missing ',' before '<'
+1>c:\local\protobuf-3.1.0-vs17\include\google\protobuf\stubs\hash.h(404,29): error C2064: term does not evaluate to a function taking 1 arguments
+1>c:\local\protobuf-3.1.0-vs17\include\google\protobuf\stubs\hash.h(245,22): error C2039: 'hash_compare': is not a member of 'std'
+1>c:\local\protobuf-3.1.0-vs17\include\google\protobuf\stubs\common.h(88,11): message : see declaration of 'std'
+1>c:\local\protobuf-3.1.0-vs17\include\google\protobuf\map.h(1728,48): message : see reference to class template instantiation 'google::protobuf::hash<google::protobuf::int64>' being compiled
+1>c:\local\protobuf-3.1.0-vs17\include\google\protobuf\stubs\hash.h(245,22): error C2504: 'hash_compare': base class undefined
+1>c:\local\protobuf-3.1.0-vs17\include\google\protobuf\map.h(1728,48): error C2064: term does not evaluate to a function taking 1 arguments
+1>c:\local\protobuf-3.1.0-vs17\include\google\protobuf\map.h(1730,48): error C2064: term does not evaluate to a function taking 1 arguments
+1>c:\local\protobuf-3.1.0-vs17\include\google\protobuf\map.h(1732,49): error C2064: term does not evaluate to a function taking 1 arguments
+1>c:\local\protobuf-3.1.0-vs17\include\google\protobuf\map.h(1734,49): error C2064: term does not evaluate to a function taking 1 arguments
+1>c:\local\protobuf-3.1.0-vs17\include\google\protobuf\map.h(1736,26): error C2064: term does not evaluate to a function taking 1 arguments
+1>Done building project "CNTKv2LibraryDll.vcxproj" -- FAILED.
+```
+This is an old version so not sure how to resolve. Try to use `vcpkg` for this.
+First install via Visual Studio Installer. Then use:
+```
+C:\git\oss\cntk\vcpkg install protobuf protobuf:x64-windows
+```
+```
+C:\git\oss\cntk\vcpkg integrate project
+```
+ * Go to Tools->NuGet Package Manager->Package Manager Console
+ * Select CNTKv2LibraryDll in Default project
+* Then paste: `Install-Package "vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Preview.VC.vcpkg" -Source "C:\git\oss\CNTK"`
+* Did not appear to work as thought, so instead hacked changes to
+  `CNTK.Cpp.props` to point to new protobuf.
+* Then used protoc.exe to regenerate mappings.
+  `C:\git\oss\CNTK\vcpkg_installed\x64-windows\tools\protobuf\protoc.exe cntk.proto --cpp_out=.`
+  `C:\git\oss\CNTK\vcpkg_installed\x64-windows\tools\protobuf\protoc.exe cntk.proto --cpp_out=.`
+
+ `C:\git\oss\CNTK\vcpkg_installed\x64-windows\tools\protobuf\protoc.exe C:\git\oss\CNTK\Source\CNTKv2LibraryDll\proto\onnx\onnxruntime\cmake\external\onnx\onnx\onnx-ml.proto3 --cpp_out=C:\git\oss\CNTK\Source\CNTKv2LibraryDll\proto\onnx`
+  
