@@ -255,7 +255,7 @@ namespace CNTK
             this._Save(filepath);
         }
 
-        public void Save(string filepath, ModelFormat format = ModelFormat.CNTKv2)
+        public void Save(string filepath, ModelFormat format)
         {
             this._Save(filepath, format);
         }
