@@ -399,9 +399,7 @@ C:\git\oss\cntk\vcpkg integrate project
 * Then paste: `Install-Package "vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Preview.VC.vcpkg" -Source "C:\git\oss\CNTK"`
 * Did not appear to work as thought, so instead hacked changes to
   `CNTK.Cpp.props` to point to new protobuf.
-* Then used protoc.exe to regenerate mappings.
-  `C:\git\oss\CNTK\vcpkg_installed\x64-windows\tools\protobuf\protoc.exe cntk.proto --cpp_out=.`
-  `C:\git\oss\CNTK\vcpkg_installed\x64-windows\tools\protobuf\protoc.exe cntk.proto --cpp_out=.`
-
- `C:\git\oss\CNTK\vcpkg_installed\x64-windows\tools\protobuf\protoc.exe C:\git\oss\CNTK\Source\CNTKv2LibraryDll\proto\onnx\onnxruntime\cmake\external\onnx\onnx\onnx-ml.proto3 --cpp_out=C:\git\oss\CNTK\Source\CNTKv2LibraryDll\proto\onnx`
-  
+* Then used `generate-proto-code.ps1` to generate cpp code for proto files given protobuf library updated.
+* Fix miscelleneous errors by hacking source code.
+* Add Save overload that takes ModelFormat to FunctionShim (hopefully we no longer need python part for this then).
+* Finally, the project appears to build, albeit with version 2.8.2.
