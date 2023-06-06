@@ -259,7 +259,10 @@ static void TestRunQuantization(
         }
     };
 
+#pragma warning(push)
+#pragma warning(disable : 5205)
     std::unique_ptr<MemAllocator> allocator(deviceId == CPUDEVICE ? nullptr : new CUDAPageLockedMemAllocator(deviceId));
+#pragma warning(pop)
 
     Matrix<ElemType> inMatrix(numRows, numCols, deviceId);
     std::unique_ptr<MatrixQuantizerImpl<ElemType>> quantizer(MatrixQuantizerImpl<ElemType>::Create(deviceId, false /*useAsync*/));
