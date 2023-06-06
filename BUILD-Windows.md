@@ -254,14 +254,12 @@ Most of Debug configuration now builds again.
    changes. Must restart VS and shells after so 
    `CUDA_PATH_V11_8=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8` 
    is set.
- * Replace 11.4/11_4 with 11.8/11_8 in all files that appears relevant. (See commit ??)
+ * Replace 11.4/11_4 with 11.8/11_8 in all files that appears relevant.
 
 ## Downloads
 * CUDA 11.8 https://developer.download.nvidia.com/compute/cuda/11.8.0/network_installers/cuda_11.8.0_windows_network.exe 
 * cuDNN 8.9.1.23 https://developer.nvidia.com/downloads/compute/cudnn/secure/8.9.1/local_installers/11.8/cudnn-windows-x86_64-8.9.1.23_cuda11-archive.zip/ (need login),
   extract to `c:\local` as given in environment variables below.
-* OpenCV 4.5.3 https://sourceforge.net/projects/opencvlibrary/files/4.5.3/opencv-4.5.3-vc14_vc15.exe/download 
-Besides above other tools.
 
 # Update Environment Variables
 ```
@@ -269,10 +267,11 @@ setx CNTK_ENABLE_ASGD false
 setx MKL_PATH c:\local\mklml-mkldnn-0.12
 setx BOOST_INCLUDE_PATH c:\local\boost_1_60_0-msvc-14.0
 setx BOOST_LIB_PATH c:\local\boost_1_60_0-msvc-14.0\lib64-msvc-14.0
-setx PROTOBUF_PATH c:\local\protobuf-3.1.0-vs17
+setx PROTOBUF_PATH c:\local\protobuf-3.1.0-vs17  // NOTE REPLACED BY VCPKG VERSION LATER
 setx CUDNN_PATH C:\local\cudnn-windows-x86_64-8.9.1.23_cuda11-archive
 setx OPENCV_PATH_V31 c:\local\Opencv3.1.0\build
 setx ZLIB_PATH c:\local\zlib-vs17
+setx CUDA_PATH "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8"
 setx CUB_PATH "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8"
 setx SWIG_PATH C:\local\swigwin-3.0.10
 ```
@@ -399,7 +398,21 @@ C:\git\oss\cntk\vcpkg integrate project
 * Then paste: `Install-Package "vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Preview.VC.vcpkg" -Source "C:\git\oss\CNTK"`
 * Did not appear to work as thought, so instead hacked changes to
   `CNTK.Cpp.props` to point to new protobuf.
-* Then used `generate-proto-code.ps1` to generate cpp code for proto files given protobuf library updated.
+* Then used `generate-proto-code.ps1` to generate cpp code for proto files given
+  protobuf library updated.
 * Fix miscelleneous errors by hacking source code.
-* Add Save overload that takes ModelFormat to FunctionShim (hopefully we no longer need python part for this then).
+* Add Save overload that takes ModelFormat to FunctionShim (hopefully we no
+  longer need python part for this then).
 * Finally, the project appears to build, albeit with version 2.8.2.
+* Due to vcpkg defaulting to linking to dynamic library, this means CNTK dlls
+  have dependency on libprotobuf.dll, to fix this have to change vcpkg
+  properties for CNTKv2LibraryDll to `Use Static Libraries=Yes` and `Use Dynamic
+  CRT=Yes`.
+* Trying to run tests in a library and this fails, figure need to update NVidia
+  dlls incl. `nvml.dll` and new dependency to `zlibwapi.dll` from `C:\Program
+  Files\Microsoft Office\root\Office16\ODBC Drivers\Salesforce\lib`. 
+* Still fails... some kind of issue with
+  `nvmlDeviceGetComputeRunningProcesses_v3` definition in `nvml.dll`, this is
+  from latest 535 driver version, so not sure what is wrong.
+* Appears some issue with still referring to CUDA 11.4 due to environment variable,
+* and some issues in `BestGpu.cpp` that hopefully resolved now.

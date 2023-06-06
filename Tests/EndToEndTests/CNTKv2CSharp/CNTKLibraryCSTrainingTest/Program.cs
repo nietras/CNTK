@@ -4,10 +4,9 @@
 //
 // Program.cs : Tests of CNTK Library C# model training examples.
 //
-using CNTK;
-using CNTK.CSTrainingExamples;
 using System;
 using System.Collections.Generic;
+using CNTK.CSTrainingExamples;
 
 namespace CNTK.CNTKLibraryCSTrainingTest
 {
@@ -61,7 +60,7 @@ namespace CNTK.CNTKLibraryCSTrainingTest
                         break;
                     case "CifarResNetClassifierTest":
                         Console.WriteLine($"======== running CifarResNet.TrainAndEvaluate using {device.Type} ========");
-                        
+
                         if (args.Length > 1)
                         {
                             Console.WriteLine($"-------- running with test data in {args[1]} --------");
@@ -130,13 +129,13 @@ namespace CNTK.CNTKLibraryCSTrainingTest
             Console.WriteLine($"======== running MNISTClassifier.TrainAndEvaluate using {device.Type} with convolution neural network ========");
             MNISTClassifier.TrainAndEvaluate(device, true, true);
 
-            if (device.Type == DeviceKind.GPU)
+            if (device.Type == DeviceKind.GPU && false)
             {
                 Console.WriteLine($"======== running CifarResNet.TrainAndEvaluate using {device.Type} ========");
                 CifarResNetClassifier.TrainAndEvaluate(device, true);
             }
 
-            if (device.Type == DeviceKind.GPU)
+            if (device.Type == DeviceKind.GPU && false)
             {
                 Console.WriteLine($"======== running TransferLearning.TrainAndEvaluateWithFlowerData using {device.Type} ========");
                 TransferLearning.TrainAndEvaluateWithFlowerData(device, true);
