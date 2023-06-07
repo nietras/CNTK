@@ -748,8 +748,9 @@ void BestGpu::QueryNvmlData()
             if (NVML_SUCCESS != result)
                 return;
             bool mlAppsFound = false;
-            for (const nvmlProcessInfo_t& info : processInfo)
+            for (auto processIndex = 0u; processIndex < size; processIndex++)
             {
+                const nvmlProcessInfo_t& info = processInfo[processIndex];
                 const unsigned nameLength = 256;
                 char nameStack[nameLength] = {'\0'};
                 auto nameResult = nvmlSystemGetProcessName(info.pid, nameStack, nameLength);
