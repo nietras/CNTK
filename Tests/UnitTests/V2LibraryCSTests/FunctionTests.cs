@@ -3,6 +3,7 @@
 //
 
 using System.IO;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CNTK.V2LibraryCSTests
@@ -25,6 +26,27 @@ namespace CNTK.V2LibraryCSTests
             Assert.AreEqual(model.Inputs.Count, loadedModel.Inputs.Count);
             Assert.AreEqual(model.Inputs[0].Shape, loadedModel.Inputs[0].Shape);
             Assert.AreEqual(model.Output.Shape, loadedModel.Output.Shape);
+        }
+
+        [TestMethod]
+        public void TestSaveAndLoadOnnx()
+        {
+            int channels = 2;
+            int imageWidth = 32;
+            var imageHeight = 16;
+            int[] inputDim = { imageHeight, imageWidth, channels };
+            int[] expectedOnnxDims = { imageHeight, imageWidth, channels, 1, -3 };
+            Variable input = CNTKLib.InputVariable(inputDim, DataType.Float, "Images");
+            Parameter param = new Parameter(inputDim, DataType.Float, CNTKLib.GlorotUniformInitializer(0.1F, 1, 0), DeviceDescriptor.CPUDevice);
+            Function model = CNTKLib.Plus(input, param, "Plus");
+            const string fileName = nameof(TestSaveAndLoadOnnx) + ".onnx";
+            var format = ModelFormat.ONNX;
+            model.Save(fileName, format);
+            Function loadedModel = Function.Load(fileName, DeviceDescriptor.CPUDevice, format);
+            Assert.AreEqual(model.Name, loadedModel.Name);
+            Assert.AreEqual(model.Inputs.Count, loadedModel.Inputs.Count);
+            CollectionAssert.AreEqual(expectedOnnxDims, loadedModel.Inputs[0].Shape.Dimensions.ToArray());
+            CollectionAssert.AreEqual(expectedOnnxDims, loadedModel.Output.Shape.Dimensions.ToArray());
         }
 
         [TestMethod]
