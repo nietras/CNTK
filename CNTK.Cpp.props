@@ -121,12 +121,12 @@
     <ProtobufLib Condition="$(DebugBuild)">libprotobufd.lib</ProtobufLib>
   </PropertyGroup> -->
   <PropertyGroup Condition="$(HasProtobuf)">
-    <ProtobufDir>$(SolutionDir)\vcpkg_installed\vcpkg\pkgs\protobuf_x64-windows</ProtobufDir>
-    <ProtobufInclude>$(ProtobufDir)\include</ProtobufInclude>
+    <ProtobufDir>$(SolutionDir)\vcpkg_installed\x64-windows-static-md\x64-windows-static-md</ProtobufDir>
+    <!--<ProtobufInclude>$(ProtobufDir)\include</ProtobufInclude>
     <ProtobufLibPath>$(ProtobufDir)\lib</ProtobufLibPath>
     <ProtobufLib Condition="$(ReleaseBuild)">libprotobuf.lib</ProtobufLib>
     <ProtobufLibPath Condition="$(DebugBuild)">$(ProtobufDir)\debug\lib</ProtobufLibPath>
-    <ProtobufLib Condition="$(DebugBuild)">libprotobufd.lib</ProtobufLib>
+    <ProtobufLib Condition="$(DebugBuild)">libprotobufd.lib</ProtobufLib>-->
     <PROTOBUF_PATH>$(ProtobufDir)</PROTOBUF_PATH>
     <ProtobufToolDir>$(ProtobufDir)/tool/protobuf/</ProtobufToolDir>
   </PropertyGroup>
