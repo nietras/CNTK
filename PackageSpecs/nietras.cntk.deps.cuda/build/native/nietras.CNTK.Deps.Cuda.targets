@@ -4,7 +4,6 @@
     <CudaPackageRoot>$(MSBuildThisFileDirectory)..\..\</CudaPackageRoot>
   </PropertyGroup>
   <Target Name="cuda_redist_AfterBuild" Condition="'$(Platform.ToLower())' == 'x64'" AfterTargets="AfterBuild">
-    <Copy SourceFiles="$(CudaPackageRoot)support\x64\Dependency\cublas64Lt_11.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="$(CudaPackageRoot)support\x64\Dependency\cublas64_11.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="$(CudaPackageRoot)support\x64\Dependency\cudart64_110.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="$(CudaPackageRoot)support\x64\Dependency\curand64_10.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />

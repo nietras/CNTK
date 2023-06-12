@@ -13,7 +13,10 @@
     <repository type="git" url="https://github.com/nietras/CNTK.git" />
     <description>Microsoft Cognitive Toolkit Libraries, Cuda dependencies</description>
     <summary>This NuGet package provides Cuda dependencies for CNTK GPU build.</summary>
-    <releaseNotes>CUDA 11.4</releaseNotes>
+    <releaseNotes>CUDA 11.8</releaseNotes>
     <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <dependencies>
+      <dependency id="nietras.CNTK.Deps.Cuda.cublasLt" version="[2.9.0]" />
+    </dependencies>
   </metadata>
 </package>
