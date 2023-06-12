@@ -19,6 +19,7 @@
     <dependencies>
       <dependency id="nietras.CNTK.Core.Managed" version="[2.9.0]" />
       <dependency id="nietras.CNTK.Deps.Cuda" version="[2.9.0]" />
+      <dependency id="nietras.CNTK.Deps.Cuda.cublasLt" version="[2.9.0]" />
       <dependency id="nietras.CNTK.Deps.cuDNN" version="[2.9.0]" />
       <dependency id="nietras.CNTK.Deps.cuDNN.CNN" version="[2.9.0]" />
       <dependency id="nietras.CNTK.Deps.MKL" version="[2.9.0]" />

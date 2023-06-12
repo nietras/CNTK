@@ -9,5 +9,6 @@
     <Copy SourceFiles="$(CudaPackageRoot)support\x64\Dependency\curand64_10.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="$(CudaPackageRoot)support\x64\Dependency\cusparse64_11.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="$(CudaPackageRoot)support\x64\Dependency\nvml.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(CudaPackageRoot)support\x64\Dependency\zlibwapi.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
   </Target>
 </Project>

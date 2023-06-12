@@ -24,5 +24,9 @@
       <Link>nvml.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="$(CudaDllDir)Dependency\zlibwapi.dll">
+      <Link>zlibwapi.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

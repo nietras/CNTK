@@ -15,8 +15,5 @@
     <summary>This NuGet package provides Cuda dependencies for CNTK GPU build.</summary>
     <releaseNotes>CUDA 11.8</releaseNotes>
     <copyright>© Microsoft Corporation. All rights reserved.</copyright>
-    <dependencies>
-      <dependency id="nietras.CNTK.Deps.Cuda.cublasLt" version="[2.9.0]" />
-    </dependencies>
   </metadata>
 </package>
