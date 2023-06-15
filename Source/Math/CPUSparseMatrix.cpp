@@ -1515,9 +1515,12 @@ void CPUSparseMatrix<ElemType>::AdaDelta(CPUMatrix<AccumType>& c, CPUMatrix<Accu
         {
             size_t denseIndex = columnOffset + row;;
             ElemType g = grad[blockOffset + row];
+#pragma warning(push)
+#pragma warning(disable : 4244) // C4244: 'initializing': conversion from 'double' to 'AccumType', possible loss of data
             AccumType adaSqr = rho * decay * smoothAda[denseIndex] + (1 - rho) * g * g;
             smoothAda[denseIndex] = adaSqr;
             AccumType x2 = decay * smoothX2[denseIndex];
+#pragma warning(pop)
             AccumType deltaX = -sqrt(x2 + epsilon) / sqrt(adaSqr + epsilon) * g;
             smoothX2[denseIndex] = rho * x2 + (1 - rho) * deltaX * deltaX;
             val[denseIndex] += learningRate * deltaX;

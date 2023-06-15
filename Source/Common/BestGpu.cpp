@@ -48,6 +48,7 @@ int bestGPUDummy = 42; // put something into this CPP, as to avoid a linker warn
 
 #include <memory>
 #include "CrossProcessMutex.h"
+#include <array>
 
 // ---------------------------------------------------------------------------
 // BestGpu class
@@ -737,35 +738,40 @@ void BestGpu::QueryNvmlData()
         result = nvmlDeviceGetComputeRunningProcesses(device, &size, NULL);
         if (size > 0)
         {
-            std::vector<nvmlProcessInfo_t> processInfo(size);
+            // Reserve more capacity than needed since had issues with access
+            // violations and heap corruptions.
+            std::vector<nvmlProcessInfo_t> processInfo(size * 2);
             processInfo.resize(size);
-            for (nvmlProcessInfo_t info : processInfo)
+            for (nvmlProcessInfo_t& info : processInfo)
                 info.usedGpuMemory = 0;
             result = nvmlDeviceGetComputeRunningProcesses(device, &size, &processInfo[0]);
             if (NVML_SUCCESS != result)
                 return;
             bool mlAppsFound = false;
-            for (nvmlProcessInfo_t info : processInfo)
+            for (auto processIndex = 0u; processIndex < size; processIndex++)
             {
-                std::string name;
-                name.resize(256);
-                unsigned len = (unsigned) name.length();
-                nvmlSystemGetProcessName(info.pid, (char*) name.data(), len);
-                name.resize(strlen(name.c_str()));
-                size_t pos = name.find_last_of(PATH_DELIMITER);
-                if (pos != std::string::npos)
-                    name = name.substr(pos + 1);
-                if (GetCurrentProcessId() == info.pid || name.length() == 0)
-                    continue;
+                const nvmlProcessInfo_t& info = processInfo[processIndex];
+                const unsigned nameLength = 256;
+                char nameStack[nameLength] = {'\0'};
+                auto nameResult = nvmlSystemGetProcessName(info.pid, nameStack, nameLength);
+                if (nameResult == NVML_SUCCESS)
+                {
+                    std::string name(nameStack, strlen(nameStack));
+                    size_t pos = name.find_last_of(PATH_DELIMITER);
+                    if (pos != std::string::npos)
+                        name = name.substr(pos + 1);
+                    if (GetCurrentProcessId() == info.pid || name.length() == 0)
+                        continue;
 #ifdef _WIN32
-                mlAppsFound |= EqualCI(name, "cntk.exe"); // recognize ourselves
-                mlAppsFound |= EqualCI(name, "cn.exe"); // also recognize some MS-proprietary legacy tools
-                mlAppsFound |= EqualCI(name, "dbn.exe"); // also recognize some MS-proprietary legacy tools
-                mlAppsFound |= EqualCI(name, "python.exe");
+                    mlAppsFound |= EqualCI(name, "cntk.exe"); // recognize ourselves
+                    mlAppsFound |= EqualCI(name, "cn.exe");   // also recognize some MS-proprietary legacy tools
+                    mlAppsFound |= EqualCI(name, "dbn.exe");  // also recognize some MS-proprietary legacy tools
+                    mlAppsFound |= EqualCI(name, "python.exe");
 #else
-                mlAppsFound |= name == "cntk"; // (Linux is case sensitive)
-                mlAppsFound |= name == "python";
+                    mlAppsFound |= name == "cntk"; // (Linux is case sensitive)
+                    mlAppsFound |= name == "python";
 #endif
+                }
             }
             // set values to save
             curPd->mlAppsFound = mlAppsFound;

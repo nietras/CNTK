@@ -4,7 +4,6 @@
 //
 // FunctionShim.cs -- C# Api for CNTK Function class
 //
-using System;
 using System.Collections.Generic;
 
 namespace CNTK
@@ -244,7 +243,7 @@ namespace CNTK
 
         public byte[] Save()
         {
-            UnsignedCharVector vectorBuf = new UnsignedCharVector(); 
+            UnsignedCharVector vectorBuf = new UnsignedCharVector();
             this._Save(vectorBuf);
             byte[] buffer = new byte[vectorBuf.Count];
             vectorBuf.CopyTo(buffer);
@@ -254,6 +253,11 @@ namespace CNTK
         public void Save(string filepath)
         {
             this._Save(filepath);
+        }
+
+        public void Save(string filepath, ModelFormat format)
+        {
+            this._Save(filepath, format);
         }
 
         /// <summary>

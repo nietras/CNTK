@@ -16,14 +16,14 @@ namespace CNTK.CSTrainingExamples
         /// execution folder is: CNTK/x64/BuildFolder
         /// data folder is: CNTK/Examples/Image/DataSets
         /// </summary>
-        public static string CifarDataFolder;
+        public static string CifarDataFolder = string.Empty;
 
         /// <summary>
         /// number of epochs for training. 
         /// </summary>
         public static uint MaxEpochs = 1;
 
-        private static readonly int[] imageDim = {32, 32, 3};
+        private static readonly int[] imageDim = { 32, 32, 3 };
         private static readonly int numClasses = 10;
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace CNTK.CSTrainingExamples
                 imageDim, numClasses, "features", "labels", "classifierOutput", device);
         }
 
-        private static Function ConvBatchNormalizationReLULayer(Variable input, int outFeatureMapCount, int kernelWidth, int kernelHeight, int hStride, int vStride, 
+        private static Function ConvBatchNormalizationReLULayer(Variable input, int outFeatureMapCount, int kernelWidth, int kernelHeight, int hStride, int vStride,
             double wScale, double bValue, double scValue, int bnTimeConst, bool spatial, DeviceDescriptor device)
         {
             var convBNFunction = ConvBatchNormalizationLayer(input, outFeatureMapCount, kernelWidth, kernelHeight, hStride, vStride, wScale, bValue, scValue, bnTimeConst, spatial, device);

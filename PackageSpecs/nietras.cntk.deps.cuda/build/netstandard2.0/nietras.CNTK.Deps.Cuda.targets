@@ -8,10 +8,6 @@
       <Link>cublas64_11.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="$(CudaDllDir)Dependency\cublasLt64_11.dll">
-      <Link>cublasLt64_11.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="$(CudaDllDir)Dependency\cudart64_110.dll">
       <Link>cudart64_110.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -26,6 +22,10 @@
     </None>
     <None Include="$(CudaDllDir)Dependency\nvml.dll">
       <Link>nvml.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(CudaDllDir)Dependency\zlibwapi.dll">
+      <Link>zlibwapi.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

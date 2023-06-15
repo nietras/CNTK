@@ -857,7 +857,6 @@ class minibatchutterancesourcemulti : public minibatchsource
             LogicError("getphonebound: generation of phone boundaries is not enabled for this utterance source!");
 
         std::vector<shiftedvector<biggrowablevector<HMMIDTYPE>>> allphoneboundaries;
-        allphoneboundaries.empty();
 
         if (!issupervised())
         {

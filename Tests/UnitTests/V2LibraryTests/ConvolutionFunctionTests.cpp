@@ -120,7 +120,6 @@ void Run1DFreeDimConvLayer(const DeviceDescriptor& device, bool testFreeDimensio
     auto relu = LeakyReLU(Plus(conv, convb), 0.01);
 
     const size_t inputDataSize = 10;
-    const size_t channelSize = 1;
     const std::vector<size_t> sequenceSize = {3, 2, 1, 1};
     const size_t batchSize = sequenceSize.size();
     const std::vector<size_t> sampleSizes = {10, 10, 10, 10};
@@ -168,7 +167,6 @@ void Run1DFreeDimSimpConvLayer(const DeviceDescriptor& device, bool testFreeDime
     auto conv2 = Convolution(convParam2, conv, {2});
 
     const size_t inputDataSize = 10;
-    const size_t channelSize = 1;
     const std::vector<size_t> sequenceSize = {2, 3, 1, 1};
     const size_t batchSize = sequenceSize.size();
     const std::vector<size_t> sampleSizes = {10, 10, 10, 10};
@@ -253,8 +251,6 @@ void Run1DSeqConvLayer(const DeviceDescriptor& device, bool auto_padding = true)
 template <typename ElementType>
 std::vector<std::vector<ElementType>> RunConvSeqByUnpack_byhand(const DeviceDescriptor& device)
 {
-    const size_t numFilters = 2;
-
     auto input = InputVariable({20, 1}, AsDataType<ElementType>(), L"features");
     auto input_ = Reshape(input, {10, 2});
     auto convParam = Parameter({3, 2, 2}, AsDataType<ElementType>(), (ElementType) 1.0f, device);
@@ -311,8 +307,6 @@ std::vector<std::vector<ElementType>> RunConvSeqByUnpack_byhand(const DeviceDesc
 template <typename ElementType>
 std::vector<std::vector<ElementType>> RunConvSeqByUnpack(const DeviceDescriptor& device)
 {
-    const size_t numFilters = 2;
-
     auto input = InputVariable({20, 1}, AsDataType<ElementType>(), L"features");
     auto input_ = Reshape(input, {10, 2});
     auto convParam = Parameter({3, 2, 2}, AsDataType<ElementType>(), (ElementType) 1.0f, device);

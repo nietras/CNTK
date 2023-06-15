@@ -25,7 +25,10 @@ BOOST_FIXTURE_TEST_CASE(FloatToShort, RandomSeedFixture)
     ArrayRef<float> inputAr(input, 3);
     ArrayRef<short> outputAr(output, 3);
 
+#pragma warning(push)
+#pragma warning(disable: 5205)
     std::unique_ptr<QuantizerBase<float, short>> symQuantPtr(new SymmetricQuantizer<float, short>(0));
+#pragma warning(pop)
     symQuantPtr->Quantize(inputAr, outputAr);
     for (size_t i = 0; i < 3; i++) 
         BOOST_CHECK_EQUAL(output[i], outputCorrect[i]);

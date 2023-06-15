@@ -1,0 +1,5 @@
+#!/usr/bin/env pwsh
+.\vcpkg_installed\x64-windows-static-md\x64-windows-static-md\tools\protobuf\protoc.exe --proto_path=Source\CNTKv2LibraryDll\proto --cpp_out=Source\CNTKv2LibraryDll\proto CNTK.proto
+.\vcpkg_installed\x64-windows-static-md\x64-windows-static-md\tools\protobuf\protoc.exe --proto_path=Source\CNTKv2LibraryDll\tensorboard --cpp_out=Source\CNTKv2LibraryDll\tensorboard tensorboard.proto
+.\vcpkg_installed\x64-windows-static-md\x64-windows-static-md\tools\protobuf\protoc.exe --proto_path=Source\CNTKv2LibraryDll\proto\onnx\onnxruntime\onnxruntime\core\protobuf --cpp_out=Source\CNTKv2LibraryDll\proto\onnx\onnxruntime\onnxruntime\core\protobuf onnx-ml.proto
+.\vcpkg_installed\x64-windows-static-md\x64-windows-static-md\tools\protobuf\protoc.exe --proto_path=Source\CNTKv2LibraryDll\proto\onnx\onnxruntime\onnxruntime\core\protobuf --cpp_out=Source\CNTKv2LibraryDll\proto\onnx\onnxruntime\onnxruntime\core\protobuf onnx-operators-ml.proto
