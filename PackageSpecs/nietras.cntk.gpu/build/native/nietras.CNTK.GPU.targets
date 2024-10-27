@@ -8,7 +8,7 @@
     <CNTKBuild Condition="($(Configuration.ToLower().IndexOf('debug')) &gt; -1)">Debug</CNTKBuild>
     <CNTKBuild Condition="$(Configuration.ToLower().IndexOf('debug')) == -1">Release</CNTKBuild>
     <CNTKPackageRoot>$(MSBuildThisFileDirectory)..\..\</CNTKPackageRoot>
-    <CNTKComponentVersion>2.9.0</CNTKComponentVersion>
+    <CNTKComponentVersion>2.9.1</CNTKComponentVersion>
     <CNTKComponentVersion Condition="'$(CNTKBuild)' == 'Debug'">$(CNTKComponentVersion)d</CNTKComponentVersion>
     <BuildSuffix>
     </BuildSuffix>

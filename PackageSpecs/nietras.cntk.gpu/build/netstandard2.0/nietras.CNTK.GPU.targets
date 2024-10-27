@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <CNTKDllDir>$(MSBuildThisFileDirectory)\..\..\support\x64\</CNTKDllDir>
-    <CNTKComponentVersion>2.9.0</CNTKComponentVersion>
+    <CNTKComponentVersion>2.9.1</CNTKComponentVersion>
   </PropertyGroup>
   <ItemGroup Condition="'$(Platform.ToLower())' == 'x64'">
     <None Include="$(CNTKDllDir)Release\Cntk.Core.CSBinding-$(CNTKComponentVersion).dll">
