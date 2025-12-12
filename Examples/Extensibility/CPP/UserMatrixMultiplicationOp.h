@@ -99,7 +99,7 @@ private:
         auto leftInputVariable = Inputs()[0];
         auto rightInputVariable = Inputs()[1];
         if (backPropagatedGradientValuesForInputs.find(rightInputVariable) != backPropagatedGradientValuesForInputs.end())
-            std::runtime_error("UserTimesFunction does not support computing gradient wrt right operand");
+            throw std::runtime_error("UserTimesFunction does not support computing gradient wrt right operand");
 
         auto rightInputData = state->SavedForwardPropValues().at(rightInputVariable)->Data();
 
