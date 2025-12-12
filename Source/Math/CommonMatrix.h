@@ -317,7 +317,7 @@ public:
                 m_tempDeviceBufferSize = 0;
 #endif
 
-                delete[](byte*) m_tempHostBuffer;
+                delete[](unsigned char*) m_tempHostBuffer;
                 m_tempHostBuffer = nullptr;
             }
             m_elemSizeAllocated = 0;

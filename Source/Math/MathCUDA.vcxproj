@@ -32,10 +32,10 @@
       <PropertyGroup>
         <UseCuDnn>true</UseCuDnn>
         <CuDnnDefine>USE_CUDNN</CuDnnDefine>
-        <CuDnnIncPath>$(CUDNN_PATH)\include</CuDnnIncPath>
-        <CuDnnLibPath>$(CUDNN_PATH)\lib\x64</CuDnnLibPath>
+        <CuDnnIncPath>$(CUDNN_PATH)\include\13.1</CuDnnIncPath>
+        <CuDnnLibPath>$(CUDNN_PATH)\lib\13.1\x64</CuDnnLibPath>
         <CuDnnLib>cudnn.lib</CuDnnLib>
-        <CuDnnDll>$(CUDNN_PATH)\bin\cudnn*.dll</CuDnnDll>
+        <CuDnnDll>$(CUDNN_PATH)\bin\13.1\cudnn*.dll</CuDnnDll>
       </PropertyGroup>
     </When>
     <Otherwise>

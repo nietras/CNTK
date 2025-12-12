@@ -1022,7 +1022,7 @@ static void Peek(const GPUMatrix<ElemType>& m, const char* which)
     ElemType buf[10000] = { 0 };
     size_t n = min(rows * cols, _countof(buf));
     CUDA_CALL(cudaMemcpy(buf, m.Data(), sizeof(ElemType) * n, cudaMemcpyDeviceToHost));
-    UNUSED(which); UNUSED(rows); UNUSED(cols); sin(1.0f); // set breakpoint here
+    UNUSED(which); UNUSED(rows); UNUSED(cols); UNUSED(sin(1.0f)); // set breakpoint here
     //CUDA_CALL(cudaMemcpy(const_cast<ElemType*>(m.Data()), buf, sizeof(ElemType) * n, cudaMemcpyHostToDevice));
 }
 
