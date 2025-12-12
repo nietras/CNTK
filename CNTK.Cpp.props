@@ -257,8 +257,9 @@
   <ItemDefinitionGroup>
   <ClCompile>
     <LanguageStandard>stdcpp17</LanguageStandard>
-    <!-- C4100 unreference parameter -->
-    <DisableSpecificWarnings>4100;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    <AdditionalOptions>/Zc:preprocessor %(AdditionalOptions)</AdditionalOptions>
+    <!-- C4100 unreference parameter. C4966 deprecated. -->
+    <DisableSpecificWarnings>4100;4966;%(DisableSpecificWarnings)</DisableSpecificWarnings>
   </ClCompile>
 </ItemDefinitionGroup>
 

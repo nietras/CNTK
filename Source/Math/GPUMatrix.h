@@ -724,11 +724,11 @@ static void CudaCall(ERRTYPE retCode, const char* exprString, const char* libNam
     }
 }
 
-#define CUDA_CALL(expr)     (CudaCall((expr), #expr, "CUDA",     cudaSuccess))
-#define CUBLAS_CALL(expr)   (CudaCall((expr), #expr, "CUBLAS",   CUBLAS_STATUS_SUCCESS))
-#define CUSPARSE_CALL(expr) (CudaCall((expr), #expr, "CUSPARSE", CUSPARSE_STATUS_SUCCESS))
-#define CURAND_CALL(expr)   (CudaCall((expr), #expr, "CURAND",   CURAND_STATUS_SUCCESS))
-#define CUDNN_CALL(expr)    (CudaCall((expr), #expr, "cuDNN",    CUDNN_STATUS_SUCCESS))
-#define CUDNN_CALL2(expr,m) (CudaCall((expr), #expr, "cuDNN",    CUDNN_STATUS_SUCCESS, m))
+#define CUDA_CALL(expr)     (CudaCall<cudaError>((expr), #expr, "CUDA",     cudaSuccess))
+#define CUBLAS_CALL(expr)   (CudaCall<cublasStatus_t>((expr), #expr, "CUBLAS",   CUBLAS_STATUS_SUCCESS))
+#define CUSPARSE_CALL(expr) (CudaCall<cusparseStatus_t>((expr), #expr, "CUSPARSE", CUSPARSE_STATUS_SUCCESS))
+#define CURAND_CALL(expr)   (CudaCall<curandStatus>((expr), #expr, "CURAND",   CURAND_STATUS_SUCCESS))
+#define CUDNN_CALL(expr)    (CudaCall<cudnnStatus_t>((expr), #expr, "cuDNN",    CUDNN_STATUS_SUCCESS))
+#define CUDNN_CALL2(expr, m)(CudaCall<cudnnStatus_t>((expr), #expr, "cuDNN", CUDNN_STATUS_SUCCESS, m))
 
 #endif // CPUONLY

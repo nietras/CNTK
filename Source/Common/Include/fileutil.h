@@ -722,7 +722,7 @@ class auto_file_ptr
         if (f && f != stdin && f != stdout && f != stderr)
         {
             int rc = ::fclose(f);
-            if ((rc != FCLOSE_SUCCESS) && !std::uncaught_exception())
+            if ((rc != FCLOSE_SUCCESS) && !std::uncaught_exceptions())
                 RuntimeError("auto_file_ptr: failed to close file: %s", strerror(errno));
 
             f = NULL;

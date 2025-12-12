@@ -139,7 +139,7 @@ inline Microsoft::MSR::CNTK::File& operator<<(Microsoft::MSR::CNTK::File& stream
     return stream;
 }
 
-#ifndef __CUDA_ARCH__
+//#ifndef __CUDA_ARCH__
 /* Some basic arithmetic operations expected of a builtin */
 __FP16_DECL__ half operator+(const half &lh, const half &rh) { return (half)((float)lh + (float)rh); }
 __FP16_DECL__ half operator-(const half &lh, const half &rh) { return (half)((float)lh - (float)rh); }
@@ -167,7 +167,7 @@ __FP16_DECL__ bool operator> (const half &lh, const half &rh) { return (float)lh
 __FP16_DECL__ bool operator< (const half &lh, const half &rh) { return (float)lh < (float)rh; }
 __FP16_DECL__ bool operator>=(const half &lh, const half &rh) { return (float)lh >= (float)rh; }
 __FP16_DECL__ bool operator<=(const half &lh, const half &rh) { return (float)lh <= (float)rh; }
-#endif
+//#endif
 
 // overload binary operators between 'half' and build-in type. TODO: This should be handled in a better way
 // int
