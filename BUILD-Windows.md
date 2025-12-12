@@ -428,3 +428,8 @@ Download and install `cudnn_9.17.0_windows_x86_64.exe`. Custom. Only for cuda13.
 ```
 C:\Program Files\NVIDIA\CUDNN\v9.17
 ```
+
+`CNTK.Cpp.props`
+```xml
+<WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+```
