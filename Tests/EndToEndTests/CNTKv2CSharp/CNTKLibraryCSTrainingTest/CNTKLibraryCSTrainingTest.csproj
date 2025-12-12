@@ -6,7 +6,7 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
 	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <RootNamespace>CNTK.CNTKLibraryCSTrainingTest</RootNamespace>
 
