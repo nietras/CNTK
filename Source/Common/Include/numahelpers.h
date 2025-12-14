@@ -39,12 +39,32 @@ static inline size_t getnumnodes()
 #endif
 }
 
+// get the current NUMA node
+static inline size_t getcurrentnode()
+{
+#ifdef CNTK_UWP
+    return 0;
+#else
+    // we can force it to be a certain node, for use in initializations
+    if (node_override >= 0)
+        return (size_t) node_override;
+    // actually use current node
+    DWORD i = GetCurrentProcessorNumber(); // note: need to change for >63 processors
+    UCHAR n;
+    if (!GetNumaProcessorNode((UCHAR) i, &n))
+        return 0;
+    if (n == 0xff)
+        LogicError("GetNumaProcessorNode() failed to determine NUMA node for GetCurrentProcessorNumber()??");
+    return n;
+#endif
+}
+
 // execute body (node, i, n), i in [0,n) on all NUMA nodes in small chunks
 template <typename FUNCTION>
 void parallel_for_on_each_numa_node(bool multistep, const FUNCTION &body)
 {
     // get our configuration
-    const size_t cores = ppl_cores;
+    const size_t cores = msra::parallel::ppl_cores;
     assert(cores > 0);
     const size_t nodes = getnumnodes();
     const size_t corespernode = (cores - 1) / nodes + 1;
@@ -96,25 +116,6 @@ static void foreach_node_single_threaded(const FUNCTION &f)
     overridenode(-1);
 }
 
-// get the current NUMA node
-static inline size_t getcurrentnode()
-{
-#ifdef CNTK_UWP
-    return 0;
-#else
-    // we can force it to be a certain node, for use in initializations
-    if (node_override >= 0)
-        return (size_t) node_override;
-    // actually use current node
-    DWORD i = GetCurrentProcessorNumber(); // note: need to change for >63 processors
-    UCHAR n;
-    if (!GetNumaProcessorNode((UCHAR) i, &n))
-        return 0;
-    if (n == 0xff)
-        LogicError("GetNumaProcessorNode() failed to determine NUMA node for GetCurrentProcessorNumber()??");
-    return n;
-#endif
-}
 
 // allocate memory
 // Allocation seems to be at least on a 512-byte boundary. We nevertheless verify alignment requirements.

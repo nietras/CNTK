@@ -37,6 +37,22 @@ static inline size_t getnumnodes()
     return n + 1;
 }
 
+// get the current NUMA node
+static inline size_t getcurrentnode()
+{
+    // we can force it to be a certain node, for use in initializations
+    if (node_override >= 0)
+        return (size_t) node_override;
+    // actually use current node
+    DWORD i = GetCurrentProcessorNumber(); // note: need to change for >63 processors
+    UCHAR n;
+    if (!GetNumaProcessorNode((UCHAR) i, &n))
+        return 0;
+    if (n == 0xff)
+        throw std::logic_error("GetNumaProcessorNode() failed to determine NUMA node for GetCurrentProcessorNumber()??");
+    return n;
+}
+
 // execute body (node, i, n), i in [0,n) on all NUMA nodes in small chunks
 template <typename FUNCTION>
 void parallel_for_on_each_numa_node(bool multistep, const FUNCTION &body)
@@ -92,22 +108,6 @@ static void foreach_node_single_threaded(const FUNCTION &f)
         f();
     }
     overridenode(-1);
-}
-
-// get the current NUMA node
-static inline size_t getcurrentnode()
-{
-    // we can force it to be a certain node, for use in initializations
-    if (node_override >= 0)
-        return (size_t) node_override;
-    // actually use current node
-    DWORD i = GetCurrentProcessorNumber(); // note: need to change for >63 processors
-    UCHAR n;
-    if (!GetNumaProcessorNode((UCHAR) i, &n))
-        return 0;
-    if (n == 0xff)
-        throw std::logic_error("GetNumaProcessorNode() failed to determine NUMA node for GetCurrentProcessorNumber()??");
-    return n;
 }
 
 // allocate memory
