@@ -431,5 +431,5 @@ C:\Program Files\NVIDIA\CUDNN\v9.17
 
 `CNTK.Cpp.props`
 ```xml
-<WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+<WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
 ```
