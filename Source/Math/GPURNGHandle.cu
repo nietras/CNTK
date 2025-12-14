@@ -27,7 +27,7 @@ GPURNGHandle::GPURNGHandle(int deviceId, uint64_t seed, uint64_t offset)
 
 /*virtual*/ GPURNGHandle::~GPURNGHandle()
 {
-    if (std::uncaught_exception())
+    if (std::uncaught_exceptions())
         curandDestroyGenerator(m_generator);
     else
         CURAND_CALL(curandDestroyGenerator(m_generator));

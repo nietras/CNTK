@@ -70,6 +70,8 @@ void CuDnnRNNExecutor<ElemType>::ForwardCore(
     GPUMatrix<ElemType>& reserve, GPUMatrix<ElemType>& workspace
     )
 {
+    RuntimeError("RNN not supported");
+#if false
     // test that the RNN shape is correct
     if (!m_rnnT->IsCompatible(rnnAttributes))
         LogicError("RNN Layout has changed during processing");
@@ -115,6 +117,7 @@ void CuDnnRNNExecutor<ElemType>::ForwardCore(
         workspace.Data(), workspace.GetNumElements()*sizeof(ElemType),
         reserve.Data(), reserve.GetNumElements()*sizeof(ElemType)));
     m_BackwardDataCalledYet = false;
+#endif
 }
 
 template <class ElemType>
@@ -124,6 +127,8 @@ void CuDnnRNNExecutor<ElemType>::BackwardDataCore(
     GPUMatrix<ElemType>& reserve, GPUMatrix<ElemType>& workspace
     )
 {
+    RuntimeError("RNN not supported");
+#if false
     // test that the RNN shape is correct
     if (!m_rnnT->IsCompatible(rnnAttributes))
         LogicError("RNN Layout has changed during processing");
@@ -147,6 +152,7 @@ void CuDnnRNNExecutor<ElemType>::BackwardDataCore(
             reserve.Data(), reserve.GetNumElements()*sizeof(ElemType)));
     }
     m_BackwardDataCalledYet = true;
+#endif
 }
 
 template <class ElemType>
@@ -155,6 +161,8 @@ void CuDnnRNNExecutor<ElemType>::BackwardWeightsCore(const GPUMatrix<ElemType>& 
     GPUMatrix<ElemType>& reserve, GPUMatrix<ElemType>& workspace
     )
 {
+    RuntimeError("RNN not supported");
+#if false
     // test that the RNN shape is correct
     if (!m_rnnT->IsCompatible(rnnAttributes))
         LogicError("RNN Layout has changed during processing");
@@ -169,6 +177,7 @@ void CuDnnRNNExecutor<ElemType>::BackwardWeightsCore(const GPUMatrix<ElemType>& 
         workspace.Data(), workspace.GetNumElements()*sizeof(ElemType),
         *wDesc, dw.Data(),
         reserve.Data(), reserve.GetNumElements()*sizeof(ElemType)));
+#endif
 }
 
 template class CuDnnRNNExecutor<double>;

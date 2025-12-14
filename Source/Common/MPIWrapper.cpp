@@ -435,7 +435,7 @@ MPIWrapperMpi::~MPIWrapperMpi()
         fprintf(stderr, "~MPIWrapperMpi\n");
 
     int rc = fflush(stderr);
-    if (!std::uncaught_exception())
+    if (!std::uncaught_exceptions())
     {
         if (rc != FFLUSH_SUCCESS)
         {

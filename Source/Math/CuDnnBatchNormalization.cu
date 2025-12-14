@@ -153,7 +153,7 @@ template class CuDnnBatchNormEngineFactory<half, float>;
 
 CudaTimer::~CudaTimer()
 {
-    // TODO: Should not throw if std::uncaught_exception()
+    // TODO: Should not throw if std::uncaught_exceptions()
     if (m_start != nullptr)
         CUDA_CALL(cudaEventDestroy(reinterpret_cast<cudaEvent_t>(m_start)));
     if (m_stop != nullptr)

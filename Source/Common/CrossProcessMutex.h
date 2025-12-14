@@ -51,7 +51,7 @@ public:
         {
             // failed to acquire
             int rc = ::CloseHandle(m_handle);
-            if ((rc == CLOSEHANDLE_ERROR) && !std::uncaught_exception())
+            if ((rc == CLOSEHANDLE_ERROR) && !std::uncaught_exceptions())
             {
                 RuntimeError("Acquire: Handler close failure with error code %d", ::GetLastError());
             }
@@ -68,12 +68,12 @@ public:
         assert(m_handle != NULL);
         int rc = 0;
         rc = ::ReleaseMutex(m_handle);
-        if ((rc == RELEASEMUTEX_ERROR) && !std::uncaught_exception())
+        if ((rc == RELEASEMUTEX_ERROR) && !std::uncaught_exceptions())
         {
             RuntimeError("Mutex Release: Failed to release mutex %s: %d", m_name.c_str(), ::GetLastError());
         }
         rc = ::CloseHandle(m_handle);
-        if ((rc == CLOSEHANDLE_ERROR) && !std::uncaught_exception())
+        if ((rc == CLOSEHANDLE_ERROR) && !std::uncaught_exceptions())
         {
             RuntimeError("Mutex Release: Failed to close handler %s: %d", m_name.c_str(), ::GetLastError());
         }

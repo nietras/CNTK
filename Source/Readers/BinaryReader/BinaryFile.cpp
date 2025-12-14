@@ -94,7 +94,7 @@ BinaryFile::~BinaryFile()
         iter = ReleaseView(iter, true);
     }
     int rc = CloseHandle(m_hndMapped);
-    if ((rc == CLOSEHANDLE_ERROR) && !std::uncaught_exception())
+    if ((rc == CLOSEHANDLE_ERROR) && !std::uncaught_exceptions())
     {
         RuntimeError("BinaryFile: Failed to close handle, %d", ::GetLastError());
     }
@@ -106,7 +106,7 @@ BinaryFile::~BinaryFile()
         SetEndOfFile(m_hndFile);
     }
     rc = CloseHandle(m_hndFile);
-    if ((rc == CLOSEHANDLE_ERROR) && !std::uncaught_exception())
+    if ((rc == CLOSEHANDLE_ERROR) && !std::uncaught_exceptions())
     {
         RuntimeError("BinaryFile: Failed to close handle, %d", ::GetLastError());
     }

@@ -611,7 +611,7 @@ public:
         if (handle != NULL)
         {
             int rc = dlclose(handle);
-            if ((rc != DLCLOSE_SUCCESS) && !std::uncaught_exception())
+            if ((rc != DLCLOSE_SUCCESS) && !std::uncaught_exceptions())
             {
                 RuntimeError("Plugin: Failed to decrements the reference count.");
             }

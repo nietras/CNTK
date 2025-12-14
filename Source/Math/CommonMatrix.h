@@ -484,7 +484,7 @@ protected:
 public:
     void VerifyResizable(const char* function) const 
     { 
-        if (!m_sob.unique())
+        if (!(m_sob.use_count() == 1))
             LogicError("%s: Cannot resize the matrix because it is a view.", function);
         else if (m_sob->HasExternalBuffer())
             LogicError("%s: Cannot resize the matrix because it is externally owned.", function);
@@ -493,7 +493,7 @@ public:
     // same as VerifyResizable() except for the error message. Could be folded into one.
     void VerifyMigratable(const char* function) const
     {
-        if (!m_sob.unique())
+        if (!(m_sob.use_count() == 1))
             LogicError("%s: Cannot migrate the matrix between devices because it is a view.", function);
         else if (m_sob->HasExternalBuffer())
             LogicError("%s: Cannot migrate the matrix between devices because it is externally owned.", function);

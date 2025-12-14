@@ -1799,7 +1799,7 @@ public:
         if (h != INVALID_HANDLE_VALUE)
         {
             int rc = ::FindClose(h);
-            if ((rc == FINDCLOSE_ERROR) && !std::uncaught_exception())
+            if ((rc == FINDCLOSE_ERROR) && !std::uncaught_exceptions())
             {
                 RuntimeError("Release: Failed to close handle: %d", ::GetLastError());
             }

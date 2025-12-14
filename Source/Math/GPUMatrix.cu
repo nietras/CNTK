@@ -153,7 +153,7 @@ SyncGuard::~SyncGuard()
         // to check for errors. So this destructor is where CUDA errors would be thrown.
         // If this destructor runs during stack unwinding, then a different error has
         // already happened that should be reported; so we only clean up the resource.
-        if (std::uncaught_exception())
+        if (std::uncaught_exceptions())
             cudaEventDestroy(m_done);
         else
         {

@@ -33,7 +33,7 @@
 #define PCLOSE_ERROR -1
 #define WRITE_BUFFER_SIZE (1024 * 1024)
 
-#include <boost/algorithm/string.hpp>
+//#include <boost/algorithm/string.hpp>
 #include "half.hpp"
 
 namespace Microsoft { namespace MSR { namespace CNTK {
@@ -281,7 +281,7 @@ File::~File(void)
         assert(false); // cannot happen
 #else
         rc = _pclose(m_file);
-        if ((rc == PCLOSE_ERROR) && !std::uncaught_exception())
+        if ((rc == PCLOSE_ERROR) && !std::uncaught_exceptions())
         {
             RuntimeError("File: failed to close file at %S", m_filename.c_str());
         }
@@ -290,7 +290,7 @@ File::~File(void)
     else if (m_file != stdin && m_file != stdout && m_file != stderr)
     {
         rc = fclose(m_file);
-        if ((rc != FCLOSE_SUCCESS) && !std::uncaught_exception())
+        if ((rc != FCLOSE_SUCCESS) && !std::uncaught_exceptions())
         {
             RuntimeError("File: failed to close file at %S", m_filename.c_str());
         }
@@ -1034,7 +1034,7 @@ FARPROC Plugin::LoadInternal(const std::wstring& plugin, const std::string& proc
     m_dllName = plugin;
 
     // For python modules we do not need to append anything.
-    if(!boost::ends_with(m_dllName, L".pyd"))
+    if (!m_dllName.ends_with(L".pyd"))
     {
         if (isCNTKPlugin)
         {

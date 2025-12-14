@@ -149,7 +149,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <CudaCompile>
-      <AdditionalOptions>--std=c++17 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>--std c++20 %(AdditionalOptions)</AdditionalOptions>
     </CudaCompile>
   </ItemDefinitionGroup>
 
@@ -255,13 +255,13 @@
   </ItemDefinitionGroup>
 
   <ItemDefinitionGroup>
-  <ClCompile>
-    <LanguageStandard>stdcpp17</LanguageStandard>
-    <AdditionalOptions>/Zc:preprocessor %(AdditionalOptions)</AdditionalOptions>
-    <!-- C4100 unreference parameter. C4966 deprecated. -->
-    <DisableSpecificWarnings>4100;4966;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-  </ClCompile>
-</ItemDefinitionGroup>
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/Zc:preprocessor %(AdditionalOptions)</AdditionalOptions>
+      <!-- C4100 unreference parameter. C4966 deprecated. -->
+      <DisableSpecificWarnings>4100;4966;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
 
   <PropertyGroup Condition="$(NoOptBuild)" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
