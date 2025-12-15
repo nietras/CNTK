@@ -505,7 +505,7 @@ public:
         // positions that were responsible for the top values. This is a scatter operation.
 #ifdef _MSC_VER 
         auto&& inputGradient = Input(0)->GradientPtrRef();
-        auto&& outputGradient = GradientPtrRef();
+        auto&& outputGradient = this->GradientPtrRef();
 #else
         auto&& inputGradient = Input(0)->template GradientPtrRef();
         auto&& outputGradient = this->template GradientPtrRef();
