@@ -26,6 +26,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <stdexcept>
 
 namespace Microsoft { namespace MSR { namespace CNTK {
 

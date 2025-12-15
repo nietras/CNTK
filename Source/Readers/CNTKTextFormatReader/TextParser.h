@@ -39,7 +39,7 @@ public:
     bool GetSequenceInfoByKey(const SequenceKey&, SequenceInfo&) override;
 
 private:
-    TextParser(CorpusDescriptorPtr corpus, const std::wstring& filename, const vector<StreamDescriptor>& streams, bool primary = true);
+    TextParser(CorpusDescriptorPtr corpus, const std::wstring& filename, const std::vector<StreamDescriptor>& streams, bool primary = true);
 
     // Builds an index of the input data.
     void Initialize();
@@ -121,7 +121,7 @@ private:
 
     std::shared_ptr<Index> m_index;
 
-    unique_ptr<char[]> m_scratch; // local buffer for string parsing
+    std::unique_ptr<char[]> m_scratch; // local buffer for string parsing
 
     // Indicates if the sequence length is computed as the maximum 
     // of number of samples across all streams (inputs).

@@ -30,11 +30,11 @@ using namespace Microsoft::MSR::CNTK;
 // ---------------------------------------------------------------------------
 
 // SourceFile constructors
-SourceFile::SourceFile(wstring location, wstring text)
+SourceFile::SourceFile(std::wstring location, std::wstring text)
     : path(location), lines(split(text, L"\r\n"))
 {
 } // from string, e.g. command line
-SourceFile::SourceFile(wstring path)
+SourceFile::SourceFile(std::wstring path)
     : path(path) // from file
 {
     File(path, fileOptionsRead | fileOptionsText).GetLines(lines);
@@ -60,7 +60,7 @@ bool TextLocation::IsValid() const
 struct Issue
 {
     TextLocation location; // using lineno and source file; char position only for printing the overall error loc
-    wstring markup;        // string with markup symbols at char positions and dots inbetween
+    std::wstring markup;        // string with markup symbols at char positions and dots inbetween
     void AddMarkup(wchar_t symbol, size_t charPos)
     {
         if (charPos >= markup.size())
@@ -91,16 +91,16 @@ struct Issue
 // Since often multiple contexts are on the same source line, we only print each source line once in a consecutive row of contexts.
 /*static*/ void TextLocation::PrintIssue(const vector<TextLocation>& locations, const wchar_t* errorKind, const wchar_t* kind, const wchar_t* what)
 {
-    wstring error = CreateIssueMessage(locations, errorKind, kind, what);
+    std::wstring error = CreateIssueMessage(locations, errorKind, kind, what);
     fprintf(stderr, "%ls", error.c_str());
     fflush(stderr);
 }
 
-/*static*/ wstring TextLocation::CreateIssueMessage(const vector<TextLocation>& locations, const wchar_t* errorKind, const wchar_t* kind, const wchar_t* what)
+/*static*/ std::wstring TextLocation::CreateIssueMessage(const vector<TextLocation>& locations, const wchar_t* errorKind, const wchar_t* kind, const wchar_t* what)
 {
     vector<Issue> issues; // tracing the error backwards
     size_t symbolIndex = 0;
-    wstring message;
+    std::wstring message;
 
     for (size_t n = 0; n < locations.size(); n++)
     {
@@ -186,7 +186,7 @@ public:
     class CodeSourceException : public ConfigException
     {
     public:
-        CodeSourceException(const wstring& msg, TextLocation where)
+        CodeSourceException(const std::wstring& msg, TextLocation where)
             : ConfigException(msg, where)
         {
         }
@@ -322,7 +322,7 @@ public:
 
     struct Token
     {
-        wstring symbol; // identifier, keyword, punctuation, or string literal
+        std::wstring symbol; // identifier, keyword, punctuation, or string literal
         double number;  // number
         TokenKind kind;
         TextLocation beginLocation; // text loc of first character of this token
@@ -332,7 +332,7 @@ public:
         {
         }
         // diagnostic helper
-        static wstring TokenKindToString(TokenKind kind)
+        static std::wstring TokenKindToString(TokenKind kind)
         {
             switch (kind)
             {
@@ -354,7 +354,7 @@ public:
                 return L"(unknown?)";
             }
         }
-        wstring ToString() const // string to show the content of token for debugging
+        std::wstring ToString() const // string to show the content of token for debugging
         {
             let kindStr = TokenKindToString(kind);
             switch (kind)
@@ -376,7 +376,7 @@ public:
     class LexerException : public ConfigException
     {
     public:
-        LexerException(const wstring& msg, TextLocation where)
+        LexerException(const std::wstring& msg, TextLocation where)
             : ConfigException(msg, where)
         {
         }
@@ -387,7 +387,7 @@ public:
     };
 
 private:
-    __declspec_noreturn static void Fail(wstring msg, Token where)
+    __declspec_noreturn static void Fail(std::wstring msg, Token where)
     {
         //Microsoft::MSR::CNTK::DebugUtil::PrintCallStack();
         throw LexerException(msg, where.beginLocation);
@@ -395,7 +395,7 @@ private:
 
     // find a file either at given location or traverse include paths
     // TODO: also allow ... syntax, where ... refers to the directory of the enclosing file
-    static wstring FindSourceFile(const wstring& path, const vector<wstring>& includePaths)
+    static std::wstring FindSourceFile(const std::wstring& path, const std::vector<std::wstring>& includePaths)
     {
         if (File::Exists(path))
             return path;
@@ -615,7 +615,7 @@ class Parser : public Lexer
     class ParseException : public ConfigException
     {
     public:
-        ParseException(const wstring& msg, TextLocation where)
+        ParseException(const std::wstring& msg, TextLocation where)
             : ConfigException(msg, where)
         {
         }
@@ -625,14 +625,14 @@ class Parser : public Lexer
         }
     };
 
-    __declspec_noreturn static void Fail(const wstring& msg, Token where)
+    __declspec_noreturn static void Fail(const std::wstring& msg, Token where)
     {
         //Microsoft::MSR::CNTK::DebugUtil::PrintCallStack();
         throw ParseException(msg, where.beginLocation);
     }
 
-    //void Expected(const wstring & what) { Fail(strprintf("%ls expected", what.c_str()), GotToken().beginLocation); }  // I don't know why this does not work
-    void Expected(const wstring& what)
+    //void Expected(const std::wstring & what) { Fail(strprintf("%ls expected", what.c_str()), GotToken().beginLocation); }  // I don't know why this does not work
+    void Expected(const std::wstring& what)
     {
         Fail(what + L" expected", GotToken().beginLocation);
     }
@@ -642,7 +642,7 @@ class Parser : public Lexer
     {
         let& tok = GotToken();
         if (tok.kind != punctuation || tok.symbol != s)
-            Expected(L"'" + wstring(s) + L"'");
+            Expected(L"'" + std::wstring(s) + L"'");
         ConsumeToken();
     }
 
@@ -651,12 +651,12 @@ class Parser : public Lexer
     {
         let& tok = GotToken();
         if (tok.kind != keyword || tok.symbol != s)
-            Expected(L"'" + wstring(s) + L"'");
+            Expected(L"'" + std::wstring(s) + L"'");
         ConsumeToken();
     }
 
     // this token must be an identifier; check and get the next token. Return the identifier.
-    wstring ConsumeIdentifier()
+    std::wstring ConsumeIdentifier()
     {
         let& tok = GotToken();
         if (tok.kind != identifier)
@@ -699,7 +699,7 @@ public:
         ExpressionPtr operand;
         if (tok.kind == numberliteral) // === numeral literal
         {
-            operand = make_shared<Expression>(tok.beginLocation, L"d", tok.number, wstring(), false);
+            operand = make_shared<Expression>(tok.beginLocation, L"d", tok.number, std::wstring(), false);
             ConsumeToken();
         }
         else if (tok.kind == stringliteral) // === string literal
@@ -709,7 +709,7 @@ public:
         }
         else if (tok.symbol == L"true" || tok.symbol == L"false") // === boolean literal
         {
-            operand = make_shared<Expression>(tok.beginLocation, L"b", 0.0, wstring(), (tok.symbol == L"true"));
+            operand = make_shared<Expression>(tok.beginLocation, L"b", 0.0, std::wstring(), (tok.symbol == L"true"));
             ConsumeToken();
         }
         else if (tok.kind == identifier) // === dict member (unqualified)
@@ -872,7 +872,7 @@ public:
     //         In case of macro definition, all arguments must be of type "id". Pass 'defining' to check for that.
     //  namedArgs = dictionary of optional args
     //         In case of macro definition, dictionary values are default values that are used if the argument is not given
-    ExpressionPtr ParseMacroArgs(bool defining, wstring openSymbol)
+    ExpressionPtr ParseMacroArgs(bool defining, std::wstring openSymbol)
     {
         ConsumePunctuation(openSymbol.c_str());
         auto macroArgs = make_shared<Expression>(GotToken().beginLocation, L"()");
@@ -992,7 +992,7 @@ static ExpressionPtr Parse(SourceFile&& sourceFile, vector<wstring>&& includePat
 {
     return Parser(move(sourceFile), move(includePaths)).ParseRecordMembersToDict();
 }
-ExpressionPtr ParseConfigDictFromString(wstring text, wstring location, vector<wstring>&& includePaths)
+ExpressionPtr ParseConfigDictFromString(wstring text, std::wstring location, vector<wstring>&& includePaths)
 {
     return Parse(SourceFile(location, text), move(includePaths));
 }
@@ -1002,7 +1002,7 @@ ExpressionPtr ParseConfigDictFromString(wstring text, wstring location, vector<w
 //    includePaths.insert(includePaths.begin(), File::DirectoryPathOf(path)); // must include our own path for nested include statements
 //    return Parse(move(sourceFile), move(includePaths));
 //}
-ExpressionPtr ParseConfigExpression(const wstring& sourceText, vector<wstring>&& includePaths)
+ExpressionPtr ParseConfigExpression(const std::wstring& sourceText, vector<wstring>&& includePaths)
 {
     auto parser = Parser(SourceFile(L"(command line)", sourceText), move(includePaths));
     auto expr = parser.ParseExpression(0, true /*can end at newline*/);

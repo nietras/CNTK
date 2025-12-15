@@ -169,7 +169,7 @@ void BinaryChunkDeserializer::SequenceInfosForChunk(ChunkIdType chunkId, std::ve
     }
 }
 
-unique_ptr<byte[]> BinaryChunkDeserializer::ReadChunk(ChunkIdType chunkId)
+std::unique_ptr<std::byte[]> BinaryChunkDeserializer::ReadChunk(ChunkIdType chunkId)
 {
     // Seek to the start of the data portion in the chunk
     m_file.SeekOrDie(m_chunkTable->GetDataStartOffset(chunkId), SEEK_SET);
@@ -179,10 +179,10 @@ unique_ptr<byte[]> BinaryChunkDeserializer::ReadChunk(ChunkIdType chunkId)
     
     // Create buffer
     // TODO: use a pool of buffers instead of allocating a new one, each time a chunk is read.
-    unique_ptr<byte[]> buffer(new byte[chunkSize]);
+    std::unique_ptr<std::byte[]> buffer(new std::byte[chunkSize]);
 
     // Read the chunk from disk
-    m_file.ReadOrDie(buffer.get(), sizeof(byte), chunkSize);
+    m_file.ReadOrDie(buffer.get(), sizeof(std::byte), chunkSize);
 
     return buffer;
 }
@@ -191,9 +191,9 @@ unique_ptr<byte[]> BinaryChunkDeserializer::ReadChunk(ChunkIdType chunkId)
 ChunkPtr BinaryChunkDeserializer::GetChunk(ChunkIdType chunkId)
 {
     // Read the chunk into memory
-    unique_ptr<byte[]> buffer = ReadChunk(chunkId);
+    std::unique_ptr<std::byte[]> buffer = ReadChunk(chunkId);
 
-    return make_shared<BinaryDataChunk>(chunkId, m_chunkTable->GetNumSequences(chunkId), std::move(buffer), m_deserializers);
+    return std::make_shared<BinaryDataChunk>(chunkId, m_chunkTable->GetNumSequences(chunkId), std::move(buffer), m_deserializers);
 }
 
 void BinaryChunkDeserializer::SetTraceLevel(unsigned int traceLevel)

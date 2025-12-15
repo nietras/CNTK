@@ -25,7 +25,7 @@ public:
     const std::map<std::wstring, std::wstring>& GetRename() const { return m_streams; }
 
     // Get full path to the input file.
-    const wstring& GetFilePath() const { return m_filepath; }
+    const std::wstring& GetFilePath() const { return m_filepath; }
 
     size_t GetRandomizationWindow() const { return m_randomizationWindow; }
 

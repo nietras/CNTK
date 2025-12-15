@@ -92,7 +92,7 @@ static inline double invertlogprob(double logP)
 // compare function to allow char* as keys (without, unordered_map will correctly
 // compute a hash key from the actual strings, but then compare the pointers
 // -- duh!)
-struct less_strcmp : public std::binary_function<const char *, const char *, bool>
+struct less_strcmp : public std::function<bool(const char *, const char *)>
 { // this implements operator<
     bool operator()(const char *const &_Left, const char *const &_Right) const
     {
