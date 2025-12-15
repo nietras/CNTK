@@ -9,7 +9,6 @@
 #include <vector>
 #include <string>
 #include <boost/algorithm/string.hpp>
-#include <boost/noncopyable.hpp>
 #include <boost/range/iterator_range_core.hpp>
 
 
@@ -18,9 +17,12 @@ namespace CNTK {
     // Representation of a state list table.
     // The table is preserved in memory, the number of states is only expected to be a couple of thousands,
     // so it is fine to keep all in memory.
-    class StateTable : boost::noncopyable
+    class StateTable
     {
     public:
+        StateTable(const StateTable&) = delete;                 // non-copyable
+        StateTable& operator=(const StateTable&) = delete; // non-assignable
+
         void ReadStateList(const std::wstring& stateListPath);
 
         const std::vector<bool>& SilStateMask() const

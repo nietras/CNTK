@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include <boost/noncopyable.hpp>
 #include "MLFDeserializer.h"
 #include "Index.h"
 

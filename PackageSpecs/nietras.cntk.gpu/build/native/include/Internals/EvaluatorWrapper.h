@@ -6,7 +6,6 @@
 #pragma once
 
 #include <algorithm>
-#include <boost/noncopyable.hpp>
 #include <memory>
 #include <vector>
 #include <functional>
@@ -95,9 +94,13 @@ namespace CNTK
     }
 
     // Evaluator interface
-    class EvaluatorWrapper : boost::noncopyable
+    class EvaluatorWrapper
     {
     public:
+        EvaluatorWrapper() = default;
+        EvaluatorWrapper(const EvaluatorWrapper&) = delete;            // non-copyable
+        EvaluatorWrapper& operator=(const EvaluatorWrapper&) = delete; // non-assignable
+
         virtual void GetModelArgumentsInfo(CNTK_Variable** inputs, uint32_t* numInputs) = 0;
         virtual void GetModelOutputsInfo(CNTK_Variable** outputs, uint32_t* numOutputs) = 0;
 
