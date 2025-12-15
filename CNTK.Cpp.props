@@ -257,7 +257,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalOptions>/Zc:preprocessor %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:preprocessor /MP %(AdditionalOptions)</AdditionalOptions>
       <!-- C4100 unreference parameter. C4966 deprecated. -->
       <DisableSpecificWarnings>4100;4966;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>

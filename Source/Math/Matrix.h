@@ -16,7 +16,7 @@
 #include "RNGHandle.h"
 #include "DataTransferer.h"
 #include <limits.h>
-#include <memory> // for shared_ptr
+#include <memory> // for std::shared_ptr
 #include <array>
 #include <initializer_list>
 #include "QuantizedOperations.h"
@@ -77,10 +77,10 @@ class MATH_API Matrix : public MatrixBase
     typedef MatrixBase Base;
 private:
     mutable BaseMatrix<ElemType>*                 m_baseMatrix;
-    mutable shared_ptr<GPUMatrix      <ElemType>> m_GPUMatrix;
-    mutable shared_ptr<CPUMatrix      <ElemType>> m_CPUMatrix;
-    mutable shared_ptr<GPUSparseMatrix<ElemType>> m_GPUSparseMatrix;
-    mutable shared_ptr<CPUSparseMatrix<ElemType>> m_CPUSparseMatrix;
+    mutable std::shared_ptr<GPUMatrix      <ElemType>> m_GPUMatrix;
+    mutable std::shared_ptr<CPUMatrix      <ElemType>> m_CPUMatrix;
+    mutable std::shared_ptr<GPUSparseMatrix<ElemType>> m_GPUSparseMatrix;
+    mutable std::shared_ptr<CPUSparseMatrix<ElemType>> m_CPUSparseMatrix;
 
     mutable MatrixType m_matrixType;
     mutable CurrentDataLocation m_currentDataLocation; // Indicates which matrix is current
@@ -154,9 +154,9 @@ private:
 public:
     // down-cast to make life easier
     template <class T>
-    static shared_ptr<T> DownCast(shared_ptr<BaseMatrix<ElemType>> inode)
+    static std::shared_ptr<T> DownCast(shared_ptr<BaseMatrix<ElemType>> inode)
     {
-        shared_ptr<T> node = dynamic_pointer_cast<T>(inode);
+        std::shared_ptr<T> node = dynamic_pointer_cast<T>(inode);
         if (!node)
             LogicError("A Matrix of mismatching type was passed.");
         return node;
@@ -607,7 +607,7 @@ public:
     // singular value decomposition of A as A = U*SIGMA*VT
     static void SVD(const Matrix<ElemType>& A, Matrix<ElemType>& SIGMA, Matrix<ElemType>& U, Matrix<ElemType>& VT, Matrix<ElemType>& W);
 
-    static void MultiplyAndWeightedAdd(ElemType alpha, const Matrix<ElemType>& a, const bool transposeA, const Matrix<ElemType>& b, const bool transposeB, ElemType beta, Matrix<ElemType>& c, shared_ptr<QuantizedMultiplier<ElemType>> pQuantizedMultiplier=nullptr); // SGEMM
+    static void MultiplyAndWeightedAdd(ElemType alpha, const Matrix<ElemType>& a, const bool transposeA, const Matrix<ElemType>& b, const bool transposeB, ElemType beta, Matrix<ElemType>& c, std::shared_ptr<QuantizedMultiplier<ElemType>> pQuantizedMultiplier=nullptr); // SGEMM
     static void MultiplyAndAdd(const Matrix<ElemType>& a, const bool transposeA, const Matrix<ElemType>& b, const bool transposeB, Matrix<ElemType>& c);
     static void Multiply(const Matrix<ElemType>& a, const bool transposeA, const Matrix<ElemType>& b, const bool transposeB, Matrix<ElemType>& c);
     static void Multiply(const Matrix<ElemType>& a, const Matrix<ElemType>& b, Matrix<ElemType>& c);

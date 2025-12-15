@@ -40,7 +40,7 @@ BlockRandomizer::BlockRandomizer(
 {
     assert(deserializer != nullptr);
 
-    m_launchType = shouldPrefetch ? launch::async : launch::deferred;
+    m_launchType = shouldPrefetch ? std::launch::async : std::launch::deferred;
 
     m_streams = m_deserializer->StreamInfos();
     m_sequenceRandomizer = std::make_shared<SequenceRandomizer>(verbosity, m_deserializer, m_chunkRandomizer);

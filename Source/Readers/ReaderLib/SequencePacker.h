@@ -43,7 +43,7 @@ protected:
     // Helper function to check and refresh the sample shape of input samples.
     void RefreshSampleShape(const std::vector<SequenceDataPtr>& minibatch, StreamInformation& outputStream);
 
-    std::pair<vector<MBLayout::SequenceInfo>,size_t> CreateSequenceInfos(const StreamBatch& batch);
+    std::pair<std::vector<MBLayout::SequenceInfo>,size_t> CreateSequenceInfos(const StreamBatch& batch);
 
     // A flag indicating whether to use local timeline for data.
     bool m_useLocalTimeline;

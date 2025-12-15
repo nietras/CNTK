@@ -7,7 +7,7 @@
 #include "Basics.h"
 #include "File.h"
 #include <string>
-using namespace std;
+//using namespace std;
 
 namespace Microsoft { namespace MSR { namespace CNTK {
 

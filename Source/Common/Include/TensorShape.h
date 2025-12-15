@@ -843,7 +843,7 @@ static inline std::string ToString(ImageLayoutKind imageLayoutKind)
     else
         LogicError("ImageLayout: Invalid ImageLayoutKind");
 }
-static inline ImageLayoutKind ImageLayoutKindFrom(const wstring& s)
+static inline ImageLayoutKind ImageLayoutKindFrom(const std::wstring& s)
 {
     if (s == L"CHW" || s == L"cudnn")
         return ImageLayoutKind::CHW;

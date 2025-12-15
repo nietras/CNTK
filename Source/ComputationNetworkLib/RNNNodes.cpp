@@ -209,7 +209,7 @@ void OptimizedRNNStackNode<ElemType>::Validate(bool isFinalValidationPass)
     // support an internal legacy version
     if (m_legacySwapInputsPending)
     {
-        ::swap(m_inputs[0], m_inputs[1]);
+        std::swap(m_inputs[0], m_inputs[1]);
         m_legacySwapInputsPending = false;
     }
     // N.B.: I need both of these lines.

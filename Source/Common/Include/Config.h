@@ -11,7 +11,7 @@
 #include "File.h"
 #include "half.hpp"
 
-using namespace std;
+//using namespace std;
 
 #pragma warning(disable : 4996) // Caused by the TODO below (line ~1280)
 
@@ -764,9 +764,9 @@ public:
     }
 
     // get the names of all members in this record (but not including parent scopes)
-    vector<wstring> GetMemberIds() const
+    std::vector<std::wstring> GetMemberIds() const
     {
-        vector<wstring> ids;
+        std::vector<std::wstring> ids;
         for (auto iter = begin(); iter != end(); ++iter)
         {
             ids.emplace_back(Microsoft::MSR::CNTK::ToFixedWStringFromMultiByte(iter->first));
@@ -1206,9 +1206,9 @@ public:
     static std::string ParseCommandLine(int argc, wchar_t* argv[], ConfigParameters& config);
 
     // support for BrainScriptNetworkBuilder: It needs the config directories in order to know where to include files from.
-    static vector<wstring>& GetBrainScriptNetworkBuilderIncludePaths()
+    static std::vector<std::wstring>& GetBrainScriptNetworkBuilderIncludePaths()
     {
-        static vector<wstring> allConfigDirs;
+        static std::vector<std::wstring> allConfigDirs;
         return allConfigDirs;
     }
 

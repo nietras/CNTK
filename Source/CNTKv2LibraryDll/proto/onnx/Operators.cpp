@@ -530,7 +530,7 @@ namespace ONNX
             index1++;
         }
 
-        return make_tuple(index0, index1);
+        return std::make_tuple(index0, index1);
     }
     bool Operators::SupportBroadcast(const std::wstring& cntkOpName)
     {

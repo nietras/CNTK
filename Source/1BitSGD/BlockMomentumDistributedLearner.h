@@ -247,7 +247,7 @@ namespace CNTK
 
             NDArrayViewPtr inPlaceAggregateTrainingLoss = std::make_shared<NDArrayView>(averageTrainingLoss, NDShape{}, DeviceDescriptor::CPUDevice());
             NDArrayViewPtr inPlaceAggregateEvalCriterion = std::make_shared<NDArrayView>(averageEvalCriterion, NDShape{}, DeviceDescriptor::CPUDevice());
-            vector<NDArrayViewPtr> inPlaceAggregateVector = { inPlaceAggregateTrainingLoss, inPlaceAggregateEvalCriterion };
+            std::vector<NDArrayViewPtr> inPlaceAggregateVector = {inPlaceAggregateTrainingLoss, inPlaceAggregateEvalCriterion};
 
             m_communicator->AggregateInPlace(inPlaceAggregateVector, m_communicator->Workers());
             

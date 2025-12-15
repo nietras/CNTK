@@ -159,7 +159,7 @@ namespace CNTK
         {
             size_t numColsPerNode = numCols / numNodes;
             size_t residue = numCols % numNodes;
-            size_t startColNumofStripe = (numColsPerNode * nodeRank) + min(residue, nodeRank);
+            size_t startColNumofStripe = (numColsPerNode * nodeRank) + std::min(residue, nodeRank);
             size_t numColsinStripe = numColsPerNode + ((nodeRank < residue) ? 1 : 0);
             return Stripe{ startColNumofStripe, numColsinStripe };
         }

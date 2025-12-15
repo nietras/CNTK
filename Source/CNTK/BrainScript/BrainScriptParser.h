@@ -12,7 +12,7 @@
 
 namespace Microsoft { namespace MSR { namespace BS {
 
-using namespace std;
+//using namespace std;
 
 // ---------------------------------------------------------------------------
 // TextLocation -- holds a pointer into a source file

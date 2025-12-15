@@ -453,7 +453,7 @@ public:
 
 // use this for primitive values, double and bool
 template <typename T>
-static inline ConfigValuePtr MakePrimitiveConfigValuePtr(const T &val, const function<void(const std::wstring &)> &failfn, const std::wstring &exprPath)
+static inline ConfigValuePtr MakePrimitiveConfigValuePtr(const T &val, const std::function<void(const std::wstring &)> &failfn, const std::wstring &exprPath)
 {
     return ConfigValuePtr(make_shared<BoxOf<Wrapped<T>>>(val), failfn, exprPath);
 }

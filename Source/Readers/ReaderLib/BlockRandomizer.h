@@ -156,7 +156,7 @@ private:
     // Prefetch future.
     std::future<ChunkPtr> m_prefetch;
     // Whether to have async or deferred prefetch.
-    launch m_launchType;
+    std::launch m_launchType;
     // Prefetched original chunk id.
     ChunkIdType m_prefetchedChunk;
 

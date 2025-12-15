@@ -10,7 +10,7 @@
 
 namespace Microsoft { namespace MSR { namespace BS {
 
-using namespace std;
+//using namespace std;
 using namespace Microsoft::MSR::ScriptableObjects;
 
 // -----------------------------------------------------------------------

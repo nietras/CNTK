@@ -50,7 +50,7 @@ namespace Microsoft { namespace MSR { namespace CNTK {
 using namespace std;
 
 // -----------------------------------------------------------------------
-// ThrowFormatted() - template function to throw a std::exception with a formatted error string
+// ThrowFormatted() - template function to throw a std::exception with a formatted error std::string
 // -----------------------------------------------------------------------
 template <class E>
 __declspec_noreturn static inline void ThrowFormattedVA(const char* format, va_list args)
@@ -63,13 +63,13 @@ __declspec_noreturn static inline void ThrowFormattedVA(const char* format, va_l
     va_copy(args_copy, args);
     auto size = vsnprintf(nullptr, 0, format, args) + 1;
 
-    string buffer("Unknown error.");
+    std::string buffer("Unknown error.");
     if (size > 0)
     {
-        buffer = string(size, ' ');
+        buffer = std::string(size, ' ');
         if (vsnprintf(&buffer[0], size, format, args_copy) < 0)
         {
-            buffer = string("Unknown error.");
+            buffer = std::string("Unknown error.");
         }
     }
     
@@ -94,7 +94,7 @@ __declspec_noreturn static inline void ThrowFormatted(const char* format, ...)
     va_end(args);
 };
 
-// RuntimeError - throw a std::runtime_error with a formatted error string
+// RuntimeError - throw a std::runtime_error with a formatted error std::string
 #ifndef _MSC_VER // gcc __attribute__((format(printf())) does not percolate through variadic templates; so must go the macro route
 #ifndef RuntimeError
 #define RuntimeError ThrowFormatted<std::runtime_error>
@@ -123,7 +123,7 @@ __declspec_noreturn static inline void InvalidArgument(const char* format, _Type
 }
 #endif
 
-// Warning - warn with a formatted error string
+// Warning - warn with a formatted error std::string
 #pragma warning(push)
 #pragma warning(disable : 4996)
 static inline void Warning(const char* format, ...)
@@ -136,7 +136,7 @@ static inline void Warning(const char* format, ...)
     va_end(args);
 };
 #pragma warning(pop)
-static inline void Warning(const string& message)
+static inline void Warning(const std::string& message)
 {
     Warning("%s", message.c_str());
 }
@@ -196,7 +196,7 @@ struct basic_cstring : public std::basic_string<C>
 typedef basic_cstring<char> cstring;
 typedef basic_cstring<wchar_t> wcstring;
 
-// [w]strprintf() -- like sprintf() but resulting in a C++ string
+// [w]strprintf() -- like sprintf() but resulting in a C++ std::string
 template <class _T>
 struct _strprintf : public std::basic_string<_T>
 { // works for both wchar_t* and char*
@@ -271,7 +271,7 @@ private:
 };
 
 // ----------------------------------------------------------------------------
-// (w)strprintf() -- sprintf() that returns an STL string
+// (w)strprintf() -- sprintf() that returns an STL std::string
 // ----------------------------------------------------------------------------
 
 typedef ::msra::strfun::_strprintf<char>    strprintf;  // char version
@@ -290,7 +290,7 @@ static inline cstring charpath(const std::wstring& p)
 }
 
 // ----------------------------------------------------------------------------
-// split and join -- tokenize a string like strtok() would, join() strings together
+// split and join -- tokenize a std::string like strtok() would, join() strings together
 // ----------------------------------------------------------------------------
 
 template <class _T>
@@ -361,7 +361,7 @@ static inline double todouble(const char* s)
     char* ep; // will be set to point to first character that failed parsing
     double value = strtod(s, &ep);
     if (*s == 0 || *ep != 0)
-        RuntimeError("todouble: invalid input string '%s'", s);
+        RuntimeError("todouble: invalid input std::string '%s'", s);
     return value;
 }
 
@@ -373,7 +373,7 @@ static inline double todouble(const std::string& s)
     size_t* idx = 0;
     value = std::stod(s, idx);
     if (idx)
-        RuntimeError("todouble: invalid input string '%s'", s.c_str());
+        RuntimeError("todouble: invalid input std::string '%s'", s.c_str());
 
     return value;
 }
@@ -383,13 +383,13 @@ static inline double todouble(const std::wstring& s)
     wchar_t* endptr;
     double value = wcstod(s.c_str(), &endptr);
     if (*endptr)
-        RuntimeError("todouble: invalid input string '%ls'", s.c_str());
+        RuntimeError("todouble: invalid input std::string '%ls'", s.c_str());
     return value;
 }
 
 // ----------------------------------------------------------------------------
 // tokenizer -- utility for white-space tokenizing strings in a character buffer
-// This simple class just breaks a string, but does not own the string buffer.
+// This simple class just breaks a std::string, but does not own the std::string buffer.
 // ----------------------------------------------------------------------------
 
 class tokenizer : public std::vector<char*>
@@ -458,15 +458,15 @@ DefineIsCType(space);
 namespace Microsoft { namespace MSR { namespace CNTK {
 
 // ----------------------------------------------------------------------------
-// case-insensitive string-comparison helpers
+// case-insensitive std::string-comparison helpers
 // ----------------------------------------------------------------------------
 
-// normalize between char* and string
-// Note: Intended for use within a single expression. Otherwise be aware of memory ownership; same restrictions apply as for string::c_str().
+// normalize between char* and std::string
+// Note: Intended for use within a single expression. Otherwise be aware of memory ownership; same restrictions apply as for std::string::c_str().
 static inline const char    * c_str(const char *    p) { return p;         }
-static inline const char    * c_str(const string &  p) { return p.c_str(); }
+static inline const char    * c_str(const std::string &  p) { return p.c_str(); }
 static inline const wchar_t * c_str(const wchar_t * p) { return p;         }
-static inline const wchar_t * c_str(const wstring & p) { return p.c_str(); }
+static inline const wchar_t * c_str(const std::wstring & p) { return p.c_str(); }
 
 // compare strings
 static inline int CompareCI(const char    * a, const char    * b) { return _stricmp(a, b); }
@@ -554,7 +554,7 @@ public:
 // TODO: maybe change to type id of an actual thing we pass in
 // TODO: is this header appropriate?
 template <class C>
-static wstring TypeId()
+static std::wstring TypeId()
 {
     return Microsoft::MSR::CNTK::ToFixedWStringFromMultiByte(typeid(C).name());
 }
@@ -601,7 +601,7 @@ public:
         : handle(NULL)
     {
     }
-    template <class STRING> // accepts char (UTF-8) and wide string
+    template <class STRING> // accepts char (UTF-8) and wide std::string
     void *Load(const STRING& plugin, const std::string& proc, bool isCNTKPlugin = true)
     {
         return LoadInternal(Microsoft::MSR::CNTK::ToLegacyString(Microsoft::MSR::CNTK::ToUTF8(plugin)), proc, isCNTKPlugin);

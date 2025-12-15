@@ -104,7 +104,7 @@ namespace CNTK
         void Renew()
         {
             delete m_codedInputPtr.release();
-            m_codedInputPtr = make_unique<io::CodedInputStream>(&m_input);
+            m_codedInputPtr = std::make_unique<io::CodedInputStream>(&m_input);
             m_codedInputPtr->SetTotalBytesLimit(INT_MAX, INT_MAX);
         }
 

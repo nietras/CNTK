@@ -74,7 +74,7 @@ void ReaderShim<ElemType>::Init(const ConfigParameters& config)
     bool prefetch = config(L"prefetch", true);
     // if prefetch - launching asynchronously,
     // otherwise deferring - synchronous execution during .get() call
-    m_launchType = prefetch ? launch::async : launch::deferred;
+    m_launchType = prefetch ? std::launch::async : std::launch::deferred;
 
     m_numParallelSequences = numberOfuttsPerMinibatchForAllEpochs[0];
 

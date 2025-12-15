@@ -647,7 +647,7 @@ namespace CNTK
 
     std::wstring Value::AsString() const
     {
-        wstringstream wss;
+        std::wstringstream wss;
         if (IsValid())
             wss << L"Value(" << Shape().AsString() << ", " << DeviceKindName(Device().Type()) << L")";
         else
