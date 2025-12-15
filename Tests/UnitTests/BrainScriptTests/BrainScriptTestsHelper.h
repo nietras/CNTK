@@ -33,8 +33,8 @@ public:
 
     const std::vector<wstring> getListOfFilesByExtension(const wstring & extension, const boost::filesystem::path & directory)
     {
-        boost::filesystem::wrecursive_directory_iterator it(directory);
-        boost::filesystem::wrecursive_directory_iterator endit;
+        boost::filesystem::recursive_directory_iterator it(directory);
+        boost::filesystem::recursive_directory_iterator endit;
 
         std::vector<wstring> listOfFiles;
 
