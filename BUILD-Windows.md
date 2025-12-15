@@ -433,3 +433,14 @@ C:\Program Files\NVIDIA\CUDNN\v9.17
 ```xml
 <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
 ```
+
+Download latest boost 1.90.0 from
+https://sourceforge.net/projects/boost/files/boost-binaries/1.90.0/ for MSVC
+14.3-64.
+
+Install to `C:\local\boost_1_90_0\`
+
+```
+setx BOOST_INCLUDE_PATH c:\local\boost_1_90_0
+setx BOOST_LIB_PATH c:\local\boost_1_90_0\lib64-msvc-14.3
+```
