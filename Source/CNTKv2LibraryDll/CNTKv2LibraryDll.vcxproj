@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" InitialTargets="CheckDependencies" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Preview.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Preview.VC.vcpkg.props" Condition="Exists('..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Preview.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Preview.VC.vcpkg.props')" />
+  <Import Project="..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.props" Condition="Exists('..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -412,11 +412,14 @@
     <Warning Condition="!$(HasProtobuf)" Text="CNTKv2LibraryDll requires Protocol Buffers to build. Please see https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-CNTK-on-Windows#protobuf for installation instructions." />
     <Error Condition="!$(HasBoost)" Text="CNTKv2LibraryDll requires the Boost library to build. Please see https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-CNTK-on-Windows#boost for installation instructions." />
   </Target>
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.targets" Condition="Exists('..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.targets')" />
+  </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Preview.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Preview.VC.vcpkg.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Preview.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Preview.VC.vcpkg.props'))" />
-    <Error Condition="!Exists('..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Preview.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Preview.VC.vcpkg.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Preview.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Preview.VC.vcpkg.targets'))" />
+    <Error Condition="!Exists('..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.props'))" />
+    <Error Condition="!Exists('..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.targets'))" />
   </Target>
 </Project>
