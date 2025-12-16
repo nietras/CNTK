@@ -11,7 +11,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using CNTKImageProcessing;
@@ -107,7 +106,7 @@ namespace Microsoft.MSR.CNTK.Extensibility.Managed.CSEvalClient
             Console.WriteLine("\n====== Evaluation Complete ========");
         }
 
-        private static void CompareImageApiResults(List<float> outputs1,List<float> outputs2)
+        private static void CompareImageApiResults(List<float> outputs1, List<float> outputs2)
         {
             if (outputs1.Count != outputs2.Count)
             {
@@ -131,7 +130,7 @@ namespace Microsoft.MSR.CNTK.Extensibility.Managed.CSEvalClient
         private static void ThrowIfFileNotExist(string filePath, string errorMsg)
         {
             if (!File.Exists(filePath))
-            {                
+            {
                 if (!string.IsNullOrEmpty(errorMsg))
                 {
                     Console.WriteLine(errorMsg);
@@ -148,7 +147,7 @@ namespace Microsoft.MSR.CNTK.Extensibility.Managed.CSEvalClient
         {
             // The pattern "Inner Exception" is used by End2EndTests to catch test failure.
             Console.WriteLine("Error: {0}\nNative CallStack: {1}\n Inner Exception: {2}", ex.Message, ex.NativeCallStack, ex.InnerException != null ? ex.InnerException.Message : "No Inner Exception");
-            throw;
+            throw ex;
         }
 
         /// <summary>
@@ -159,7 +158,7 @@ namespace Microsoft.MSR.CNTK.Extensibility.Managed.CSEvalClient
         {
             // The pattern "Inner Exception" is used by End2EndTests to catch test failure.
             Console.WriteLine("Error: {0}\nCallStack: {1}\n Inner Exception: {2}", ex.Message, ex.StackTrace, ex.InnerException != null ? ex.InnerException.Message : "No Inner Exception");
-            throw;
+            throw ex;
         }
 
         /// <summary>
@@ -183,7 +182,7 @@ namespace Microsoft.MSR.CNTK.Extensibility.Managed.CSEvalClient
                 {
                     // Load model
                     string modelFilePath = Path.Combine(Environment.CurrentDirectory, @".\Output\Models\01_OneHidden");
-                    ThrowIfFileNotExist(modelFilePath, 
+                    ThrowIfFileNotExist(modelFilePath,
                         string.Format("Error: The model '{0}' does not exist. Please follow instructions in README.md in <CNTK>/Examples/Image/GettingStarted to create the model.", modelFilePath));
 
                     model.CreateNetwork(string.Format("modelPath=\"{0}\"", modelFilePath), deviceId: -1);
@@ -345,14 +344,14 @@ namespace Microsoft.MSR.CNTK.Extensibility.Managed.CSEvalClient
 
             // Load model
             string modelFilePath = Path.Combine(Environment.CurrentDirectory, @".\Output\Models\02_OneConv");
-            ThrowIfFileNotExist(modelFilePath, 
+            ThrowIfFileNotExist(modelFilePath,
                 string.Format("Error: The model '{0}' does not exist. Please follow instructions in README.md in <CNTK>/Examples/Image/GettingStarted to create the model.", modelFilePath));
 
             // Initializes the model instances
             ModelEvaluator.Initialize(numConcurrentModels, modelFilePath);
 
             string testfile = Path.Combine(Environment.CurrentDirectory, @"..\DataSets\MNIST\Test-28x28_cntk_text.txt");
-            ThrowIfFileNotExist(testfile, 
+            ThrowIfFileNotExist(testfile,
                 string.Format("Error: The test file '{0}' does not exist. Please follow instructions in README.md in <CNTK>/Examples/Image/GettingStarted to download the data.", testfile));
 
             Stopwatch sw = new Stopwatch();
@@ -407,8 +406,8 @@ namespace Microsoft.MSR.CNTK.Extensibility.Managed.CSEvalClient
 
             sw.Stop();
             ModelEvaluator.DisposeAll();
-            
-            Console.WriteLine("The file {0} was processed using {1} concurrent model(s) with an error rate of: {2:P2} ({3} error(s) out of {4} record(s)), and a throughput of {5:N2} records/sec", @"Test-28x28_cntk_text.txt", 
+
+            Console.WriteLine("The file {0} was processed using {1} concurrent model(s) with an error rate of: {2:P2} ({3} error(s) out of {4} record(s)), and a throughput of {5:N2} records/sec", @"Test-28x28_cntk_text.txt",
                 numConcurrentModels, (float)errorCount / count, errorCount, count, (count + errorCount) * 1000.0 / sw.ElapsedMilliseconds);
         }
 
@@ -444,7 +443,7 @@ namespace Microsoft.MSR.CNTK.Extensibility.Managed.CSEvalClient
                     var resized = bmp.Resize(resNetImageSize, resNetImageSize, true);
 
                     var resizedCHW = resized.ParallelExtractCHW();
-                    var inputs = new Dictionary<string, List<float>>() { {inDims.First().Key, resizedCHW } };
+                    var inputs = new Dictionary<string, List<float>>() { { inDims.First().Key, resizedCHW } };
 
                     // We can call the evaluate method and get back the results (single layer output)...
                     var outDims = model.GetNodeDimensions(NodeGroup.Output);
