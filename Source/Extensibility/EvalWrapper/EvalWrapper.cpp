@@ -345,7 +345,7 @@ public:
         auto rect = gcnew System::Drawing::Rectangle(0, 0, imageWidth, imageHeight);
         auto bitmap = image->LockBits(*rect, ImageLockMode::ReadOnly, image->PixelFormat);
         // The byte array that contains the bitmap.
-        auto bytes = reinterpret_cast<byte*>(bitmap->Scan0.ToPointer());
+        auto bytes = reinterpret_cast<std::byte*>(bitmap->Scan0.ToPointer());
         // The offset to go from one scanline of the image to the next one.
         int bitmapStride = bitmap->Stride;
         // The feature vector that will be fed into the network.
@@ -610,7 +610,7 @@ private:
 public ref class IEvaluateModelManagedF : IEvaluateModelManaged<float>
 {
 public:
-    IEvaluateModelManagedF::IEvaluateModelManagedF()
+    IEvaluateModelManagedF()
         : IEvaluateModelManaged("GetEvalF")
     {
     }
@@ -621,7 +621,7 @@ public:
 public ref class IEvaluateModelManagedD : IEvaluateModelManaged<double>
 {
 public:
-    IEvaluateModelManagedD::IEvaluateModelManagedD()
+    IEvaluateModelManagedD()
         : IEvaluateModelManaged("GetEvalD")
     {
     }

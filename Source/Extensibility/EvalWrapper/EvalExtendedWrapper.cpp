@@ -414,9 +414,9 @@ private:
     {
         switch ((int)dataType)
         {
-        case DataType::Float32:
+        case (int)DataType::Float32:
             return DataType::Float32;
-        case DataType::Float64:
+        case (int)DataType::Float64:
             return DataType::Float64;
         default:
             throw gcnew CNTKRuntimeException(String::Format("Cannot convert native DataType with value: {0} to corresponding managed DataType.", (int)dataType), "");
@@ -427,11 +427,11 @@ private:
     {
         switch ((int)storageType)
         {
-        case StorageType::Dense:
+        case (int)StorageType::Dense:
             return StorageType::Dense;
-        case StorageType::Sparse:
+        case (int)StorageType::Sparse:
             return StorageType::Sparse;
-        case StorageType::Unknown:
+        case (int)StorageType::Unknown:
             return StorageType::Unknown;
         default:
             throw gcnew CNTKRuntimeException(String::Format("Cannot convert native StorageType with value: {0} to corresponding managed StorageType.", (int)storageType), "");
@@ -523,7 +523,7 @@ private:
 public ref class ModelEvaluationExtendedF : ModelEvaluationExtended<float>
 {
 public:
-    ModelEvaluationExtendedF::ModelEvaluationExtendedF()
+    ModelEvaluationExtendedF()
         : ModelEvaluationExtended("GetEvalExtendedF")
     {
     }
@@ -534,7 +534,7 @@ public:
 public ref class ModelEvaluationExtendedD : ModelEvaluationExtended<double>
 {
 public:
-    ModelEvaluationExtendedD::ModelEvaluationExtendedD()
+    ModelEvaluationExtendedD()
         : ModelEvaluationExtended("GetEvalExtendedD")
     {
     }
