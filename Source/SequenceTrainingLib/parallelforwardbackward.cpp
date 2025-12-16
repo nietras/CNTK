@@ -20,7 +20,8 @@
 using namespace msra::cuda;
 
 #ifndef CPUONLY
-#define ANAMEFORLIB "Cntk.Math.Cuda-" ## CNTK_COMPONENT_VERSION ## ".lib"
+// #define ANAMEFORLIB "Cntk.Math.Cuda-" ## CNTK_COMPONENT_VERSION ## ".lib"
+#define ANAMEFORLIB "Cntk.Math.Cuda-2.10.0.lib"
 #pragma comment(lib, ANAMEFORLIB) // built by CNTKMathCUDA project
 #undef ANAMEFORLIB
 #endif

@@ -65,7 +65,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)Source\Common\include;$(CUB_PATH);$(CudaInclude);$(CuDnnIncPath)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <DisableSpecificWarnings>4819</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4819;$(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(CudaLibs);%(AdditionalDependencies)</AdditionalDependencies>

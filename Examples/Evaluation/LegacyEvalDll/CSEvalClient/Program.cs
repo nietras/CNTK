@@ -148,7 +148,7 @@ namespace Microsoft.MSR.CNTK.Extensibility.Managed.CSEvalClient
         {
             // The pattern "Inner Exception" is used by End2EndTests to catch test failure.
             Console.WriteLine("Error: {0}\nNative CallStack: {1}\n Inner Exception: {2}", ex.Message, ex.NativeCallStack, ex.InnerException != null ? ex.InnerException.Message : "No Inner Exception");
-            throw ex;
+            throw;
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Microsoft.MSR.CNTK.Extensibility.Managed.CSEvalClient
         {
             // The pattern "Inner Exception" is used by End2EndTests to catch test failure.
             Console.WriteLine("Error: {0}\nCallStack: {1}\n Inner Exception: {2}", ex.Message, ex.StackTrace, ex.InnerException != null ? ex.InnerException.Message : "No Inner Exception");
-            throw ex;
+            throw;
         }
 
         /// <summary>

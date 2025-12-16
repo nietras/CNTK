@@ -20,6 +20,7 @@ namespace CNTK {
     class StateTable
     {
     public:
+        StateTable() = default;
         StateTable(const StateTable&) = delete;                 // non-copyable
         StateTable& operator=(const StateTable&) = delete; // non-assignable
 

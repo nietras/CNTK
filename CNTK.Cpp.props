@@ -258,8 +258,8 @@
     <ClCompile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/Zc:preprocessor /MP %(AdditionalOptions)</AdditionalOptions>
-      <!-- C4100 unreference parameter. C4966 deprecated. -->
-      <DisableSpecificWarnings>4100;4966;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <!-- C4100 unreference parameter. C4966 deprecated. C5054 operator '+' deprecated between enums. -->
+      <DisableSpecificWarnings>4100;4966;5054;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
 

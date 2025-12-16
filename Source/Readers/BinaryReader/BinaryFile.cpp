@@ -13,6 +13,8 @@
 
 #define CLOSEHANDLE_ERROR 0
 
+using namespace std;
+
 namespace Microsoft { namespace MSR { namespace CNTK {
 
 // HIGH and LOW DWORD functions
@@ -154,7 +156,7 @@ vector<ViewPosition>::iterator BinaryFile::FindDataView(void* data)
     auto iter = m_views.begin();
     for (; iter != m_views.end(); ++iter)
     {
-        byte* viewBegin = (byte*) iter->view;
+        std::byte* viewBegin = (std::byte*) iter->view;
         if (viewBegin <= data && viewBegin + iter->size > data)
             break;
     }
@@ -313,7 +315,7 @@ void* BinaryFile::EnsureMapped(void* data, size_t size)
     auto viewPos = FindDataView(data);
     if (viewPos != m_views.end())
     {
-        int64_t offset = (byte*) data - (byte*) viewPos->view;
+        int64_t offset = (std::byte*) data - (std::byte*) viewPos->view;
         int64_t dataEnd = offset + size;
 
         // if our end of data is beyond the size of the view, need to reallocate
@@ -322,7 +324,7 @@ void* BinaryFile::EnsureMapped(void* data, size_t size)
             // TODO: this view change only accomidates this request
             size_t filePosition = viewPos->filePosition;
             ReleaseView(viewPos);
-            byte* view = (byte*) GetView(filePosition, dataEnd);
+            std::byte* view = (std::byte*) GetView(filePosition, dataEnd);
             data = view + offset;
         }
     }
@@ -710,7 +712,7 @@ void* Section::EnsureMapped(void* dataStart, size_t size)
         // Element Window is mapped separately so won't no need to remap
         if (m_mappingType != mappingElementWindow)
         {
-            int64_t offset = (byte*) view - (byte*) dataStart;
+            int64_t offset = (std::byte*) view - (std::byte*) dataStart;
             m_sectionHeader = (SectionHeader*) ((char*) m_sectionHeader + offset);
             m_elementBuffer = (char*) m_sectionHeader + m_sectionHeader->sizeHeader;
             RemapHeader(m_sectionHeader, m_filePosition);

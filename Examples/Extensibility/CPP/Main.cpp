@@ -84,7 +84,8 @@ void UserTimesFunctionExample()
 }
 #pragma warning(pop)
 
-void main()
+int main()
 {
     UserTimesFunctionExample();
+    return 0;
 }
