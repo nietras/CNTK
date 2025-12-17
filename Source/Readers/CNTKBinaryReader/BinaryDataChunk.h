@@ -17,7 +17,7 @@ class BinaryDataChunk : public Chunk, public std::enable_shared_from_this<Chunk>
 public:
     explicit BinaryDataChunk(ChunkIdType chunkId,
         size_t numSequences, 
-        unique_ptr<byte[]> buffer, 
+        std::unique_ptr<std::byte[]> buffer, 
         std::vector<BinaryDataDeserializerPtr> deserializer)
         : m_chunkId(chunkId),
         m_numSequences(numSequences), 
@@ -34,7 +34,7 @@ public:
         {
             for (auto& s : seqs)
             {
-                if (!s.unique())
+                if (!(s.use_count() == 1))
                 {
                     // create holding chunk if not already have one
                     if (!holdingBuffer)
@@ -67,7 +67,7 @@ public:
     {
         uint32_t numSamples = 0;
         for (size_t i = 0; i < m_data.size(); i++)
-            numSamples = max(numSamples, m_data[i].at(sequenceIdx)->m_numberOfSamples);
+            numSamples = std::max(numSamples, m_data[i].at(sequenceIdx)->m_numberOfSamples);
         return numSamples;
     }
 
@@ -91,7 +91,7 @@ protected:
     size_t m_numSequences;
 
     // This is the actual chunk read from disk. We will call back to the deserializer for it to be deserialized
-    unique_ptr<byte[]> m_buffer;
+    std::unique_ptr<std::byte[]> m_buffer;
 
     // This is the deserializer who knows how to interpret the m_data chunk that we read in
     std::vector<BinaryDataDeserializerPtr> m_deserializers;
@@ -101,6 +101,6 @@ protected:
     std::vector<std::vector<SequenceDataPtr>> m_data;
 };
 
-typedef shared_ptr<BinaryDataChunk> BinaryChunkPtr;
+typedef std::shared_ptr<BinaryDataChunk> BinaryChunkPtr;
 
 }

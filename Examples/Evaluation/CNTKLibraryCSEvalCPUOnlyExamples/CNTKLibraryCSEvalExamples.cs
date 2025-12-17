@@ -87,7 +87,7 @@ namespace CNTKLibraryCSEvalExamples
                 // This program uses images from the CIFAR-10 dataset for evaluation.
                 // Please see README.md in <CNTK>/Examples/Image/DataSets/CIFAR-10 about how to download the CIFAR-10 dataset.
                 ThrowIfFileNotExist(SampleImage, string.Format("Error: The sample image '{0}' does not exist. Please see README.md in <CNTK>/Examples/Image/DataSets/CIFAR-10 about how to download the CIFAR-10 dataset.", SampleImage));
-                Bitmap bmp = new Bitmap(Bitmap.FromFile(SampleImage));
+                Bitmap bmp = new(Bitmap.FromFile(SampleImage));
                 var resized = bmp.Resize(imageWidth, imageHeight, true);
                 List<float> resizedCHW = resized.ParallelExtractCHW();
 
@@ -119,7 +119,7 @@ namespace CNTKLibraryCSEvalExamples
             catch (Exception ex)
             {
                 Console.WriteLine("Error: {0}\nCallStack: {1}\n Inner Exception: {2}", ex.Message, ex.StackTrace, ex.InnerException != null ? ex.InnerException.Message : "No Inner Exception");
-                throw ex;
+                throw;
             }
         }
 
@@ -213,7 +213,7 @@ namespace CNTKLibraryCSEvalExamples
             catch (Exception ex)
             {
                 Console.WriteLine("Error: {0}\nCallStack: {1}\n Inner Exception: {2}", ex.Message, ex.StackTrace, ex.InnerException != null ? ex.InnerException.Message : "No Inner Exception");
-                throw ex;
+                throw;
             }
         }
 
@@ -250,7 +250,7 @@ namespace CNTKLibraryCSEvalExamples
             // ParameterCloningMethod.Share specifies that model parameters are shared between cloned model functions, while
             // each model function instance has its own private state for evaluation.
             int numOfModelInstances = 3;
-            List<Function> modelPool = new List<Function>();
+            List<Function> modelPool = new();
             modelPool.Add(modelFunc);
 
             for (int i = 1; i < numOfModelInstances; i++)
@@ -279,7 +279,7 @@ namespace CNTKLibraryCSEvalExamples
                     {
                         Console.WriteLine(string.Format("Evaluating image {0} using thread {1}.", image, Thread.CurrentThread.ManagedThreadId));
 
-                        Bitmap bmp = new Bitmap(Bitmap.FromFile(image));
+                        Bitmap bmp = new(Bitmap.FromFile(image));
                         var resized = bmp.Resize(imageWidth, imageHeight, true);
                         List<float> resizedCHW = resized.ParallelExtractCHW();
 
@@ -301,9 +301,9 @@ namespace CNTKLibraryCSEvalExamples
 
                         // Add result to the buffer for output at a later time.
                         if (results.TryAdd(image, outputData) == false)
-                           throw new ArgumentException(string.Format("The image {0} has already been evaluated.", image));
-                   }
-               }));
+                            throw new ArgumentException(string.Format("The image {0} has already been evaluated.", image));
+                    }
+                }));
             }
 
             // Await until all images have been evaluated.
@@ -340,7 +340,7 @@ namespace CNTKLibraryCSEvalExamples
 
                 // Load model from memory buffer
                 Function modelFunc = Function.Load(modelBuffer, device);
-                
+
                 // Get shape data for the input variable
                 Variable inputVar = modelFunc.Arguments.Single();
                 NDShape inputShape = inputVar.Shape;
@@ -351,7 +351,7 @@ namespace CNTKLibraryCSEvalExamples
                 // This program uses images from the CIFAR-10 dataset for evaluation.
                 // Please see README.md in <CNTK>/Examples/Image/DataSets/CIFAR-10 about how to download the CIFAR-10 dataset.
                 ThrowIfFileNotExist(SampleImage, string.Format("Error: The sample image '{0}' does not exist. Please see README.md in <CNTK>/Examples/Image/DataSets/CIFAR-10 about how to download the CIFAR-10 dataset.", SampleImage));
-                Bitmap bmp = new Bitmap(Bitmap.FromFile(SampleImage));
+                Bitmap bmp = new(Bitmap.FromFile(SampleImage));
                 var resized = bmp.Resize(imageWidth, imageHeight, true);
                 List<float> resizedCHW = resized.ParallelExtractCHW();
 
@@ -380,7 +380,7 @@ namespace CNTKLibraryCSEvalExamples
             catch (Exception ex)
             {
                 Console.WriteLine("Error: {0}\nCallStack: {1}\n Inner Exception: {2}", ex.Message, ex.StackTrace, ex.InnerException != null ? ex.InnerException.Message : "No Inner Exception");
-                throw ex;
+                throw;
             }
         }
 
@@ -415,7 +415,7 @@ namespace CNTKLibraryCSEvalExamples
                 // This program uses images from the CIFAR-10 dataset for evaluation.
                 // Please see README.md in <CNTK>/Examples/Image/DataSets/CIFAR-10 about how to download the CIFAR-10 dataset.
                 ThrowIfFileNotExist(SampleImage, string.Format("Error: The sample image '{0}' does not exist. Please see README.md in <CNTK>/Examples/Image/DataSets/CIFAR-10 about how to download the CIFAR-10 dataset.", SampleImage));
-                Bitmap bmp = new Bitmap(Bitmap.FromFile(SampleImage));
+                Bitmap bmp = new(Bitmap.FromFile(SampleImage));
                 var resized = bmp.Resize(imageWidth, imageHeight, true);
                 List<float> resizedCHW = resized.ParallelExtractCHW();
 
@@ -444,7 +444,7 @@ namespace CNTKLibraryCSEvalExamples
             catch (Exception ex)
             {
                 Console.WriteLine("Error: {0}\nCallStack: {1}\n Inner Exception: {2}", ex.Message, ex.StackTrace, ex.InnerException != null ? ex.InnerException.Message : "No Inner Exception");
-                throw ex;
+                throw;
             }
         }
 
@@ -591,7 +591,7 @@ namespace CNTKLibraryCSEvalExamples
             catch (Exception ex)
             {
                 Console.WriteLine("Error: {0}\nCallStack: {1}\n Inner Exception: {2}", ex.Message, ex.StackTrace, ex.InnerException != null ? ex.InnerException.Message : "No Inner Exception");
-                throw ex;
+                throw;
             }
         }
 
@@ -720,7 +720,7 @@ namespace CNTKLibraryCSEvalExamples
             catch (Exception ex)
             {
                 Console.WriteLine("Error: {0}\nCallStack: {1}\n Inner Exception: {2}", ex.Message, ex.StackTrace, ex.InnerException != null ? ex.InnerException.Message : "No Inner Exception");
-                throw ex;
+                throw;
             }
         }
 
@@ -831,7 +831,7 @@ namespace CNTKLibraryCSEvalExamples
             catch (Exception ex)
             {
                 Console.WriteLine("Error: {0}\nCallStack: {1}\n Inner Exception: {2}", ex.Message, ex.StackTrace, ex.InnerException != null ? ex.InnerException.Message : "No Inner Exception");
-                throw ex;
+                throw;
             }
         }
 
@@ -876,7 +876,7 @@ namespace CNTKLibraryCSEvalExamples
                 // This program uses images from the CIFAR-10 dataset for evaluation.
                 // Please see README.md in <CNTK>/Examples/Image/DataSets/CIFAR-10 about how to download the CIFAR-10 dataset.
                 ThrowIfFileNotExist(SampleImage, string.Format("Error: The sample image '{0}' does not exist. Please see README.md in <CNTK>/Examples/Image/DataSets/CIFAR-10 about how to download the CIFAR-10 dataset.", SampleImage));
-                Bitmap bmp = new Bitmap(Bitmap.FromFile(SampleImage));
+                Bitmap bmp = new(Bitmap.FromFile(SampleImage));
                 var resized = bmp.Resize((int)imageWidth, (int)imageHeight, true);
                 List<float> resizedCHW = resized.ParallelExtractCHW();
 
@@ -902,7 +902,7 @@ namespace CNTKLibraryCSEvalExamples
             catch (Exception ex)
             {
                 Console.WriteLine("Error: {0}\nCallStack: {1}\n Inner Exception: {2}", ex.Message, ex.StackTrace, ex.InnerException != null ? ex.InnerException.Message : "No Inner Exception");
-                throw ex;
+                throw;
             }
         }
 
@@ -946,7 +946,7 @@ namespace CNTKLibraryCSEvalExamples
                 // This program uses images from the CIFAR-10 dataset for evaluation.
                 // Please see README.md in <CNTK>/Examples/Image/DataSets/CIFAR-10 about how to download the CIFAR-10 dataset.
                 ThrowIfFileNotExist(SampleImage, string.Format("Error: The sample image '{0}' does not exist. Please see README.md in <CNTK>/Examples/Image/DataSets/CIFAR-10 about how to download the CIFAR-10 dataset.", SampleImage));
-                Bitmap bmp = new Bitmap(Bitmap.FromFile(SampleImage));
+                Bitmap bmp = new(Bitmap.FromFile(SampleImage));
                 var resized = bmp.Resize((int)imageWidth, (int)imageHeight, true);
                 List<float> resizedCHW = resized.ParallelExtractCHW();
 
@@ -973,10 +973,11 @@ namespace CNTKLibraryCSEvalExamples
                     var outputData = value.GetDenseData<float>(variable);
 
                     string variableName = "last layer of the model";
-                    if (variable.Name == interLayerPrimitiveFunc.Name) {
+                    if (variable.Name == interLayerPrimitiveFunc.Name)
+                    {
                         variableName = "intermediate layer " + variable.Name;
                     }
-                    
+
                     Console.WriteLine("Evaluation result of {0}", variableName);
                     PrintOutput(variable.Shape.TotalSize, outputData);
                 }
@@ -984,7 +985,7 @@ namespace CNTKLibraryCSEvalExamples
             catch (Exception ex)
             {
                 Console.WriteLine("Error: {0}\nCallStack: {1}\n Inner Exception: {2}", ex.Message, ex.StackTrace, ex.InnerException != null ? ex.InnerException.Message : "No Inner Exception");
-                throw ex;
+                throw;
             }
         }
 

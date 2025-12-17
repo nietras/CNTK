@@ -10,15 +10,17 @@
 #include "CorpusDescriptor.h"
 #include "ConfigHelper.h"
 #include "Index.h"
-#include <boost/noncopyable.hpp>
 
 namespace CNTK {
 
 // Class represents a speech lattice.
 // Provides a set of chunks/sequences to the upper layers.
-class LatticeDeserializer : public DataDeserializerBase, private boost::noncopyable
+class LatticeDeserializer : public DataDeserializerBase
 {
 public:
+    LatticeDeserializer(const LatticeDeserializer&) = delete;    // non-copyable
+    LatticeDeserializer& operator=(const LatticeDeserializer&) = delete; // non-assignable
+
     // Expects new configuration.
     LatticeDeserializer(CorpusDescriptorPtr corpus, const ConfigParameters& config, bool primary);
 
@@ -42,7 +44,7 @@ private:
     // Initialization functions.
     void InitializeChunkInfos(CorpusDescriptorPtr corpus, ConfigHelper& config);
     void InitializeStreams(const std::wstring& featureName);
-    size_t RecordChunk(const string& latticePath, const vector<string>& tocLines, CorpusDescriptorPtr corpus, bool enableCaching, bool lastChunkInTOC);
+    size_t RecordChunk(const std::string& latticePath, const std::vector<std::string>& tocLines, CorpusDescriptorPtr corpus, bool enableCaching, bool lastChunkInTOC);
 
     CorpusDescriptorPtr m_corpus;
 

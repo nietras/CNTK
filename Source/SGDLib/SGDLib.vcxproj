@@ -27,7 +27,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>CNTK</RootNamespace>
     <ProjectName>SGDLib</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -41,7 +41,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <TargetName>Cntk.SGD-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.SGD</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -53,12 +53,12 @@
       <PreprocessorDefinitions>WIN32;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'!$(IsUWP)'">QUANTIZED_GRADIENT_AGGREGATION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(CNTK_ENABLE_ASGD)'!='false' and '!$(IsUWP)'">ASGD_PARALLEL_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4819</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4819;$(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(MSMPI_LIB64);$(OutDir);$(NvmlLibPath)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Cntk.ComputationNetwork-$(CntkComponentVersion).lib; Cntk.Math-$(CntkComponentVersion).lib; %(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>Cntk.Math-$(CntkComponentVersion).dll</DelayLoadDLLs>
+      <AdditionalDependencies>Cntk.ComputationNetwork.lib; Cntk.Math.lib; %(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>Cntk.Math.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="$(DebugBuild)">

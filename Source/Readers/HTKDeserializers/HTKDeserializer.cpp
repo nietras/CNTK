@@ -347,9 +347,12 @@ void HTKDeserializer::SequenceInfosForChunk(ChunkIdType chunkId, vector<Sequence
 
 // A wrapper around a matrix that views it as a vector of column vectors.
 // Does not have any memory associated.
-class MatrixAsVectorOfVectors : boost::noncopyable
+class MatrixAsVectorOfVectors
 {
 public:
+    MatrixAsVectorOfVectors(const MatrixAsVectorOfVectors&) = delete; // non-copyable
+    MatrixAsVectorOfVectors& operator=(const MatrixAsVectorOfVectors&) = delete; // non-assignable
+
     MatrixAsVectorOfVectors(msra::dbn::matrixbase& m)
         : m_matrix(m)
     {
@@ -372,10 +375,14 @@ private:
 
 // Represents a chunk data in memory. Given up to the randomizer.
 // It is up to the randomizer to decide when to release a particular chunk.
-class HTKDeserializer::HTKChunk : public Chunk, boost::noncopyable
+class HTKDeserializer::HTKChunk : public Chunk
 {
 public:
-    HTKChunk(HTKDeserializer* parent, ChunkIdType chunkId) : m_parent(parent), m_chunkId(chunkId)
+    HTKChunk(const HTKChunk&) = delete; // non-copyable
+    HTKChunk& operator=(const HTKChunk&) = delete; // non-assignable
+
+    HTKChunk(HTKDeserializer* parent, ChunkIdType chunkId)
+        : m_parent(parent), m_chunkId(chunkId)
     {
         auto& chunkInfo = m_parent->m_chunks[chunkId];
 

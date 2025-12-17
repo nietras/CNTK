@@ -567,7 +567,7 @@ template <class ElemType>
     let&  source = InputRef(SOURCEDATA).Value(); // source data to copy
 
 #ifdef _MSC_VER
-    auto& outputValuePtrRef = ValuePtrRef();
+    auto& outputValuePtrRef = this->ValuePtrRef();
 #else
     auto& outputValuePtrRef = this->template ValuePtrRef();
 #endif
@@ -642,7 +642,7 @@ template <class ElemType>
     let&  source = InputRef(SOURCEDATA).Value(); // source data to copy
 
 #ifdef _MSC_VER
-    auto& outputValuePtrRef = ValuePtrRef();
+    auto& outputValuePtrRef = this->ValuePtrRef();
 #else
     auto& outputValuePtrRef = this->template ValuePtrRef();
 #endif

@@ -7,7 +7,6 @@
 
 #include <vector>
 #include <memory>
-#include <boost/noncopyable.hpp>
 #include "Basics.h"
 
 namespace CNTK {
@@ -94,12 +93,16 @@ private:
 // to sequences within a chunk (residing in memory or on disk). Towards 
 // this end, it stores a mapping of sequence keys (unique size_t identifiers) 
 // to corresponding chunk ids and positions within the chunk.
-class Index : private boost::noncopyable
+class Index
 {
     friend class IndexBuilder;
 
 public:
-    Index(size_t chunkSize) : m_maxChunkSize(chunkSize)
+    Index(const Index&) = delete;                 // non-copyable
+    Index& operator=(const Index&) = delete; // non-assignable
+
+    Index(size_t chunkSize)
+        : m_maxChunkSize(chunkSize)
     {}
 
     // Reserves inner structures for the specified number of bytes.

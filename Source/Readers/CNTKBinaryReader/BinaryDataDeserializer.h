@@ -82,7 +82,7 @@ protected:
         uint32_t len;
         // read the name
         file.ReadOrDie(len);
-        vector<char> temp(len + 1 , '\0');
+        std::vector<char> temp(len + 1, '\0');
         file.ReadOrDie(temp.data(), sizeof(char), len);
         m_name = Microsoft::MSR::CNTK::ToFixedWStringFromMultiByte(temp.data());
     }
@@ -140,10 +140,10 @@ protected:
     DataType m_precision;
     ReaderDataType m_dataType;
     uint32_t m_sampleDimension;
-    wstring m_name;
+    std::wstring m_name;
 };
 
-typedef shared_ptr<BinaryDataDeserializer> BinaryDataDeserializerPtr;
+typedef std::shared_ptr<BinaryDataDeserializer> BinaryDataDeserializerPtr;
     
 class DenseBinaryDataDeserializer : public BinaryDataDeserializer
 {
@@ -159,7 +159,7 @@ public:
         size_t offset = 0;
         for (size_t i = 0; i < numSequences; i++)
         {
-            shared_ptr<DenseInputStreamBuffer> sequenceDataPtr = make_shared<DenseInputStreamBuffer>();
+            std::shared_ptr<DenseInputStreamBuffer> sequenceDataPtr = std::make_shared<DenseInputStreamBuffer>();
             sequenceDataPtr->m_numberOfSamples = *(uint32_t*)((char*)data + offset);
             offset += sizeof(uint32_t);
             sequenceDataPtr->m_data = (char*)data + offset;
@@ -200,7 +200,7 @@ public:
         result.resize(numSequences);
         for (size_t i = 0; i < numSequences; i++)
         {
-            shared_ptr<SparseInputStreamBuffer> sequenceDataPtr = make_shared<SparseInputStreamBuffer>();
+            std::shared_ptr<SparseInputStreamBuffer> sequenceDataPtr = std::make_shared<SparseInputStreamBuffer>();
             offset += GetSequenceData((char*)data + offset, sequenceDataPtr);
             sequenceDataPtr->m_sampleShape = GetSampleShape();
             sequenceDataPtr->m_elementType = m_precision;
@@ -210,7 +210,7 @@ public:
         return offset;
     }
 
-    size_t GetSequenceData(void* data, shared_ptr<SparseInputStreamBuffer>& sequence)
+    size_t GetSequenceData(void* data, std::shared_ptr<SparseInputStreamBuffer>& sequence)
     {
         size_t valueSize = SizeOfDataType();
         size_t offset = 0;

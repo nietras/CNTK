@@ -416,3 +416,31 @@ C:\git\oss\cntk\vcpkg integrate project
   from latest 535 driver version, so not sure what is wrong.
 * Appears some issue with still referring to CUDA 11.4 due to environment variable,
 * and some issues in `BestGpu.cpp` that hopefully resolved now.
+
+
+# CUDA 13.1.0 - Modifications to support Blackwell 50-series GPUs
+
+Download and install `cuda_13.1.0_windows.exe`. All. Fix `CUDA_PATH` etc. env.vars. after.
+```
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.1
+```
+Download and install `cudnn_9.17.0_windows_x86_64.exe`. Custom. Only for cuda13.1.
+```
+C:\Program Files\NVIDIA\CUDNN\v9.17
+```
+
+`CNTK.Cpp.props`
+```xml
+<WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+```
+
+Download latest boost 1.90.0 from
+https://sourceforge.net/projects/boost/files/boost-binaries/1.90.0/ for MSVC
+14.3-64.
+
+Install to `C:\local\boost_1_90_0\`
+
+```
+setx BOOST_INCLUDE_PATH c:\local\boost_1_90_0
+setx BOOST_LIB_PATH c:\local\boost_1_90_0\lib64-msvc-14.3
+```

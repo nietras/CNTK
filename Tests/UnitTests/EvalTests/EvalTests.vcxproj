@@ -27,7 +27,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>EvalTests</RootNamespace>
     <ProjectName>EvalTests</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(SolutionDir)\CNTK.Cpp.props" />
@@ -58,11 +58,11 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>$(BOOST_INCLUDE_PATH);$(SolutionDir)Source\Common\Include;$(SolutionDir)Source\ComputationNetworkLib;$(SolutionDir)Source\Math</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4819</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4819;$(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(OutDir);$(BOOST_LIB_PATH)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Cntk.Eval-$(CntkComponentVersion).lib; %(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Cntk.Eval.lib; %(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="$(DebugBuild)">

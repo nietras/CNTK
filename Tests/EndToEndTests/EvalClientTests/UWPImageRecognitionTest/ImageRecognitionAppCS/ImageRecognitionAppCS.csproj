@@ -18,7 +18,7 @@
     <AssemblyName>ImageRecognitionAppCS</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.17763.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <!-- Windows 10, November 2015 -->
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
@@ -85,10 +85,10 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
-    <Content Include="$(CNTKRoot)\$(Platform)\$(Configuration)\Cntk.Core_app-$(CntkComponentVersion).dll">
+    <Content Include="$(CNTKRoot)\$(Platform)\$(Configuration)\Cntk.Core_app.dll">
       <DeploymentContent>true</DeploymentContent>
     </Content>
-    <Content Include="$(CNTKRoot)\$(Platform)\$(Configuration)\Cntk.Math_app-$(CntkComponentVersion).dll">
+    <Content Include="$(CNTKRoot)\$(Platform)\$(Configuration)\Cntk.Math_app.dll">
       <DeploymentContent>true</DeploymentContent>
     </Content>
     <Content Include="$(CNTKRoot)\$(Platform)\$(Configuration)\libopenblas.dll">

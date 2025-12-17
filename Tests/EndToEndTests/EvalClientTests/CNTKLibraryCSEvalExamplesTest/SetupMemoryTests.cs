@@ -156,7 +156,7 @@ namespace CNTKLibraryCSEvalExamples
             catch (Exception ex)
             {
                 Console.WriteLine("Error: {0}\nCallStack: {1}\n Inner Exception: {2}", ex.Message, ex.StackTrace, ex.InnerException != null ? ex.InnerException.Message : "No Inner Exception");
-                throw ex;
+                throw;
             }
         }
     }

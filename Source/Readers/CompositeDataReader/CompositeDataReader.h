@@ -67,7 +67,7 @@ private:
     DataDeserializerPtr CreateDeserializer(const Microsoft::MSR::CNTK::ConfigParameters& readerConfig, bool primary);
     TransformerPtr CreateTransformer(const Microsoft::MSR::CNTK::ConfigParameters& config, const std::string& defaultModule, const std::wstring& transformerType);
 
-    bool ContainsDeserializer(const Microsoft::MSR::CNTK::ConfigParameters& readerConfig, const wstring& type);
+    bool ContainsDeserializer(const Microsoft::MSR::CNTK::ConfigParameters& readerConfig, const std::wstring& type);
 
     enum class PackingMode
     {

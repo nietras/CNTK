@@ -185,7 +185,7 @@ BinaryReader<ElemType>::~BinaryReader()
     for (size_t i = 0; i < m_fStream.size(); i++)
     {
         rc = fclose(m_fStream[i]);
-        if ((rc != FCLOSE_SUCCESS) && !std::uncaught_exception())
+        if ((rc != FCLOSE_SUCCESS) && !std::uncaught_exceptions())
         {
             RuntimeError("BinaryReader: failed to close stream %zu", i);
         }

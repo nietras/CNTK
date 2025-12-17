@@ -265,7 +265,7 @@ public:
                     std::make_pair(c,
                         std::make_shared<std::future<ChunkPtr>>(
                             std::async(
-                                launch::async,
+                                std::launch::async,
                                 [this, c, i]()
                                 {
                                     ChunkPtr chunk = m_parent->m_weakChunkTable[i][c].lock();

@@ -9,6 +9,7 @@
 #include "PrimitiveFunction.h"
 #include "CompositeFunction.h"
 
+using namespace std;
 
 namespace CNTK
 {

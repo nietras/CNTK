@@ -14,6 +14,7 @@
 
 namespace CNTK {
 
+using namespace std;
 using namespace Microsoft::MSR::CNTK;
 
 std::pair<vector<MBLayout::SequenceInfo>, size_t> SequencePacker::CreateSequenceInfos(const StreamBatch& batch)

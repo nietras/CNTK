@@ -52,7 +52,7 @@ public:
     std::string GetScpDir();
 
     // Adjusts utterance path according to the given root path and scp directory.
-    void AdjustUtterancePath(const std::string& rootPath, const string& scpDir, std::string& path);
+    void AdjustUtterancePath(const std::string& rootPath, const std::string& scpDir, std::string& path);
 
     // Gets names of feature, label, hmm and lattice files from the configuration.
     void GetDataNamesFromConfig(

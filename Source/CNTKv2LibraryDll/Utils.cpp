@@ -132,8 +132,8 @@ namespace CNTK
         }
         case DictionaryValue::Type::TrainingParameterSchedule:
         {
-            TrainingParameterSchedule<double>* schedulePtr1 = reinterpret_cast<TrainingParameterSchedule<double>*>(m_data.m_ptr);
-            TrainingParameterSchedule<double>* schedulePtr2 = reinterpret_cast<TrainingParameterSchedule<double>*>(other.m_data.m_ptr);
+            const TrainingParameterSchedule<double>* schedulePtr1 = reinterpret_cast<const TrainingParameterSchedule<double>*>(m_data.m_ptr);
+            const TrainingParameterSchedule<double>* schedulePtr2 = reinterpret_cast<const TrainingParameterSchedule<double>*>(other.m_data.m_ptr);
             return (*schedulePtr1) == (*schedulePtr2);
         }
         default:

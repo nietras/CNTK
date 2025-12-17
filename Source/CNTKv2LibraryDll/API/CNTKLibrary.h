@@ -5002,7 +5002,7 @@ namespace CNTK
 
         CNTK_API static TrainingParameterSchedule<T> Deserialize(const Dictionary& dictionary);
 
-        CNTK_API bool operator==(const TrainingParameterSchedule<T>& right)
+        CNTK_API bool operator==(const TrainingParameterSchedule<T>& right) const
         {
             return this->m_schedule == right.m_schedule
                 && this->m_epochSize == right.m_epochSize

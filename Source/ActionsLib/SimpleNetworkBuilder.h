@@ -20,7 +20,7 @@
 
 #pragma warning(disable : 4661)
 
-using namespace std; // TODO: ugh!
+//using namespace std; // TODO: ugh!
 
 /// this is for sparse input, useful when input dimension is very large and sparse such as language modeling
 /// to-do: need to use it guided by argument

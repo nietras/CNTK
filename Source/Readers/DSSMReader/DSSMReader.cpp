@@ -198,8 +198,8 @@ void DSSMReader<ElemType>::InitFromConfig(const ConfigRecordType& readerConfig)
     m_partialMinibatch = EqualCI(minibatchMode, "Partial");
 
     // Get the config parameters for query feature and doc feature
-    ConfigParameters configFeaturesQuery = readerConfig(m_featuresNameQuery, "");
-    ConfigParameters configFeaturesDoc   = readerConfig(m_featuresNameDoc, "");
+    ConfigParameters configFeaturesQuery = readerConfig(m_featuresNameQuery);
+    ConfigParameters configFeaturesDoc   = readerConfig(m_featuresNameDoc);
 
     if (configFeaturesQuery.size() == 0)
         RuntimeError("features file not found, required in configuration: i.e. 'features=[file=c:\\myfile.txt;start=1;dim=123]'");
@@ -293,7 +293,7 @@ void DSSMReader<ElemType>::StartMinibatchLoop(size_t mbSize, size_t epoch, size_
     }
     if (Randomize())
     {
-        random_shuffle(&read_order[0], &read_order[m_epochSize]);
+        std::shuffle(&read_order[0], &read_order[m_epochSize], std::default_random_engine(this->m_seed));
     }
     m_epoch = epoch;
     m_mbStartSample = epoch * m_epochSize;

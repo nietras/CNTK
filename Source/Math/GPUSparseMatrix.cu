@@ -3355,8 +3355,8 @@ void* GPUSparseMatrix<ElemType>::ReserveTempHostBuffer(const size_t sizeInByte) 
 {
     if (GetTempHostBufferSize() < sizeInByte)
     {
-        delete[](byte*) GetTempHostBuffer();
-        SetTempHostBuffer(new byte[sizeInByte]);
+        delete[](unsigned char*) GetTempHostBuffer();
+        SetTempHostBuffer(new unsigned char[sizeInByte]);
         SetTempHostBufferSize(sizeInByte);
     }
     return (void*) GetTempHostBuffer();

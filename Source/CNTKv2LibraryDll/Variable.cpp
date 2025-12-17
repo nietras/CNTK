@@ -10,6 +10,8 @@
 #include "Serialization.h"
 #include "InputAndParamNodes.h"
 
+using namespace std;
+
 namespace CNTK
 {
     Variable::Variable(const FunctionPtr& function)

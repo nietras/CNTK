@@ -7,7 +7,6 @@
 
 #include <stdint.h>
 #include <vector>
-#include <boost/noncopyable.hpp>
 #include "Index.h"
 #include "CorpusDescriptor.h"
 #include "BufferedFileReader.h"
@@ -43,7 +42,7 @@ public:
 };
 
 
-class IndexBuilder : private boost::noncopyable
+class IndexBuilder
 {
     struct Prefix {
         Prefix() = default;
@@ -61,6 +60,9 @@ class IndexBuilder : private boost::noncopyable
     };
 
 public:
+    IndexBuilder(const IndexBuilder&) = delete; // non-copyable
+    IndexBuilder& operator=(const IndexBuilder&) = delete; // non-assignable
+
     // Reads the input file, building and index of chunks and corresponding
     // sequences. Returns input data index (chunk and sequence metadata);
     std::shared_ptr<Index> Build();

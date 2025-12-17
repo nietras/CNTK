@@ -153,7 +153,7 @@ SyncGuard::~SyncGuard()
         // to check for errors. So this destructor is where CUDA errors would be thrown.
         // If this destructor runs during stack unwinding, then a different error has
         // already happened that should be reported; so we only clean up the resource.
-        if (std::uncaught_exception())
+        if (std::uncaught_exceptions())
             cudaEventDestroy(m_done);
         else
         {
@@ -1022,7 +1022,7 @@ static void Peek(const GPUMatrix<ElemType>& m, const char* which)
     ElemType buf[10000] = { 0 };
     size_t n = min(rows * cols, _countof(buf));
     CUDA_CALL(cudaMemcpy(buf, m.Data(), sizeof(ElemType) * n, cudaMemcpyDeviceToHost));
-    UNUSED(which); UNUSED(rows); UNUSED(cols); sin(1.0f); // set breakpoint here
+    UNUSED(which); UNUSED(rows); UNUSED(cols); UNUSED(sin(1.0f)); // set breakpoint here
     //CUDA_CALL(cudaMemcpy(const_cast<ElemType*>(m.Data()), buf, sizeof(ElemType) * n, cudaMemcpyHostToDevice));
 }
 

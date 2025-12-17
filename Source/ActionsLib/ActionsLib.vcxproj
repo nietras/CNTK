@@ -35,7 +35,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>CNTK</RootNamespace>
     <ProjectName>ActionsLib</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -49,12 +49,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <TargetName>Cntk.Actions$(OutputSuffix)-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.Actions$(OutputSuffix)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)Source\Readers\ReaderLib;$(SolutionDir)Source\CNTKv2LibraryDll;$(SolutionDir)Source\CNTKv2LibraryDll\API;$(SolutionDir)Source\CNTKv2LibraryDll\API\Internals;$(SolutionDir)Source\SequenceTrainingLib;$(SolutionDir)Source\SGDLib;$(SolutionDir)Source\ComputationNetworkLib;$(SolutionDir)Source\CNTK;$(SolutionDir)Source\Math;$(SolutionDir)Source\Common\Include;$(SolutionDir)Source\CNTK\BrainScript;$(MSMPI_INC);$(NvmlInclude)</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4819</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4819;$(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(MSMPI_LIB64);$(OutDir);$(NvmlLibPath)</AdditionalLibraryDirectories>
@@ -67,8 +67,8 @@
       <PreprocessorDefinitions>WIN32;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Cntk.Math-$(CntkComponentVersion).lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>Cntk.Math-$(CntkComponentVersion).dll</DelayLoadDLLs>
+      <AdditionalDependencies>Cntk.Math.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>Cntk.Math.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="$(DebugBuild) Or $(NoOptBuild)">

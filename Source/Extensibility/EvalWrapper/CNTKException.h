@@ -7,7 +7,7 @@
 
 #include "ExceptionWithCallStack.h"
 
-using namespace std;
+//using namespace std;
 using namespace System;
 using namespace System::Collections::Generic;
 using namespace System::Collections;

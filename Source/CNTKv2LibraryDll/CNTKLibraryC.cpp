@@ -12,7 +12,6 @@
 #include "stdafx.h"
 #include <string>
 #include <algorithm>
-#include <boost/noncopyable.hpp>
 #include "ExceptionWithCallStack.h"
 #include "EvaluatorWrapper.h"
 

@@ -387,7 +387,7 @@ BestGpu::~BestGpu()
     if (m_nvmlData)
     {
         nvmlReturn_t r = nvmlShutdown();
-        if ((r != NVML_SUCCESS) && !std::uncaught_exception())
+        if ((r != NVML_SUCCESS) && !std::uncaught_exceptions())
         {
             RuntimeError("BestGPU Destructor: failed to shut down NVML. \n");
         }

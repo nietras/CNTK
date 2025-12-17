@@ -53,7 +53,7 @@ public:
         auto inputDataValue = ::CNTK::MakeSharedObject<::CNTK::Value>(inputDataNDArrayView, ::CNTK::CreateMask(sequenceLengths));
         auto dummyVar = ::CNTK::InputVariable(::CNTK::AsNDShape(GetSampleLayout()), this->IsValueSparse(), ::CNTK::AsDataType<ElemType>());
 #ifdef _MSC_VER
-        auto& outputValuePtrRef = ValuePtrRef();
+        auto& outputValuePtrRef = this->ValuePtrRef();
 #else
         auto& outputValuePtrRef = this->template ValuePtrRef();
 #endif
@@ -326,7 +326,7 @@ public:
         UpdateFunctionValuesSize();
 
 #ifdef _MSC_VER
-        auto& outputValuePtrRef = ValuePtrRef();
+        auto& outputValuePtrRef = this->ValuePtrRef();
 #else
         auto& outputValuePtrRef = this->template ValuePtrRef();
 #endif

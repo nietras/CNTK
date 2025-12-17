@@ -53,8 +53,8 @@
     <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(SolutionDir)$(Platform)\$(Configuration)\Cntk.Core$(OutputSuffix)-$(CntkComponentVersion).dll" />
-    <None Include="$(SolutionDir)$(Platform)\$(Configuration)\Cntk.Math$(OutputSuffix)-$(CntkComponentVersion).dll" />
+    <None Include="$(SolutionDir)$(Platform)\$(Configuration)\Cntk.Core$(OutputSuffix).dll" />
+    <None Include="$(SolutionDir)$(Platform)\$(Configuration)\Cntk.Math$(OutputSuffix).dll" />
     <None Include="$(SolutionDir)$(Platform)\$(Configuration)\Math\libopenblas.dll" />
     <None Include="GeneratedCode\CNTKDevelopmentTemporaryKey.pfx" />
   </ItemGroup>

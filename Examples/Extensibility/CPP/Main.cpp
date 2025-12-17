@@ -53,10 +53,10 @@ void UserTimesFunctionExample()
         const double absoluteTolerance = 0.000001f;
 
         if (!Internal::AreEqual(*userDefinedTimesOutputValue, *builtInTimesOutputValue, relativeTolerance, absoluteTolerance))
-            std::runtime_error("UserTimesOp's Forward result does not match built-in result");
+            throw std::runtime_error("UserTimesOp's Forward result does not match built-in result");
 
         if (!Internal::AreEqual(*userDefinedTimesInputGradientValue, *builtInTimesInputGradientValue, relativeTolerance, absoluteTolerance))
-            std::runtime_error("UserTimesOp's Forward result does not match built-in result");
+            throw std::runtime_error("UserTimesOp's Forward result does not match built-in result");
 
     };
 
@@ -84,7 +84,8 @@ void UserTimesFunctionExample()
 }
 #pragma warning(pop)
 
-void main()
+int main()
 {
     UserTimesFunctionExample();
+    return 0;
 }

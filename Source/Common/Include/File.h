@@ -24,7 +24,7 @@
 
 namespace Microsoft { namespace MSR { namespace CNTK {
 
-using namespace std;
+//using namespace std;
 
 // file options, Type of textfile to use
 enum FileOptions

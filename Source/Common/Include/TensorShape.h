@@ -160,7 +160,7 @@ public:
     }
     void operator=(const SmallVector& other)
     {
-        if (m_data == other.m_data)
+        if (&m_data[0] == &other.m_data[0])
             return;
         m_size = other.m_size;
         memcpy(m_data, other.m_data, other.m_size * sizeof(T));
@@ -843,7 +843,7 @@ static inline std::string ToString(ImageLayoutKind imageLayoutKind)
     else
         LogicError("ImageLayout: Invalid ImageLayoutKind");
 }
-static inline ImageLayoutKind ImageLayoutKindFrom(const wstring& s)
+static inline ImageLayoutKind ImageLayoutKindFrom(const std::wstring& s)
 {
     if (s == L"CHW" || s == L"cudnn")
         return ImageLayoutKind::CHW;

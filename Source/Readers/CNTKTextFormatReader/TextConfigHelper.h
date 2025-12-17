@@ -20,10 +20,10 @@ public:
     explicit TextConfigHelper(const Microsoft::MSR::CNTK::ConfigParameters& config);
 
     // Get all input streams that are specified in the configuration.
-    const vector<StreamDescriptor>& GetStreams() const { return m_streams; }
+    const std::vector<StreamDescriptor>& GetStreams() const { return m_streams; }
 
     // Get full path to the input file.
-    const wstring& GetFilePath() const { return m_filepath; }
+    const std::wstring& GetFilePath() const { return m_filepath; }
 
     size_t GetRandomizationWindow() const { return m_randomizationWindow; }
 

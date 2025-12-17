@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include <boost/noncopyable.hpp>
 #include "HTKDeserializer.h"
 #include "CorpusDescriptor.h"
 #include "MLFUtils.h"
@@ -67,9 +66,12 @@ struct MLFSequenceData : SparseSequenceData
 
 // Class represents an MLF deserializer.
 // Provides a set of chunks/sequences to the upper layers.
-class MLFDeserializer : public DataDeserializerBase, boost::noncopyable
+class MLFDeserializer : public DataDeserializerBase
 {
 public:
+    MLFDeserializer(const MLFDeserializer&) = delete;                // non-copyable
+    MLFDeserializer& operator=(const MLFDeserializer&) = delete; // non-assignable
+
     // Expects new configuration.
     MLFDeserializer(CorpusDescriptorPtr corpus, const ConfigParameters& config, bool primary);
 

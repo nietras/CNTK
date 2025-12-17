@@ -72,7 +72,7 @@ GranularGPUDataTransferer::GranularGPUDataTransferer(int deviceId, const cudaStr
 
 GranularGPUDataTransferer::~GranularGPUDataTransferer()
 {
-    // TODO: Check for error code and throw if !std::uncaught_exception()
+    // TODO: Check for error code and throw if !std::uncaught_exceptions()
     cudaEventDestroy(m_assignCompleteEvent);
     cudaEventDestroy(m_fetchCompleteEvent);
     cudaEventDestroy(m_syncEvent);

@@ -14,6 +14,7 @@
 
 #pragma warning(disable : 4505) // 'function' : unreferenced local function has been removed
 
+#define CUDA_NO_HALF
 #include <cuda_fp16.h> // ASSUME CUDA10
 #else
 class alignas(2) __half
@@ -138,6 +139,22 @@ inline Microsoft::MSR::CNTK::File& operator<<(Microsoft::MSR::CNTK::File& stream
     return stream;
 }
 
+inline std::ostream &operator<<(std::ostream &os, const half &h)
+{
+    os << static_cast<float>(h);
+    return os;
+}
+
+// Stream input for half
+inline std::istream &operator>>(std::istream &is, half &h)
+{
+    float f;
+    is >> f;
+    h = half(f);
+    return is;
+}
+
+//#ifndef __CUDA_ARCH__
 /* Some basic arithmetic operations expected of a builtin */
 __FP16_DECL__ half operator+(const half &lh, const half &rh) { return (half)((float)lh + (float)rh); }
 __FP16_DECL__ half operator-(const half &lh, const half &rh) { return (half)((float)lh - (float)rh); }
@@ -165,6 +182,7 @@ __FP16_DECL__ bool operator> (const half &lh, const half &rh) { return (float)lh
 __FP16_DECL__ bool operator< (const half &lh, const half &rh) { return (float)lh < (float)rh; }
 __FP16_DECL__ bool operator>=(const half &lh, const half &rh) { return (float)lh >= (float)rh; }
 __FP16_DECL__ bool operator<=(const half &lh, const half &rh) { return (float)lh <= (float)rh; }
+//#endif
 
 // overload binary operators between 'half' and build-in type. TODO: This should be handled in a better way
 // int

@@ -99,7 +99,7 @@ private:
         auto leftInputVariable = Inputs()[0];
         auto rightInputVariable = Inputs()[1];
         if (backPropagatedGradientValuesForInputs.find(rightInputVariable) != backPropagatedGradientValuesForInputs.end())
-            std::runtime_error("UserTimesFunction does not support computing gradient wrt right operand");
+            throw std::runtime_error("UserTimesFunction does not support computing gradient wrt right operand");
 
         auto rightInputData = state->SavedForwardPropValues().at(rightInputVariable)->Data();
 
@@ -128,13 +128,13 @@ private:
         auto rightOperand = Inputs()[1];
 
         if (leftOperand.Shape().Rank() != 2)
-            std::runtime_error("Left operand must be 2D");
+            throw std::runtime_error("Left operand must be 2D");
 
         if (rightOperand.Shape().Rank() != 1)
-            std::runtime_error("Right operand must be 1D");
+            throw std::runtime_error("Right operand must be 1D");
 
         if (!leftOperand.DynamicAxes().empty())
-            std::runtime_error("Left operand must not have dynamic axes (i.e. should not be minibatch data, but be a Parameter of fixed size)");
+            throw std::runtime_error("Left operand must not have dynamic axes (i.e. should not be minibatch data, but be a Parameter of fixed size)");
 
         outputs.push_back(OutputVariable(NDShape({ leftOperand.Shape()[0] }), leftOperand.GetDataType(), rightOperand.DynamicAxes()));
     }

@@ -253,6 +253,7 @@
     <None Include="BrainScript\Doc\BrainScript--extending the CNTK config language, Frank Seide August 2015.pptx">
       <Filter>BrainScript\Doc</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="BrainScript\CNTKCoreLib\CNTK.core.bs">

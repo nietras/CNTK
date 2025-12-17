@@ -177,7 +177,7 @@ void RandomSampleNode<ElemType>::ForwardPropNonLooping()
         // affect other nodes who share this matrix due to memory sharing
         auto newSparseValueMatrix = std::make_shared<Matrix<ElemType>>(ValueAsMatrix().GetNumRows(), ValueAsMatrix().GetNumCols(), CPUDEVICE, SPARSE, matrixFormatSparseCSC);
 #ifdef _MSC_VER
-        ValuePtrRef() = newSparseValueMatrix;
+        this->ValuePtrRef() = newSparseValueMatrix;
 #else
         this->template ValuePtrRef() = newSparseValueMatrix;
 #endif

@@ -107322,7 +107322,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_CNTK_TrainingParameterScheduleDouble_
   } 
   {
     try {
-      result = (bool)(arg1)->operator ==((CNTK::TrainingParameterSchedule< double > const &)*arg2); 
+      result = (bool)((CNTK::TrainingParameterSchedule< double > const *)arg1)->operator ==((CNTK::TrainingParameterSchedule< double > const &)*arg2); 
     }
     catch (const Swig::DirectorException &e) {
       {

@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include <boost/noncopyable.hpp>
 #include "IndexBuilder.h"
 #include <limits>
 

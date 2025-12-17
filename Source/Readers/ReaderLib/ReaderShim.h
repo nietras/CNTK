@@ -138,7 +138,7 @@ private:
     std::unordered_map<std::wstring, size_t> m_nameToStreamId;
 
     std::vector<StreamInformation> m_streams;
-    launch m_launchType;
+    std::launch m_launchType;
 
     // Data structure required for prefetch.
     struct StreamPrefetchBuffer

@@ -55,8 +55,8 @@ inline bool AreEqualIgnoreCase(wchar_t a, wchar_t b)
 
 template <class TElement>
 inline bool AreEqualIgnoreCase(
-    const std::basic_string<TElement, char_traits<TElement>, allocator<TElement>>& s1,
-    const std::basic_string<TElement, char_traits<TElement>, allocator<TElement>>& s2)
+    const std::basic_string<TElement, std::char_traits<TElement>, std::allocator<TElement>>& s1,
+    const std::basic_string<TElement, std::char_traits<TElement>, std::allocator<TElement>>& s2)
 {
     if (s1.size() != s2.size())
     {

@@ -11,15 +11,17 @@
 #include "UtteranceDescription.h"
 #include "HTKChunkDescription.h"
 #include "ConfigHelper.h"
-#include <boost/noncopyable.hpp>
 
 namespace CNTK {
 
 // Class represents an HTK deserializer.
 // Provides a set of chunks/sequences to the upper layers.
-class HTKDeserializer : public DataDeserializerBase, private boost::noncopyable
+class HTKDeserializer : public DataDeserializerBase
 {
 public:
+    HTKDeserializer(const HTKDeserializer&) = delete;     // non-copyable
+    HTKDeserializer& operator=(const HTKDeserializer&) = delete; // non-assignable
+
     // Expects new configuration.
     HTKDeserializer(CorpusDescriptorPtr corpus, const ConfigParameters& config, bool primary);
 

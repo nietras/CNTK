@@ -24,7 +24,7 @@
 
 namespace Microsoft { namespace MSR { namespace CNTK {
 
-using namespace std;
+//using namespace std;
 
 // base class that we can catch, independent of the type parameter
 struct /*interface*/ IExceptionWithCallStackBase

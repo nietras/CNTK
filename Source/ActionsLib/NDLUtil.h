@@ -13,7 +13,7 @@
 #include "Config.h"
 #include <stdexcept>
 
-using namespace std;
+//using namespace std;
 
 namespace Microsoft { namespace MSR { namespace CNTK {
 

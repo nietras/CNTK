@@ -73,10 +73,10 @@ namespace CNTK {
     public:
         TypedLabelGenerator(size_t labelDimension) : m_value(1), m_indices(labelDimension)
         {
-            if (labelDimension > numeric_limits<SparseIndexType>::max())
+            if (labelDimension > std::numeric_limits<SparseIndexType>::max())
             {
                 RuntimeError("Label dimension (%d) exceeds the maximum allowed "
-                    "value (%d)\n", (int)labelDimension, (int)numeric_limits<SparseIndexType>::max());
+                    "value (%d)\n", (int)labelDimension, (int)std::numeric_limits<SparseIndexType>::max());
             }
             iota(m_indices.begin(), m_indices.end(), 0);
         }

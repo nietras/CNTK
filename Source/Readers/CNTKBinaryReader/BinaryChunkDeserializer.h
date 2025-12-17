@@ -72,11 +72,11 @@ public:
 
 private:
     uint32_t m_numChunks;
-    unique_ptr<BinaryChunkInfo[]> m_diskOffsetsTable;
-    vector<uint64_t> m_startIndex;
+    std::unique_ptr<BinaryChunkInfo[]> m_diskOffsetsTable;
+    std::vector<uint64_t> m_startIndex;
 };
 
-typedef unique_ptr<ChunkTable> ChunkTablePtr;
+typedef std::unique_ptr<ChunkTable> ChunkTablePtr;
 
 class CorpusDescriptor;
 typedef std::shared_ptr<CorpusDescriptor> CorpusDescriptorPtr;
@@ -109,9 +109,9 @@ private:
     void ReadChunkTable();
 
     // Reads a chunk from disk into buffer
-    unique_ptr<byte[]> ReadChunk(ChunkIdType chunkId);
+    std::unique_ptr<std::byte[]> ReadChunk(ChunkIdType chunkId);
 
-    BinaryChunkDeserializer(const wstring& filename);
+    BinaryChunkDeserializer(const std::wstring& filename);
 
     void SetTraceLevel(unsigned int traceLevel);
 

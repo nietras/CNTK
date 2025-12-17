@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.props" Condition="Exists('..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -27,7 +28,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>CNTK</RootNamespace>
     <ProjectName>CNTK</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(SolutionDir)\CNTK.Cpp.props" />
@@ -58,7 +59,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)Source\CNTKv2LibraryDll;$(SolutionDir)Source\CNTKv2LibraryDll\API;$(SolutionDir)Source\CNTKv2LibraryDll\API\Internals;$(SolutionDir)Source\CNTKv2LibraryDll\Generated\Windows;$(SolutionDir)Source\Readers\ReaderLib;$(SolutionDir)Source\ActionsLib;$(SolutionDir)Source\SequenceTrainingLib;$(SolutionDir)Source\SGDLib;$(SolutionDir)Source\ComputationNetworkLib;$(SolutionDir)Source\Math;$(SolutionDir)Source\Common\Include;$(SolutionDir)Source\CNTK\BrainScript;$(MSMPI_INC);$(NvmlInclude);$(SolutionDir)Source\PerformanceProfilerDll</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4819</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4819;$(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(MSMPI_LIB64);$(OutDir);$(NvmlLibPath)</AdditionalLibraryDirectories>
@@ -79,8 +80,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Cntk.Core-$(CntkComponentVersion).lib;Cntk.Actions-$(CntkComponentVersion).lib; Cntk.SGD-$(CntkComponentVersion).lib; Cntk.ComputationNetwork-$(CntkComponentVersion).lib; Cntk.Math-$(CntkComponentVersion).lib; Cntk.Common-$(CntkComponentVersion).lib; kernel32.lib; user32.lib; shell32.lib; Cntk.SequenceTrainingLib-$(CntkComponentVersion).lib; Cntk.PerformanceProfiler-$(CntkComponentVersion).lib; %(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>Cntk.Math-$(CntkComponentVersion).dll; msmpi.dll; nvml.dll; $(CudaRuntimeDll)</DelayLoadDLLs>
+      <AdditionalDependencies>Cntk.Core.lib;Cntk.Actions.lib; Cntk.SGD.lib; Cntk.ComputationNetwork.lib; Cntk.Math.lib; Cntk.Common.lib; kernel32.lib; user32.lib; shell32.lib; Cntk.SequenceTrainingLib.lib; Cntk.PerformanceProfiler.lib; %(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>Cntk.Math.dll; msmpi.dll; nvml.dll; $(CudaRuntimeDll)</DelayLoadDLLs>
       <StackReserveSize>200000000</StackReserveSize>
     </Link>
     <PreBuildEvent>
@@ -107,9 +108,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>Cntk.Core-$(CntkComponentVersion).lib;Cntk.Actions-$(CntkComponentVersion).lib;Cntk.SGD-$(CntkComponentVersion).lib;Cntk.ComputationNetwork-$(CntkComponentVersion).lib;Cntk.Math-$(CntkComponentVersion).lib;Cntk.Common-$(CntkComponentVersion).lib;kernel32.lib;user32.lib;shell32.lib;Cntk.SequenceTrainingLib-$(CntkComponentVersion).lib;Cntk.PerformanceProfiler-$(CntkComponentVersion).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Cntk.Core.lib;Cntk.Actions.lib;Cntk.SGD.lib;Cntk.ComputationNetwork.lib;Cntk.Math.lib;Cntk.Common.lib;kernel32.lib;user32.lib;shell32.lib;Cntk.SequenceTrainingLib.lib;Cntk.PerformanceProfiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Profile>true</Profile>
-      <DelayLoadDLLs>Cntk.Math-$(CntkComponentVersion).dll; msmpi.dll; nvml.dll; $(CudaRuntimeDll)</DelayLoadDLLs>
+      <DelayLoadDLLs>Cntk.Math.dll; msmpi.dll; nvml.dll; $(CudaRuntimeDll)</DelayLoadDLLs>
       <StackReserveSize>200000000</StackReserveSize>
     </Link>
     <PreBuildEvent>
@@ -122,7 +123,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions);CPUONLY</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <DelayLoadDLLs>Cntk.Math-$(CntkComponentVersion).dll; msmpi.dll;</DelayLoadDLLs>
+      <DelayLoadDLLs>Cntk.Math.dll; msmpi.dll;</DelayLoadDLLs>
     </Link>
     <PostBuildEvent>
       <Message>Copying dependencies</Message>
@@ -219,8 +220,18 @@
       <ExcludedFromBuild>false</ExcludedFromBuild>
     </Xml>
     <None Include="BrainScript\Doc\BrainScript--extending the CNTK config language, Frank Seide August 2015.pptx" />
+    <None Include="packages.config" />
     <None Include="prebuild.bat" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.targets" Condition="Exists('..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.props'))" />
+    <Error Condition="!Exists('..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.1.0.0\build\native\vcpkg.C.ProgramFiles.MicrosoftVisualStudio.2022.Enterprise.VC.vcpkg.targets'))" />
+  </Target>
 </Project>

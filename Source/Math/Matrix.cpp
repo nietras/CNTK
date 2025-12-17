@@ -20,7 +20,8 @@
 #include "Quantizers.h"
 #include "half.hpp"
 #ifndef CPUONLY
-#define ANAMEFORLIB "Cntk.Math.Cuda-" ## CNTK_COMPONENT_VERSION ## ".lib"
+//#define ANAMEFORLIB "Cntk.Math.Cuda-" ## CNTK_COMPONENT_VERSION ## ".lib"
+#define ANAMEFORLIB "Cntk.Math.Cuda.lib"
 #pragma comment(lib, ANAMEFORLIB) // built by MathCUDA project
 #undef ANAMEFORLIB
 #endif
