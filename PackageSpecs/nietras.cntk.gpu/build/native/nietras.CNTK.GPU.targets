@@ -22,7 +22,7 @@
       <AdditionalIncludeDirectories>$(CNTKPackageRoot)build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>$(CNTKPackageRoot)build\native\lib\x64\$(CNTKBuild)\Cntk.Core-$(CNTKComponentVersion).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(CNTKPackageRoot)build\native\lib\x64\$(CNTKBuild)\Cntk.Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="!$(CNTKSupported)">
@@ -31,13 +31,13 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <Target Name="cntk_redist_AfterBuild" Condition="$(CNTKSupported)" AfterTargets="AfterBuild">
-    <Copy SourceFiles="$(CNTKPackageRoot)support\x64\$(CNTKBuild)\Cntk.Core-$(CNTKComponentVersion).dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(CNTKPackageRoot)support\x64\$(CNTKBuild)\Cntk.Math-$(CNTKComponentVersion).dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(CNTKPackageRoot)support\x64\$(CNTKBuild)\Cntk.PerformanceProfiler-$(CNTKComponentVersion).dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(CNTKPackageRoot)support\x64\$(CNTKBuild)\Cntk.Deserializers.Binary-$(CNTKComponentVersion).dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(CNTKPackageRoot)support\x64\$(CNTKBuild)\Cntk.Deserializers.TextFormat-$(CNTKComponentVersion).dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(CNTKPackageRoot)support\x64\$(CNTKBuild)\Cntk.Composite-$(CNTKComponentVersion).dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(CNTKPackageRoot)support\x64\$(CNTKBuild)\Cntk.Deserializers.HTK-$(CNTKComponentVersion).dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(CNTKPackageRoot)support\x64\$(CNTKBuild)\Cntk.Deserializers.Image-$(CNTKComponentVersion).dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(CNTKPackageRoot)support\x64\$(CNTKBuild)\Cntk.Core.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(CNTKPackageRoot)support\x64\$(CNTKBuild)\Cntk.Math.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(CNTKPackageRoot)support\x64\$(CNTKBuild)\Cntk.PerformanceProfiler.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(CNTKPackageRoot)support\x64\$(CNTKBuild)\Cntk.Deserializers.Binary.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(CNTKPackageRoot)support\x64\$(CNTKBuild)\Cntk.Deserializers.TextFormat.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(CNTKPackageRoot)support\x64\$(CNTKBuild)\Cntk.Composite.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(CNTKPackageRoot)support\x64\$(CNTKBuild)\Cntk.Deserializers.HTK.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(CNTKPackageRoot)support\x64\$(CNTKBuild)\Cntk.Deserializers.Image.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
   </Target>
 </Project>

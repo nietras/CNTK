@@ -56,10 +56,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="$(DebugBuild)">
     <LinkIncremental>true</LinkIncremental>
-    <TargetName>Cntk.Core$(OutputSuffix)-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.Core$(OutputSuffix)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="$(ReleaseBuild)">
-    <TargetName>Cntk.Core$(OutputSuffix)-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.Core$(OutputSuffix)</TargetName>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
     <VcpkgEnableManifest>true</VcpkgEnableManifest>
@@ -106,7 +106,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Source\ComputationNetworkLib;$(SolutionDir)Source\Math;$(MSMPI_LIB64);$(SolutionDir)$(Platform)\$(Configuration);$(NvmlLibPath);$(ProtobufLibPath)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(ReaderLibs);Cntk.Common$(OutputSuffix)-$(CntkComponentVersion).lib;Cntk.ComputationNetwork$(OutputSuffix)-$(CntkComponentVersion).lib;Cntk.SequenceTrainingLib$(OutputSuffix)-$(CntkComponentVersion).lib;$(ProtobufLib);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(ReaderLibs);Cntk.Common$(OutputSuffix).lib;Cntk.ComputationNetwork$(OutputSuffix).lib;Cntk.SequenceTrainingLib$(OutputSuffix).lib;$(ProtobufLib);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>prebuild.bat "$(Configuration)" "$(CNTK_MKL_SEQUENTIAL)" "$(CudaPath)" "$(CUDNN_PATH)" "$(CUB_PATH)" "$(CNTK_ENABLE_ASGD)"</Command>
@@ -126,8 +126,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <DelayLoadDLLs>Cntk.Math$(OutputSuffix)-$(CntkComponentVersion).dll; nvml.dll; $(CudaRuntimeDll); msmpi.dll;</DelayLoadDLLs>
-      <DelayLoadDLLs Condition="!$(IsUWP)">%(DelayLoadDLLs); Cntk.PerformanceProfiler-$(CntkComponentVersion).dll;Cntk.DelayLoadedExtensions-$(CntkComponentVersion).dll</DelayLoadDLLs>
+      <DelayLoadDLLs>Cntk.Math$(OutputSuffix).dll; nvml.dll; $(CudaRuntimeDll); msmpi.dll;</DelayLoadDLLs>
+      <DelayLoadDLLs Condition="!$(IsUWP)">%(DelayLoadDLLs); Cntk.PerformanceProfiler.dll;Cntk.DelayLoadedExtensions.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="$(ReleaseBuild)">
@@ -145,8 +145,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <DelayLoadDLLs>Cntk.Math$(OutputSuffix)-$(CntkComponentVersion).dll; nvml.dll; $(CudaRuntimeDll); msmpi.dll;</DelayLoadDLLs>
-      <DelayLoadDLLs Condition="!$(IsUWP)">%(DelayLoadDLLs); Cntk.PerformanceProfiler-$(CntkComponentVersion).dll;Cntk.DelayLoadedExtensions-$(CntkComponentVersion).dll</DelayLoadDLLs>
+      <DelayLoadDLLs>Cntk.Math$(OutputSuffix).dll; nvml.dll; $(CudaRuntimeDll); msmpi.dll;</DelayLoadDLLs>
+      <DelayLoadDLLs Condition="!$(IsUWP)">%(DelayLoadDLLs); Cntk.PerformanceProfiler.dll;Cntk.DelayLoadedExtensions.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="$(CpuOnlyBuild)">
@@ -156,8 +156,8 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug_CpuOnly|x64'">$(IntDir)\$(ProjectName)\$(ConfigurationName)\%(RelativeDir)</ObjectFileName>
     </ClCompile>
     <Link>
-      <DelayLoadDLLs>Cntk.Math$(OutputSuffix)-$(CntkComponentVersion).dll; msmpi.dll;</DelayLoadDLLs>
-      <DelayLoadDLLs Condition="!$(IsUWP)">%(DelayLoadDLLs); Cntk.PerformanceProfiler-$(CntkComponentVersion).dll;Cntk.DelayLoadedExtensions-$(CntkComponentVersion).dll</DelayLoadDLLs>
+      <DelayLoadDLLs>Cntk.Math$(OutputSuffix).dll; msmpi.dll;</DelayLoadDLLs>
+      <DelayLoadDLLs Condition="!$(IsUWP)">%(DelayLoadDLLs); Cntk.PerformanceProfiler.dll;Cntk.DelayLoadedExtensions.dll</DelayLoadDLLs>
       <OptimizeReferences Condition="'$(Configuration)|$(Platform)'=='Debug_CpuOnly|x64'">false</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>

@@ -53,7 +53,7 @@
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetName>Cntk.Deserializers.Image-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.Deserializers.Image</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>

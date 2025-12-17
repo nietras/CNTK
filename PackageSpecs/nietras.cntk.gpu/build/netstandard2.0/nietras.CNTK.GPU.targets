@@ -5,40 +5,40 @@
     <CNTKComponentVersion>2.10.0</CNTKComponentVersion>
   </PropertyGroup>
   <ItemGroup Condition="'$(Platform.ToLower())' == 'x64'">
-    <None Include="$(CNTKDllDir)Release\Cntk.Core.CSBinding-$(CNTKComponentVersion).dll">
-      <Link>Cntk.Core.CSBinding-$(CNTKComponentVersion).dll</Link>
+    <None Include="$(CNTKDllDir)Release\Cntk.Core.CSBinding.dll">
+      <Link>Cntk.Core.CSBinding.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="$(CNTKDllDir)Release\Cntk.Core-$(CNTKComponentVersion).dll">
-      <Link>Cntk.Core-$(CNTKComponentVersion).dll</Link>
+    <None Include="$(CNTKDllDir)Release\Cntk.Core.dll">
+      <Link>Cntk.Core.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="$(CNTKDllDir)Release\Cntk.Math-$(CNTKComponentVersion).dll">
-      <Link>Cntk.Math-$(CNTKComponentVersion).dll</Link>
+    <None Include="$(CNTKDllDir)Release\Cntk.Math.dll">
+      <Link>Cntk.Math.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="$(CNTKDllDir)Release\Cntk.PerformanceProfiler-$(CNTKComponentVersion).dll">
-      <Link>Cntk.PerformanceProfiler-$(CNTKComponentVersion).dll</Link>
+    <None Include="$(CNTKDllDir)Release\Cntk.PerformanceProfiler.dll">
+      <Link>Cntk.PerformanceProfiler.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="$(CNTKDllDir)Release\Cntk.Deserializers.Binary-$(CNTKComponentVersion).dll">
-      <Link>Cntk.Deserializers.Binary-$(CNTKComponentVersion).dll</Link>
+    <None Include="$(CNTKDllDir)Release\Cntk.Deserializers.Binary.dll">
+      <Link>Cntk.Deserializers.Binary.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="$(CNTKDllDir)Release\Cntk.Deserializers.TextFormat-$(CNTKComponentVersion).dll">
-      <Link>Cntk.Deserializers.TextFormat-$(CNTKComponentVersion).dll</Link>
+    <None Include="$(CNTKDllDir)Release\Cntk.Deserializers.TextFormat.dll">
+      <Link>Cntk.Deserializers.TextFormat.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="$(CNTKDllDir)Release\Cntk.Composite-$(CNTKComponentVersion).dll">
-      <Link>Cntk.Composite-$(CNTKComponentVersion).dll</Link>
+    <None Include="$(CNTKDllDir)Release\Cntk.Composite.dll">
+      <Link>Cntk.Composite.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="$(CNTKDllDir)Release\Cntk.Deserializers.HTK-$(CNTKComponentVersion).dll">
-      <Link>Cntk.Deserializers.HTK-$(CNTKComponentVersion).dll</Link>
+    <None Include="$(CNTKDllDir)Release\Cntk.Deserializers.HTK.dll">
+      <Link>Cntk.Deserializers.HTK.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="$(CNTKDllDir)Release\Cntk.Deserializers.Image-$(CNTKComponentVersion).dll">
-      <Link>Cntk.Deserializers.Image-$(CNTKComponentVersion).dll</Link>
+    <None Include="$(CNTKDllDir)Release\Cntk.Deserializers.Image.dll">
+      <Link>Cntk.Deserializers.Image.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

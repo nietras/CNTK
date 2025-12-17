@@ -49,7 +49,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <TargetName>Cntk.Actions$(OutputSuffix)-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.Actions$(OutputSuffix)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -67,8 +67,8 @@
       <PreprocessorDefinitions>WIN32;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Cntk.Math-$(CntkComponentVersion).lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>Cntk.Math-$(CntkComponentVersion).dll</DelayLoadDLLs>
+      <AdditionalDependencies>Cntk.Math.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>Cntk.Math.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="$(DebugBuild) Or $(NoOptBuild)">

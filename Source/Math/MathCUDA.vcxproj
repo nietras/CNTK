@@ -56,7 +56,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <TargetName>Cntk.Math.Cuda-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.Math.Cuda</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>

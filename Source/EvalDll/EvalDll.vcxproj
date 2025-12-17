@@ -51,11 +51,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="$(DebugBuild)">
     <LinkIncremental>true</LinkIncremental>
-    <TargetName>Cntk.Eval-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.Eval</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="$(ReleaseBuild)">
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>Cntk.Eval-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.Eval</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -64,7 +64,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Source\ComputationNetworkLib;$(SolutionDir)Source\Math;$(MSMPI_LIB64);$(SolutionDir)$(Platform)\$(Configuration);$(NvmlLibPath)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Cntk.Common-$(CntkComponentVersion).lib;Cntk.Math-$(CntkComponentVersion).lib;Cntk.ComputationNetwork-$(CntkComponentVersion).lib;Cntk.Actions-$(CntkComponentVersion).lib;Cntk.SequenceTrainingLib-$(CntkComponentVersion).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Cntk.Common.lib;Cntk.Math.lib;Cntk.ComputationNetwork.lib;Cntk.Actions.lib;Cntk.SequenceTrainingLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="$(DebugBuild)">
@@ -80,7 +80,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <DelayLoadDLLs>Cntk.Math-$(CntkComponentVersion).dll; nvml.dll; $(CudaRuntimeDll)</DelayLoadDLLs>
+      <DelayLoadDLLs>Cntk.Math.dll; nvml.dll; $(CudaRuntimeDll)</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="$(ReleaseBuild)">
@@ -104,7 +104,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <Profile>true</Profile>
-      <DelayLoadDLLs>Cntk.Math-$(CntkComponentVersion).dll; nvml.dll; $(CudaRuntimeDll)</DelayLoadDLLs>
+      <DelayLoadDLLs>Cntk.Math.dll; nvml.dll; $(CudaRuntimeDll)</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="$(CpuOnlyBuild)">
@@ -112,7 +112,7 @@
       <PreprocessorDefinitions>CPUONLY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <DelayLoadDLLs>Cntk.Math-$(CntkComponentVersion).dll</DelayLoadDLLs>
+      <DelayLoadDLLs>Cntk.Math.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="$(GpuBuild)">

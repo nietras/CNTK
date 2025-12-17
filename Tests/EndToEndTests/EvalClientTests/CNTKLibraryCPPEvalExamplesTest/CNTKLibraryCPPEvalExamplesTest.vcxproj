@@ -70,7 +70,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Cntk.Core-$(CntkComponentVersion).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Cntk.Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="$(DebugBuild)">

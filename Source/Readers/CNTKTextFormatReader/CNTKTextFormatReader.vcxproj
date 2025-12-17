@@ -54,7 +54,7 @@
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetName>Cntk.Deserializers.TextFormat-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.Deserializers.TextFormat</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>

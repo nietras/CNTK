@@ -51,11 +51,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="$(DebugBuild)">
     <LinkIncremental>true</LinkIncremental>
-    <TargetName>Cntk.DelayLoadedExtensions-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.DelayLoadedExtensions</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="$(ReleaseBuild)">
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>Cntk.DelayLoadedExtensions-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.DelayLoadedExtensions</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>

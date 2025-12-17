@@ -48,7 +48,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <TargetName>Cntk.Reader$(OutputSuffix)-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.Reader$(OutputSuffix)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="$(IsUWP)">
     <ClCompile>

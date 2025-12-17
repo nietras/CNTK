@@ -53,8 +53,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- If an executable links Cntk.Reader-$(CntkComponentVersion).lib, it has dependency on Cntk.Common.dll, Cntk.Math.dll and Cntk.PerformanceProfiler.dll -->
-    <ReaderLibs>Cntk.Reader$(OutputSuffix)-$(CntkComponentVersion).lib;Cntk.Common$(OutputSuffix)-$(CntkComponentVersion).lib;Cntk.Math$(OutputSuffix)-$(CntkComponentVersion).lib;</ReaderLibs>
+    <!-- If an executable links Cntk.Reader.lib, it has dependency on Cntk.Common.dll, Cntk.Math.dll and Cntk.PerformanceProfiler.dll -->
+    <ReaderLibs>Cntk.Reader$(OutputSuffix).lib;Cntk.Common$(OutputSuffix).lib;Cntk.Math$(OutputSuffix).lib;</ReaderLibs>
   </PropertyGroup>
 
   <PropertyGroup Condition="!$(IsUWP)">
@@ -64,7 +64,7 @@
     <MathIncludePath>$(MKL_PATH)\include</MathIncludePath>
     <MathDefine>USE_MKL</MathDefine>
     <!-- Only non-UWP configurations consume PerformanceProfiler -->
-    <ReaderLibs>Cntk.PerformanceProfiler-$(CntkComponentVersion).lib;$(ReaderLibs)</ReaderLibs>
+    <ReaderLibs>Cntk.PerformanceProfiler.lib;$(ReaderLibs)</ReaderLibs>
     <MathLibraryName>MKL Library</MathLibraryName>
     <MathLibraryPath>$(MKL_PATH)\lib</MathLibraryPath>
     <MathLinkLibrary>mklml.lib</MathLinkLibrary>

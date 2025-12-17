@@ -41,7 +41,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <TargetName>Cntk.SGD-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.SGD</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -57,8 +57,8 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(MSMPI_LIB64);$(OutDir);$(NvmlLibPath)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Cntk.ComputationNetwork-$(CntkComponentVersion).lib; Cntk.Math-$(CntkComponentVersion).lib; %(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>Cntk.Math-$(CntkComponentVersion).dll</DelayLoadDLLs>
+      <AdditionalDependencies>Cntk.ComputationNetwork.lib; Cntk.Math.lib; %(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>Cntk.Math.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="$(DebugBuild)">

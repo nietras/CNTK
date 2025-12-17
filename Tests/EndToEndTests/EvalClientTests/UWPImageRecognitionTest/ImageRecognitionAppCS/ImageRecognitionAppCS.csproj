@@ -85,10 +85,10 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
-    <Content Include="$(CNTKRoot)\$(Platform)\$(Configuration)\Cntk.Core_app-$(CntkComponentVersion).dll">
+    <Content Include="$(CNTKRoot)\$(Platform)\$(Configuration)\Cntk.Core_app.dll">
       <DeploymentContent>true</DeploymentContent>
     </Content>
-    <Content Include="$(CNTKRoot)\$(Platform)\$(Configuration)\Cntk.Math_app-$(CntkComponentVersion).dll">
+    <Content Include="$(CNTKRoot)\$(Platform)\$(Configuration)\Cntk.Math_app.dll">
       <DeploymentContent>true</DeploymentContent>
     </Content>
     <Content Include="$(CNTKRoot)\$(Platform)\$(Configuration)\libopenblas.dll">

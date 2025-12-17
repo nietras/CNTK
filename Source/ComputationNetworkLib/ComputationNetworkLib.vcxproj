@@ -49,7 +49,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <TargetName>Cntk.ComputationNetwork$(OutputSuffix)-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.ComputationNetwork$(OutputSuffix)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -61,8 +61,8 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(MSMPI_LIB64);$(OutDir);$(NvmlLib)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Cntk.Math-$(CntkComponentVersion).lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>Cntk.Math-$(CntkComponentVersion).dll</DelayLoadDLLs>
+      <AdditionalDependencies>Cntk.Math.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>Cntk.Math.dll</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="$(DebugBuild)">

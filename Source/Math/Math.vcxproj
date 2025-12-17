@@ -56,7 +56,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <TargetName>Cntk.Math$(OutputSuffix)-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.Math$(OutputSuffix)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -74,7 +74,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(MathLinkLibrary);Cntk.Common$(OutputSuffix)-$(CntkComponentVersion).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(MathLinkLibrary);Cntk.Common$(OutputSuffix).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>$(MathDelayLoad); $(CudaDlls); %(DelayLoadDLLs)</DelayLoadDLLs>
       <Profile>true</Profile>
     </Link>

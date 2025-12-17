@@ -63,7 +63,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Cntk.Core-$(CntkComponentVersion).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Cntk.Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Profile>true</Profile>
     </Link>
     <PostBuildEvent>
@@ -103,7 +103,7 @@
   </ItemDefinitionGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <TargetName>Cntk.Core.JavaBinding-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.Core.JavaBinding</TargetName>
   </PropertyGroup>
   <ItemGroup>
     <CustomBuild Include="cntk_java.i">

@@ -71,7 +71,7 @@
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Cntk.Eval-$(CntkComponentVersion).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Cntk.Eval.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
       <Profile>true</Profile>
     </Link>

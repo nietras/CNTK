@@ -62,7 +62,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)$(Platform)\$(Configuration)\CNTKv2LibraryDll;$(VCInstallDir)UnitTest\lib\UWP;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Cntk.Core$(OutputSuffix)-$(CntkComponentVersion).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Cntk.Core$(OutputSuffix).lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -90,10 +90,10 @@
     <Image Include="Assets\Square150x150Logo.scale-200.png" />
     <Image Include="Assets\StoreLogo.png" />
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
-    <None Include="$(SolutionDir)$(Platform)\$(Configuration)\Cntk.Core$(OutputSuffix)-$(CntkComponentVersion).dll">
+    <None Include="$(SolutionDir)$(Platform)\$(Configuration)\Cntk.Core$(OutputSuffix).dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="$(SolutionDir)$(Platform)\$(Configuration)\Cntk.Math$(OutputSuffix)-$(CntkComponentVersion).dll">
+    <None Include="$(SolutionDir)$(Platform)\$(Configuration)\Cntk.Math$(OutputSuffix).dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="$(SolutionDir)$(Platform)\$(Configuration)\Math\libopenblas.dll">

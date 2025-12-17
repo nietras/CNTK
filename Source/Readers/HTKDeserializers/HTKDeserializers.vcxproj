@@ -47,7 +47,7 @@
     <LinkIncremental>$(DebugBuild)</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetName>Cntk.Deserializers.HTK-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.Deserializers.HTK</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>

@@ -54,7 +54,7 @@
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetName>Cntk.Deserializers.Binary-$(CntkComponentVersion)</TargetName>
+    <TargetName>Cntk.Deserializers.Binary</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
